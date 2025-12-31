@@ -21,6 +21,16 @@ namespace ste_tool_studio
             // Close this window
             this.Close();
         }
+
+        private void STDTemplateNormalizer_click(object sender, RoutedEventArgs e)
+        {
+            // Open the Baseline Verifier tool window
+            var baselineVerifierWindow = new BaselineVerifierWindow();
+            baselineVerifierWindow.Show();
+
+            // Close this window
+            this.Close();
+        }
     }
 }
 

@@ -59,14 +59,13 @@
                     
                     <!-- STD Baseline Verifier Tool -->
                     <Button
+                        MaxWidth="200"
+                        Width="200"
                         x:Name="BaselineVerifierButton"
                         Click="BaselineVerifierButton_Click"
-                        Style="{StaticResource CustomMaterialButton}"
-                        Margin="15"
+                        Style="{StaticResource GreenButton}"
+                        Margin="10"
                         Cursor="Hand"
-                        Background="#4CAF50"
-                        Foreground="White"
-                        BorderBrush="#4CAF50"
                         Padding="20"
                         MinHeight="200">
                         <StackPanel>
@@ -76,6 +75,8 @@
                                 HorizontalAlignment="Center"
                                 Margin="0,0,0,15" />
                             <TextBlock
+                                MaxWidth="190"
+                                TextAlignment="Center"
                                 Text="STD Baseline Verifier"
                                 FontSize="20"
                                 FontWeight="Bold"
@@ -83,6 +84,7 @@
                                 TextWrapping="Wrap"
                                 Foreground="White" />
                             <TextBlock
+                                TextAlignment="Center"
                                 Text="Verify STD bugs and validate rules"
                                 FontSize="12"
                                 HorizontalAlignment="Center"
@@ -94,34 +96,37 @@
 
                     <!-- Placeholder for future tools -->
                     <Button
-                        x:Name="PlaceholderToolButton"
-                        Style="{StaticResource CustomMaterialButton}"
-                        Margin="15"
+                        MaxWidth="200"
+                        Width="200"
+                        x:Name="STDTemplateNormalizer"
+                        Click="STDTemplateNormalizer_click"
+                        Style="{StaticResource PurpleButton}"
+                        Margin="10"
                         Cursor="Hand"
-                        Background="#3C3C3C"
-                        Foreground="LightGray"
-                        BorderBrush="#555"
                         Padding="20"
                         MinHeight="200"
-                        IsEnabled="False">
+                        IsEnabled="True">
                         <StackPanel>
                             <TextBlock
-                                Text="➕"
+                                Text="📄"
                                 FontSize="48"
                                 HorizontalAlignment="Center"
                                 Margin="0,0,0,15" />
                             <TextBlock
-                                Text="More Tools"
+                                MaxWidth="200"
+                                Text="STD Template Normalizer"
                                 FontSize="20"
                                 FontWeight="Bold"
                                 HorizontalAlignment="Center"
                                 TextWrapping="Wrap"
-                                Foreground="LightGray" />
+                                TextAlignment="Center"
+                                Foreground="White" />
                             <TextBlock
-                                Text="Coming soon..."
+                                TextAlignment="Center"
+                                Text="Normalizes exported STD Word file into template"
                                 FontSize="12"
                                 HorizontalAlignment="Center"
-                                Foreground="Gray"
+                                Foreground="LightGray"
                                 Margin="0,10,0,0"
                                 TextWrapping="Wrap" />
                         </StackPanel>
