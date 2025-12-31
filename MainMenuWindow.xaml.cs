@@ -24,9 +24,9 @@ namespace ste_tool_studio
 
         private void STDTemplateNormalizer_click(object sender, RoutedEventArgs e)
         {
-            // Open the Baseline Verifier tool window
-            var baselineVerifierWindow = new BaselineVerifierWindow();
-            baselineVerifierWindow.Show();
+            // Open the STD Template Normalizer tool window
+            var stdTemplateNormalizerWindow = new STDTemplateNormalizer();
+            stdTemplateNormalizerWindow.Show();
 
             // Close this window
             this.Close();

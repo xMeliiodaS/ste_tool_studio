@@ -51,6 +51,7 @@
                 BorderBrush="#555"
                 Padding="12,8"
                 Margin="0,0,15,0"
+                MinWidth="60"
                 Cursor="Hand"
                 ToolTip="Return to Main Menu">
                 <StackPanel Orientation="Horizontal">
@@ -58,10 +59,6 @@
                         Text="←"
                         FontSize="18"
                         Margin="0,0,5,0"
-                        VerticalAlignment="Center" />
-                    <TextBlock
-                        Text="Back"
-                        FontSize="14"
                         VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
