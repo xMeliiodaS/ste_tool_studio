@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace STD_baseline_verifier.ViewModels
+namespace ste_tool_studio.ViewModels
 {
     public class RelayCommand : ICommand
     {

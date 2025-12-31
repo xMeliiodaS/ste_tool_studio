@@ -1,8 +1,8 @@
-﻿using STD_baseline_verifier.Constants;
+﻿using ste_tool_studio.Constants;
 using System;
 using System.Threading.Tasks;
 
-namespace STD_baseline_verifier.Services
+namespace ste_tool_studio.Services
 {
     /// <summary>
     /// Service for running violation check processes

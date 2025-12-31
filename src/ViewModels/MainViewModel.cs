@@ -1,7 +1,7 @@
 ﻿using Microsoft.Win32;
-using STD_baseline_verifier.Configuration;
-using STD_baseline_verifier.Constants;
-using STD_baseline_verifier.Services;
+using ste_tool_studio.Configuration;
+using ste_tool_studio.Constants;
+using ste_tool_studio.Services;
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -12,7 +12,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using IOPath = System.IO.Path;
 
-namespace STD_baseline_verifier.ViewModels
+namespace ste_tool_studio.ViewModels
 {
     /// <summary>
     /// Main ViewModel implementing MVVM pattern for the application

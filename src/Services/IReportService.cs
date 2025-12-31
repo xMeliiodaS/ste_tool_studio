@@ -1,6 +1,6 @@
 using System;
 
-namespace STD_baseline_verifier.Services
+namespace ste_tool_studio.Services
 {
     /// <summary>
     /// Interface for managing report files

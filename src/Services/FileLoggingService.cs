@@ -1,9 +1,9 @@
-using STD_baseline_verifier.Configuration;
+using ste_tool_studio.Configuration;
 using System;
 using System.IO;
 using IOPath = System.IO.Path;
 
-namespace STD_baseline_verifier.Services
+namespace ste_tool_studio.Services
 {
     /// <summary>
     /// File-based logging service

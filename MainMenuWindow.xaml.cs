@@ -1,6 +1,6 @@
 using System.Windows;
 
-namespace AT_baseline_verifier
+namespace ste_tool_studio
 {
     /// <summary>
     /// Main menu window that serves as a launcher for all tools

@@ -1,5 +1,5 @@
 <Window
-    x:Class="AT_baseline_verifier.MainMenuWindow"
+    x:Class="ste_tool_studio.MainMenuWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"

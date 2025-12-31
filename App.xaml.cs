@@ -2,7 +2,7 @@
 using System.Data;
 using System.Windows;
 
-namespace AT_baseline_verifier
+namespace ste_tool_studio
 {
     /// <summary>
     /// Interaction logic for App.xaml

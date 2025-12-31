@@ -1,7 +1,7 @@
-using STD_baseline_verifier.Configuration;
-using STD_baseline_verifier.ViewModels;
+using ste_tool_studio.Configuration;
+using ste_tool_studio.ViewModels;
 
-namespace STD_baseline_verifier.Services
+namespace ste_tool_studio.Services
 {
     /// <summary>
     /// Simple factory for creating service instances and ViewModels

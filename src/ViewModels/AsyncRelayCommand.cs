@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace STD_baseline_verifier.ViewModels
+namespace ste_tool_studio.ViewModels
 {
     public class AsyncRelayCommand : ICommand
     {

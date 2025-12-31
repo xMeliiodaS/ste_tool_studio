@@ -1,4 +1,4 @@
-﻿namespace STD_baseline_verifier.Models
+﻿namespace ste_tool_studio.Models
 {
     public class UserInputModel
     {

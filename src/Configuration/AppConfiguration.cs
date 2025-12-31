@@ -1,10 +1,10 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
-using STD_baseline_verifier.Constants;
+using ste_tool_studio.Constants;
 using IOPath = System.IO.Path;
 
-namespace STD_baseline_verifier.Configuration
+namespace ste_tool_studio.Configuration
 {
     /// <summary>
     /// Manages application configuration with user-specific settings

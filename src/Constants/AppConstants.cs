@@ -1,4 +1,4 @@
-namespace STD_baseline_verifier.Constants
+namespace ste_tool_studio.Constants
 {
     /// <summary>
     /// Centralized constants to eliminate magic strings and hard-coded values
@@ -6,7 +6,7 @@ namespace STD_baseline_verifier.Constants
     public static class AppConstants
     {
         // Application Info
-        public const string AppName = "AT_baseline_verifier";
+        public const string AppName = "ste_tool_studio";
         public const string AppDisplayName = "STD Baseline Verifier";
 
         // File Names

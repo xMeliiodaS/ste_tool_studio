@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36401.2 d17.14
+VisualStudioVersion = 17.14.36401.2
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AT_baseline_verifier", "AT_baseline_verifier.csproj", "{5A49CB65-8531-471B-86C5-BF3E040EFDDB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ste_tool_studio", "ste_tool_studio.csproj", "{5A49CB65-8531-471B-86C5-BF3E040EFDDB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

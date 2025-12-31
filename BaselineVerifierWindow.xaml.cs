@@ -1,6 +1,6 @@
-using STD_baseline_verifier.Constants;
-using STD_baseline_verifier.Services;
-using STD_baseline_verifier.ViewModels;
+using ste_tool_studio.Constants;
+using ste_tool_studio.Services;
+using ste_tool_studio.ViewModels;
 using System;
 using System.IO;
 using System.Windows;
@@ -10,7 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 
-namespace AT_baseline_verifier
+namespace ste_tool_studio
 {
     /// <summary>
     /// Baseline Verifier tool window with minimal code-behind, using MVVM pattern
