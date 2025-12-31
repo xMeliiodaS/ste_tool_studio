@@ -68,7 +68,8 @@
 
             <!-- Title -->
             <TextBlock
-                Grid.Column="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"                
                 Text="STD Baseline Verifier"
                 Foreground="White"
                 HorizontalAlignment="Center"
