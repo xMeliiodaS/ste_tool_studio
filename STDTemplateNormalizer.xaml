@@ -187,7 +187,7 @@
                                 TextChanged="DOCNumberInput_TextChanged" />
                             <TextBlock
                                 x:Name="DOCNumberPlaceholder"
-                                Text="DOC #"
+                                Text="DOC number"
                                 Foreground="Gray"
                                 FontSize="14"
                                 HorizontalAlignment="Center"
