@@ -198,7 +198,7 @@
                         <!-- Plan Input (Right) -->
                         <Grid Grid.Column="1" Margin="7,0,0,0">
                             <TextBox
-                                x:Name="PlanInput"
+                                x:Name="ProjectInput"
                                 Width="150"
                                 Background="#3C3C3C"
                                 Foreground="White"
@@ -209,8 +209,8 @@
                                 HorizontalContentAlignment="Center"
                                 TextChanged="PlanInput_TextChanged" />
                             <TextBlock
-                                x:Name="PlanPlaceholder"
-                                Text="Plan"
+                                x:Name="ProjectPlaceholder"
+                                Text="Project number"
                                 Foreground="Gray"
                                 FontSize="14"
                                 HorizontalAlignment="Center"
