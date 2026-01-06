@@ -99,7 +99,21 @@ namespace ste_tool_studio
 
         private void PlanInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            PlanPlaceholder.Visibility = string.IsNullOrWhiteSpace(PlanInput.Text) 
+            ProjectPlaceholder.Visibility = string.IsNullOrWhiteSpace(ProjectInput.Text) 
+                ? Visibility.Visible 
+                : Visibility.Collapsed;
+        }
+
+        private void TestPlanInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TestPlanPlaceholder.Visibility = string.IsNullOrWhiteSpace(TestPlanInput.Text) 
+                ? Visibility.Visible 
+                : Visibility.Collapsed;
+        }
+
+        private void FooterInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            FooterPlaceholder.Visibility = string.IsNullOrWhiteSpace(FooterInput.Text) 
                 ? Visibility.Visible 
                 : Visibility.Collapsed;
         }
