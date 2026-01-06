@@ -40,7 +40,6 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <!-- Back Button -->
             <Button
                 x:Name="BackButton"
                 Grid.Column="0"
@@ -49,18 +48,21 @@
                 Background="#3C3C3C"
                 Foreground="White"
                 BorderBrush="#555"
-                Padding="12,8"
                 Margin="0,0,15,0"
-                MinWidth="60"
-                Cursor="Hand"
-                ToolTip="Return to Main Menu">
+                MinWidth="40"
+                Cursor="Hand">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
-                        Text="←"
+                        Text="&lt;"
                         FontSize="18"
                         Margin="0,0,5,0"
                         VerticalAlignment="Center" />
                 </StackPanel>
+                <Button.ToolTip>
+                    <ToolTip Style="{StaticResource CustomToolTip}">
+                        Return to Main Menu
+                    </ToolTip>
+                </Button.ToolTip>
             </Button>
 
             <!-- Title -->

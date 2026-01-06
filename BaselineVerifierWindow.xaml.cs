@@ -29,6 +29,8 @@ namespace ste_tool_studio
 
             // Subscribe to ViewModel property changes for UI updates
             _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+            
+            this.Closing += BaselineVerifierWindow_Closing;
         }
 
         private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -214,15 +216,43 @@ namespace ste_tool_studio
             _viewModel.OpenLastRulesReportCommand.Execute(null);
         }
 
+        private static MainMenuWindow _mainMenuWindow;
+
+        private void BaselineVerifierWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // If already shutting down, don't do anything
+            if (MainMenuWindow.IsShuttingDown) return;
+
+            // If closing via X button (not hiding), shut down the application
+            try
+            {
+                if (_mainMenuWindow != null && _mainMenuWindow.IsLoaded)
+                {
+                    _mainMenuWindow.Close();
+                }
+                else
+                {
+                    MainMenuWindow.IsShuttingDown = true;
+                    Application.Current.Shutdown();
+                }
+            }
+            catch { }
+        }
+
         // Back button handler - return to main menu
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            // Open the main menu window
-            var mainMenuWindow = new MainMenuWindow();
-            mainMenuWindow.Show();
+            // Show existing main menu or create new one
+            if (_mainMenuWindow == null || !_mainMenuWindow.IsLoaded)
+            {
+                _mainMenuWindow = new MainMenuWindow();
+                _mainMenuWindow.Closed += (s, args) => _mainMenuWindow = null;
+            }
+            _mainMenuWindow.Show();
+            _mainMenuWindow.Activate();
             
-            // Close this window
-            this.Close();
+            // Hide this window instead of closing to preserve state
+            this.Hide();
         }
     }
 }

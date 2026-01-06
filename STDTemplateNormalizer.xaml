@@ -1,4 +1,4 @@
-﻿<Window
+<Window
     x:Class="ste_tool_studio.STDTemplateNormalizer"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -200,7 +200,7 @@
                         <!-- Plan Input (Right) -->
                         <Grid Grid.Column="1" Margin="7,0,0,0">
                             <TextBox
-                                x:Name="ProjectInput"
+                                x:Name="ProjectNumberInput"
                                 Width="100"
                                 Background="#3C3C3C"
                                 Foreground="White"
@@ -211,7 +211,7 @@
                                 HorizontalContentAlignment="Center"
                                 TextChanged="PlanInput_TextChanged" />
                             <TextBlock
-                                x:Name="ProjectPlaceholder"
+                                x:Name="ProjectNumberPlaceholder"
                                 Text="Project number"
                                 Foreground="Gray"
                                 FontSize="14"

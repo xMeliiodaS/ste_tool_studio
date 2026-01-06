@@ -12,17 +12,48 @@ namespace ste_tool_studio
     public partial class STDTemplateNormalizer : Window
     {
         private string _selectedFilePath = string.Empty;
+        private static MainMenuWindow _mainMenuWindow;
 
         public STDTemplateNormalizer()
         {
             InitializeComponent();
+            this.Closing += STDTemplateNormalizer_Closing;
+        }
+
+        private void STDTemplateNormalizer_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // If already shutting down, don't do anything
+            if (MainMenuWindow.IsShuttingDown) return;
+
+            // If closing via X button (not hiding), shut down the application
+            try
+            {
+                if (_mainMenuWindow != null && _mainMenuWindow.IsLoaded)
+                {
+                    _mainMenuWindow.Close();
+                }
+                else
+                {
+                    MainMenuWindow.IsShuttingDown = true;
+                    Application.Current.Shutdown();
+                }
+            }
+            catch { }
         }
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            var mainMenu = new MainMenuWindow();
-            mainMenu.Show();
-            this.Close();
+            // Show existing main menu or create new one
+            if (_mainMenuWindow == null || !_mainMenuWindow.IsLoaded)
+            {
+                _mainMenuWindow = new MainMenuWindow();
+                _mainMenuWindow.Closed += (s, args) => _mainMenuWindow = null;
+            }
+            _mainMenuWindow.Show();
+            _mainMenuWindow.Activate();
+            
+            // Hide this window instead of closing to preserve state
+            this.Hide();
         }
 
         private void SelectFileButton_Click(object sender, RoutedEventArgs e)
@@ -99,7 +130,7 @@ namespace ste_tool_studio
 
         private void PlanInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ProjectPlaceholder.Visibility = string.IsNullOrWhiteSpace(ProjectInput.Text) 
+            ProjectNumberPlaceholder.Visibility = string.IsNullOrWhiteSpace(ProjectNumberInput.Text) 
                 ? Visibility.Visible 
                 : Visibility.Collapsed;
         }
