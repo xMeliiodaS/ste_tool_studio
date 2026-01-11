@@ -1,27 +1,57 @@
-﻿using ste_tool_studio.Constants;
+using ste_tool_studio.Constants;
 using System;
 using System.Threading.Tasks;
 
 namespace ste_tool_studio.Services
 {
     /// <summary>
-    /// Service for running violation check processes
+    /// Unified service for running validation processes (automation and violation checks)
     /// </summary>
-    public class ViolationCheckService
+    public class ValidationService
     {
         private readonly IProcessExecutionService _processService;
         private readonly ILoggingService _loggingService;
 
-        public ViolationCheckService(IProcessExecutionService processService, ILoggingService loggingService)
+        public ValidationService(IProcessExecutionService processService, ILoggingService loggingService)
         {
             _processService = processService ?? throw new ArgumentNullException(nameof(processService));
             _loggingService = loggingService ?? throw new ArgumentNullException(nameof(loggingService));
         }
 
         /// <summary>
+        /// Runs the automation validation process
+        /// </summary>
+        public async Task<ProcessExecutionResult> RunAutomationAsync(
+            string excelFilePath,
+            string stdName,
+            System.Action<int, int, string> progressCallback = null)
+        {
+            _loggingService.LogSeparator();
+            _loggingService.LogInfo($"Starting automation validation for: {excelFilePath}, STD: {stdName}");
+
+            string arguments = $"\"{excelFilePath}\" \"{stdName}\"";
+            var result = await _processService.ExecuteAsync(
+                AppConstants.AutomationExeName,
+                arguments,
+                progressCallback);
+
+            if (result.IsSuccess)
+            {
+                _loggingService.LogInfo("Automation validation completed successfully");
+            }
+            else
+            {
+                _loggingService.LogError($"Automation validation failed: {result.Error}");
+            }
+
+            _loggingService.LogSeparator();
+            return result;
+        }
+
+        /// <summary>
         /// Runs the violation check process
         /// </summary>
-        public async Task<ProcessExecutionResult> RunCheckAsync(
+        public async Task<ProcessExecutionResult> RunViolationCheckAsync(
             string excelFilePath,
             System.Action<int, int, string> progressCallback = null)
         {
@@ -48,3 +78,4 @@ namespace ste_tool_studio.Services
         }
     }
 }
+

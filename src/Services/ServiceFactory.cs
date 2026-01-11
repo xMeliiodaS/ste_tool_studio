@@ -14,14 +14,12 @@ namespace ste_tool_studio.Services
             var config = new AppConfiguration();
             var processService = new ProcessExecutionService();
             var loggingService = new FileLoggingService(config);
-            var automationService = new AutomationService(processService, loggingService);
-            var violationService = new ViolationCheckService(processService, loggingService);
+            var validationService = new ValidationService(processService, loggingService);
             var reportService = new ReportService(config);
 
             return new MainViewModel(
                 config,
-                automationService,
-                violationService,
+                validationService,
                 reportService,
                 loggingService);
         }

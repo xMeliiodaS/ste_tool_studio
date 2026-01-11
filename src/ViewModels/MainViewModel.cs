@@ -20,8 +20,7 @@ namespace ste_tool_studio.ViewModels
     public class MainViewModel : INotifyPropertyChanged
     {
         private readonly AppConfiguration _config;
-        private readonly AutomationService _automationService;
-        private readonly ViolationCheckService _violationService;
+        private readonly ValidationService _validationService;
         private readonly IReportService _reportService;
         private readonly ILoggingService _loggingService;
 
@@ -37,16 +36,19 @@ namespace ste_tool_studio.ViewModels
         private int _progressCurrent;
         private int _progressTotal;
 
+        // File type configuration - can be set by the window using this ViewModel
+        public string FileFilter { get; set; } = AppConstants.ExcelFileFilter;
+        public string FileDialogTitle { get; set; } = AppConstants.ExcelFileDialogTitle;
+        public string[] AllowedExtensions { get; set; } = new[] { ".xls", ".xlsx" };
+
         public MainViewModel(
             AppConfiguration config,
-            AutomationService automationService,
-            ViolationCheckService violationService,
+            ValidationService validationService,
             IReportService reportService,
             ILoggingService loggingService)
         {
             _config = config ?? throw new ArgumentNullException(nameof(config));
-            _automationService = automationService ?? throw new ArgumentNullException(nameof(automationService));
-            _violationService = violationService ?? throw new ArgumentNullException(nameof(violationService));
+            _validationService = validationService ?? throw new ArgumentNullException(nameof(validationService));
             _reportService = reportService ?? throw new ArgumentNullException(nameof(reportService));
             _loggingService = loggingService ?? throw new ArgumentNullException(nameof(loggingService));
 
@@ -242,8 +244,8 @@ namespace ste_tool_studio.ViewModels
         {
             var openFileDialog = new OpenFileDialog
             {
-                Filter = AppConstants.ExcelFileFilter,
-                Title = AppConstants.ExcelFileDialogTitle
+                Filter = FileFilter,
+                Title = FileDialogTitle
             };
 
             if (openFileDialog.ShowDialog() == true)
@@ -256,9 +258,9 @@ namespace ste_tool_studio.ViewModels
 
         public void HandleFileSelection(string filePath)
         {
-            if (string.IsNullOrEmpty(filePath) || !IsValidExcelFile(filePath))
+            if (string.IsNullOrEmpty(filePath) || !IsValidFile(filePath))
             {
-                SetStatus(AppConstants.ErrorInvalidFileFormat, true);
+                SetStatus($"Invalid file format. Expected: {string.Join(", ", AllowedExtensions)}", true);
                 return;
             }
 
@@ -279,15 +281,21 @@ namespace ste_tool_studio.ViewModels
                 });
             }
 
-            SetStatus(string.Format(AppConstants.SuccessExcelPathUpdated, filePath), false);
+            SetStatus($"File selected: {IOPath.GetFileName(filePath)}", false);
         }
 
 
-        private bool IsValidExcelFile(string filePath)
+        private bool IsValidFile(string filePath)
         {
             if (string.IsNullOrEmpty(filePath)) return false;
             string extension = IOPath.GetExtension(filePath).ToLowerInvariant();
-            return extension == ".xls" || extension == ".xlsx";
+            return AllowedExtensions.Any(ext => extension == ext.ToLowerInvariant());
+        }
+
+        // Keep this method for backward compatibility with BaselineVerifierWindow
+        private bool IsValidExcelFile(string filePath)
+        {
+            return IsValidFile(filePath);
         }
 
         private bool CanRunAutomation(object arg)
@@ -317,7 +325,7 @@ namespace ste_tool_studio.ViewModels
                 TrimAndNormalizeInputs();
                 _config.UpdateConfig(StdName, IterationPath, VvVersion);
 
-                var result = await _automationService.RunAutomationAsync(
+                var result = await _validationService.RunAutomationAsync(
                     SelectedFilePath,
                     StdName,
                     OnProgressUpdate);
@@ -347,7 +355,7 @@ namespace ste_tool_studio.ViewModels
         {
             if (string.IsNullOrWhiteSpace(SelectedFilePath))
             {
-                SetStatus(AppConstants.ErrorSelectExcelFile, true);
+                SetStatus("Please select a file.", true);
                 return;
             }
 
@@ -356,7 +364,7 @@ namespace ste_tool_studio.ViewModels
 
             try
             {
-                var result = await _violationService.RunCheckAsync(
+                var result = await _validationService.RunViolationCheckAsync(
                     SelectedFilePath,
                     OnProgressUpdate);
 
@@ -402,7 +410,7 @@ namespace ste_tool_studio.ViewModels
         {
             if (string.IsNullOrWhiteSpace(SelectedFilePath))
             {
-                SetStatus(AppConstants.ErrorSelectExcelFile, true);
+                SetStatus("Please select a file.", true);
                 return false;
             }
 

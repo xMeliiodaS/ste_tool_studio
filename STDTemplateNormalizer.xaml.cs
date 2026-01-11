@@ -1,158 +1,120 @@
-﻿using System;
+﻿using ste_tool_studio.Constants;
+using ste_tool_studio.Services;
+using ste_tool_studio.ViewModels;
+using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.Win32;
+using System.Windows.Input;
 
 namespace ste_tool_studio
 {
     /// <summary>
     /// Interaction logic for STDTemplateNormalizer.xaml
     /// </summary>
-    public partial class STDTemplateNormalizer : Window
+    public partial class STDTemplateNormalizer : BaseToolWindow
     {
-        private string _selectedFilePath = string.Empty;
-        private static MainMenuWindow _mainMenuWindow;
+        private readonly MainViewModel _viewModel;
 
         public STDTemplateNormalizer()
         {
             InitializeComponent();
-            this.Closing += STDTemplateNormalizer_Closing;
-        }
-
-        private void STDTemplateNormalizer_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            // If already shutting down, don't do anything
-            if (MainMenuWindow.IsShuttingDown) return;
-
-            // If closing via X button (not hiding), shut down the application
-            try
-            {
-                if (_mainMenuWindow != null && _mainMenuWindow.IsLoaded)
-                {
-                    _mainMenuWindow.Close();
-                }
-                else
-                {
-                    MainMenuWindow.IsShuttingDown = true;
-                    Application.Current.Shutdown();
-                }
-            }
-            catch { }
-        }
-
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Show existing main menu or create new one
-            if (_mainMenuWindow == null || !_mainMenuWindow.IsLoaded)
-            {
-                _mainMenuWindow = new MainMenuWindow();
-                _mainMenuWindow.Closed += (s, args) => _mainMenuWindow = null;
-            }
-            _mainMenuWindow.Show();
-            _mainMenuWindow.Activate();
             
-            // Hide this window instead of closing to preserve state
-            this.Hide();
+            // Initialize StatusTextBlock reference after InitializeComponent
+            StatusTextBlock = this.StatusText;
+
+            // Create and configure ViewModel for DOCX files
+            _viewModel = ServiceFactory.CreateMainViewModel();
+            _viewModel.FileFilter = "Word Documents (*.docx)|*.docx|All Files (*.*)|*.*";
+            _viewModel.FileDialogTitle = "Select DOCX File";
+            _viewModel.AllowedExtensions = new[] { ".docx" };
+            
+            DataContext = _viewModel;
+
+            // Subscribe to ViewModel property changes for UI updates
+            _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+        }
+
+        private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            // Handle UI-specific updates based on ViewModel property changes
+            switch (e.PropertyName)
+            {
+                case nameof(MainViewModel.StatusMessage):
+                case nameof(MainViewModel.IsError):
+                    UpdateStatusDisplay();
+                    break;
+            }
+        }
+
+        private void UpdateStatusDisplay()
+        {
+            // The StatusText is bound to StatusMessage, but we need to update the color based on IsError
+            if (StatusTextBlock != null)
+            {
+                StatusTextBlock.Foreground = new System.Windows.Media.SolidColorBrush(
+                    _viewModel.IsError
+                        ? System.Windows.Media.Color.FromRgb(255, 102, 102)
+                        : System.Windows.Media.Color.FromRgb(255, 255, 255));
+            }
         }
 
         private void SelectFileButton_Click(object sender, RoutedEventArgs e)
         {
-            var openFileDialog = new OpenFileDialog
-            {
-                Filter = "Word Documents (*.docx)|*.docx|All Files (*.*)|*.*",
-                Title = "Select DOCX File"
-            };
-
-            if (openFileDialog.ShowDialog() == true)
-            {
-                _selectedFilePath = openFileDialog.FileName;
-                SelectedFileLabel.Text = Path.GetFileName(_selectedFilePath);
-                StatusText.Text = $"File selected: {Path.GetFileName(_selectedFilePath)}";
-            }
+            _viewModel.SelectFileCommand.Execute(null);
         }
 
-        private void Window_Drop(object sender, DragEventArgs e)
+        // Implement abstract methods from BaseToolWindow
+        protected override bool IsValidFileType(string filePath)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                if (files.Length > 0)
-                {
-                    string filePath = files[0];
-                    if (Path.GetExtension(filePath).Equals(".docx", StringComparison.OrdinalIgnoreCase))
-                    {
-                        _selectedFilePath = filePath;
-                        SelectedFileLabel.Text = Path.GetFileName(_selectedFilePath);
-                        StatusText.Text = $"File selected: {Path.GetFileName(_selectedFilePath)}";
-                    }
-                    else
-                    {
-                        StatusText.Text = "Please select a DOCX file";
-                    }
-                }
-            }
+            if (string.IsNullOrEmpty(filePath)) return false;
+            return Path.GetExtension(filePath).Equals(".docx", StringComparison.OrdinalIgnoreCase);
         }
 
-        private void Window_DragOver(object sender, DragEventArgs e)
+        protected override string GetExpectedFileType()
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                e.Effects = DragDropEffects.Copy;
-            }
-            else
-            {
-                e.Effects = DragDropEffects.None;
-            }
-            e.Handled = true;
+            return "DOCX files (.docx)";
+        }
+
+        protected override void HandleFileDrop(string filePath)
+        {
+            _viewModel.HandleFileSelection(filePath);
         }
 
         private void STDNameInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            STDNamePlaceholder.Visibility = string.IsNullOrWhiteSpace(STDNameInput.Text) 
-                ? Visibility.Visible 
-                : Visibility.Collapsed;
+            HandlePlaceholderVisibility(STDNameInput, STDNamePlaceholder);
         }
 
         private void DOCNumberInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            DOCNumberPlaceholder.Visibility = string.IsNullOrWhiteSpace(DOCNumberInput.Text) 
-                ? Visibility.Visible 
-                : Visibility.Collapsed;
+            HandlePlaceholderVisibility(DOCNumberInput, DOCNumberPlaceholder);
         }
 
         private void PreparedByInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            PreparedByPlaceholder.Visibility = string.IsNullOrWhiteSpace(PreparedByInput.Text) 
-                ? Visibility.Visible 
-                : Visibility.Collapsed;
+            HandlePlaceholderVisibility(PreparedByInput, PreparedByPlaceholder);
         }
 
         private void PlanInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ProjectNumberPlaceholder.Visibility = string.IsNullOrWhiteSpace(ProjectNumberInput.Text) 
-                ? Visibility.Visible 
-                : Visibility.Collapsed;
+            HandlePlaceholderVisibility(ProjectNumberInput, ProjectNumberPlaceholder);
         }
 
         private void TestPlanInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            TestPlanPlaceholder.Visibility = string.IsNullOrWhiteSpace(TestPlanInput.Text) 
-                ? Visibility.Visible 
-                : Visibility.Collapsed;
+            HandlePlaceholderVisibility(TestPlanInput, TestPlanPlaceholder);
         }
 
         private void FooterInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            FooterPlaceholder.Visibility = string.IsNullOrWhiteSpace(FooterInput.Text) 
-                ? Visibility.Visible 
-                : Visibility.Collapsed;
+            HandlePlaceholderVisibility(FooterInput, FooterPlaceholder);
         }
 
         private void GenerateButton_Click(object sender, RoutedEventArgs e)
         {
             // TODO: Implement generation logic
-            StatusText.Text = "Generation functionality will be implemented here";
+            
         }
     }
 }

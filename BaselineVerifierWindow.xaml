@@ -1,8 +1,9 @@
-<Window
+<local:BaseToolWindow
     x:Class="ste_tool_studio.BaselineVerifierWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:local="clr-namespace:ste_tool_studio"
     Title="STD Baseline Verifier"
     Height="575"
     Width="690"
@@ -488,5 +489,5 @@
         </Border>
 
     </Grid>
-</Window>
+</local:BaseToolWindow>
 
