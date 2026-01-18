@@ -94,7 +94,7 @@
                 <!-- File Selector Button -->
                 <Button
                     x:Name="SelectFileButton"
-                    Command="{Binding SelectFileCommand}"
+                    Click="SelectFileButton_Click"
                     Style="{StaticResource PurpleButton}"
                     Margin="0,0,0,4"
                     Cursor="Hand">

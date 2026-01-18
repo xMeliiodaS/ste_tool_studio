@@ -93,7 +93,7 @@
                 <!-- File Selector Button -->
                 <Button
                     x:Name="SelectSTDButton"
-                    Command="{Binding SelectFileCommand}"
+                    Click="SelectSTDButton_Click"
                     Style="{StaticResource PurpleButton}"
                     Margin="0,0,0,4"
                     Cursor="Hand">
@@ -240,7 +240,7 @@
                     <Button
                         x:Name="RunAutomationButton"
                         Grid.Row="0"
-                        Command="{Binding RunAutomationCommand}"
+                        Click="RunAutomationButton_Click"
                         Style="{StaticResource GreenButton}"
                         MaxWidth="350"
                         Cursor="Hand"
@@ -336,7 +336,7 @@
                         Height="31"
                         Margin="317,0,0,6"
                         VerticalAlignment="Center"
-                        Command="{Binding OpenLastBugsReportCommand}"
+                        Click="OpenLastBugsReportButton_Click"
                         ToolTipService.InitialShowDelay="0"
                         ToolTipService.BetweenShowDelay="0">
 
@@ -352,7 +352,7 @@
                     <Button
                         x:Name="RunViolationButton"
                         Grid.Row="1"
-                        Command="{Binding RunViolationCheckCommand}"
+                        Click="RunViolationButton_Click"
                         Style="{StaticResource BlueButton}"
                         Cursor="Hand"
                         Margin="0,10,0,0">
@@ -448,7 +448,7 @@
                         Height="31"
                         Margin="197,-32,0,0"
                         VerticalAlignment="Center"
-                        Command="{Binding OpenLastRulesReportCommand}"
+                        Click="OpenLastRulesReportButton_Click"
                         ToolTipService.InitialShowDelay="0"
                         ToolTipService.BetweenShowDelay="0">
 

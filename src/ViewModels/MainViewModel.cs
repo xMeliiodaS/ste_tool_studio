@@ -239,8 +239,8 @@ namespace ste_tool_studio.ViewModels
         public ICommand OpenLastBugsReportCommand { get; }
         public ICommand OpenLastRulesReportCommand { get; }
 
-        // Command implementations
-        private void ExecuteSelectFile(object obj)
+        // Public methods for simple click handlers (no ICommand needed)
+        public void SelectFile()
         {
             var openFileDialog = new OpenFileDialog
             {
@@ -252,6 +252,32 @@ namespace ste_tool_studio.ViewModels
             {
                 HandleFileSelection(openFileDialog.FileName);
             }
+        }
+
+        public async void RunAutomation()
+        {
+            await ExecuteRunAutomation(null);
+        }
+
+        public async void RunViolationCheck()
+        {
+            await ExecuteRunViolationCheck(null);
+        }
+
+        public void OpenLastBugsReport()
+        {
+            ExecuteOpenLastBugsReport(null);
+        }
+
+        public void OpenLastRulesReport()
+        {
+            ExecuteOpenLastRulesReport(null);
+        }
+
+        // Command implementations (kept for backward compatibility if needed)
+        private void ExecuteSelectFile(object obj)
+        {
+            SelectFile();
         }
 
         public event Action RequestStdNameFocus;

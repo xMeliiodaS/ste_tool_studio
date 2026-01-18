@@ -86,11 +86,6 @@ namespace ste_tool_studio
             HandlePlaceholderVisibility(VVVersionInput, VVVersionPlaceholder);
         }
 
-        private void SelectFile_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.SelectFileCommand.Execute(null);
-        }
-
         // Implement abstract methods from BaseToolWindow
         protected override bool IsValidFileType(string filePath)
         {
@@ -158,25 +153,30 @@ namespace ste_tool_studio
             VVVersionInput.IsEnabled = isEnabled;
         }
 
-        // Button click handlers - delegate to ViewModel commands
-        private void RunAutomation_Click(object sender, RoutedEventArgs e)
+        // Simple click handlers - just call ViewModel methods directly
+        private void SelectSTDButton_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.RunAutomationCommand.Execute(null);
+            _viewModel.SelectFile();
         }
 
-        private void RunViolationCheck_Click(object sender, RoutedEventArgs e)
+        private void RunAutomationButton_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.RunViolationCheckCommand.Execute(null);
+            _viewModel.RunAutomation();
         }
 
-        private void OpenLastBugsReport_Click(object sender, RoutedEventArgs e)
+        private void RunViolationButton_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.OpenLastBugsReportCommand.Execute(null);
+            _viewModel.RunViolationCheck();
         }
 
-        private void OpenLastRulesReport_Click(object sender, RoutedEventArgs e)
+        private void OpenLastBugsReportButton_Click(object sender, RoutedEventArgs e)
         {
-            _viewModel.OpenLastRulesReportCommand.Execute(null);
+            _viewModel.OpenLastBugsReport();
+        }
+
+        private void OpenLastRulesReportButton_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.OpenLastRulesReport();
         }
     }
 }

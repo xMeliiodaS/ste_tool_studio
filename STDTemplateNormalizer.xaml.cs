@@ -59,11 +59,6 @@ namespace ste_tool_studio
             }
         }
 
-        private void SelectFileButton_Click(object sender, RoutedEventArgs e)
-        {
-            _viewModel.SelectFileCommand.Execute(null);
-        }
-
         // Implement abstract methods from BaseToolWindow
         protected override bool IsValidFileType(string filePath)
         {
@@ -109,6 +104,12 @@ namespace ste_tool_studio
         private void FooterInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             HandlePlaceholderVisibility(FooterInput, FooterPlaceholder);
+        }
+
+        // Simple click handlers - just call ViewModel methods directly
+        private void SelectFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.SelectFile();
         }
 
         private void GenerateButton_Click(object sender, RoutedEventArgs e)
