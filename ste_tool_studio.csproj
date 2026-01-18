@@ -12,6 +12,7 @@
     <None Remove="Scripts\config.json" />
     <None Remove="Scripts\test_bugs_std_validation.exe" />
     <None Remove="Scripts\test_excel_violations.exe" />
+    <None Remove="Scripts\test_word_table_normalization.exe" />
     <None Remove="src\Scripts\config.json" />
   </ItemGroup>
 
@@ -21,6 +22,9 @@
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
     </Content>
     <Content Include="Scripts\test_excel_violations.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\test_word_table_normalization.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
