@@ -112,10 +112,10 @@ namespace ste_tool_studio
             _viewModel.SelectFile();
         }
 
-        private void GenerateButton_Click(object sender, RoutedEventArgs e)
+        private void NormalizeButton_Click(object sender, RoutedEventArgs e)
         {
             // TODO: Implement generation logic
-            
+            _viewModel.RunSTDNormalizer();
         }
     }
 }

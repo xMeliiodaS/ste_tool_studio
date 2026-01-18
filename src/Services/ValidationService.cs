@@ -76,6 +76,35 @@ namespace ste_tool_studio.Services
             _loggingService.LogSeparator();
             return result;
         }
+
+        /// <summary>
+        /// Runs the STD template normalization process
+        /// </summary>
+        public async Task<ProcessExecutionResult> RunSTDNormalizationAsync(
+            string docxFilePath,
+            System.Action<int, int, string> progressCallback = null)
+        {
+            _loggingService.LogSeparator();
+            _loggingService.LogInfo($"Starting STD normalization for: {docxFilePath}");
+
+            string arguments = $"\"{docxFilePath}\"";
+            var result = await _processService.ExecuteAsync(
+                AppConstants.WordTableNormalizationExeName,
+                arguments,
+                progressCallback);
+
+            if (result.IsSuccess)
+            {
+                _loggingService.LogInfo("STD normalization completed successfully");
+            }
+            else
+            {
+                _loggingService.LogError($"STD normalization failed: {result.Error}");
+            }
+
+            _loggingService.LogSeparator();
+            return result;
+        }
     }
 }
 

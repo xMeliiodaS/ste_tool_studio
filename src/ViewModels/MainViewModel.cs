@@ -3,6 +3,7 @@ using ste_tool_studio.Configuration;
 using ste_tool_studio.Constants;
 using ste_tool_studio.Services;
 using System;
+using System.Collections;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
@@ -29,6 +30,13 @@ namespace ste_tool_studio.ViewModels
         private string _iterationPath;
         private string _vvVersion;
         private string _statusMessage;
+        
+        // STD Normalizer specific properties
+        private string _docNumber;
+        private string _projectNumber;
+        private string _testPlan;
+        private string _preparedBy;
+        private string _footer;
         private bool _isError;
         private bool _isRunning;
         private bool _isAutomationRunning;
@@ -58,9 +66,12 @@ namespace ste_tool_studio.ViewModels
             // Initialize commands
             SelectFileCommand = new RelayCommand(ExecuteSelectFile);
             RunAutomationCommand = new AsyncRelayCommand(ExecuteRunAutomation, CanRunAutomation);
-            RunViolationCheckCommand = new AsyncRelayCommand(ExecuteRunViolationCheck, CanRunViolationCheck);
+            RunViolationCheckCommand = new AsyncRelayCommand(ExecuteRunViolationCheck, CanRunAutomation);
+
             OpenLastBugsReportCommand = new RelayCommand(ExecuteOpenLastBugsReport);
             OpenLastRulesReportCommand = new RelayCommand(ExecuteOpenLastRulesReport);
+
+            RunSTDNormalizerCommand = new AsyncRelayCommand(ExecuteSTDNormalizerCommand, CanRunAutomation);
         }
 
         // Properties
@@ -127,6 +138,72 @@ namespace ste_tool_studio.ViewModels
                 {
                     _vvVersion = value;
                     OnPropertyChanged(nameof(VvVersion));
+                }
+            }
+        }
+
+        // STD Normalizer properties
+        public string DocNumber
+        {
+            get => _docNumber;
+            set
+            {
+                if (_docNumber != value)
+                {
+                    _docNumber = value;
+                    OnPropertyChanged(nameof(DocNumber));
+                }
+            }
+        }
+
+        public string ProjectNumber
+        {
+            get => _projectNumber;
+            set
+            {
+                if (_projectNumber != value)
+                {
+                    _projectNumber = value;
+                    OnPropertyChanged(nameof(ProjectNumber));
+                }
+            }
+        }
+
+        public string TestPlan
+        {
+            get => _testPlan;
+            set
+            {
+                if (_testPlan != value)
+                {
+                    _testPlan = value;
+                    OnPropertyChanged(nameof(TestPlan));
+                }
+            }
+        }
+
+        public string PreparedBy
+        {
+            get => _preparedBy;
+            set
+            {
+                if (_preparedBy != value)
+                {
+                    _preparedBy = value;
+                    OnPropertyChanged(nameof(PreparedBy));
+                }
+            }
+        }
+
+        public string Footer
+        {
+            get => _footer;
+            set
+            {
+                if (_footer != value)
+                {
+                    _footer = value;
+                    OnPropertyChanged(nameof(Footer));
                 }
             }
         }
@@ -233,11 +310,16 @@ namespace ste_tool_studio.ViewModels
         }
 
         // Commands
+
+        // Baseline Verifier
         public ICommand SelectFileCommand { get; }
         public ICommand RunAutomationCommand { get; }
         public ICommand RunViolationCheckCommand { get; }
         public ICommand OpenLastBugsReportCommand { get; }
         public ICommand OpenLastRulesReportCommand { get; }
+
+        // STDNormalizer
+        public ICommand RunSTDNormalizerCommand { get; }
 
         // Public methods for simple click handlers (no ICommand needed)
         public void SelectFile()
@@ -262,6 +344,11 @@ namespace ste_tool_studio.ViewModels
         public async void RunViolationCheck()
         {
             await ExecuteRunViolationCheck(null);
+        }
+
+        public async void RunSTDNormalizer()
+        {
+            await ExecuteSTDNormalizerCommand(null);
         }
 
         public void OpenLastBugsReport()
@@ -509,6 +596,69 @@ namespace ste_tool_studio.ViewModels
                     MessageBoxButton.OK,
                     MessageBoxImage.Error);
             }
+        }
+
+
+        private async Task ExecuteSTDNormalizerCommand(object obj)
+        {
+            if (!ValidateSTDNormalizerInputs())
+            {
+                return;
+            }
+
+            IsRunning = true;
+            SetStatus("Normalizing STD template...", false);
+
+            try
+            {
+                // Trim and normalize inputs
+                StdName = StdName?.Trim() ?? string.Empty;
+                DocNumber = DocNumber?.Trim() ?? string.Empty;
+                ProjectNumber = ProjectNumber?.Trim() ?? string.Empty;
+                TestPlan = TestPlan?.Trim() ?? string.Empty;
+                PreparedBy = PreparedBy?.Trim() ?? string.Empty;
+                Footer = Footer?.Trim() ?? string.Empty;
+
+                var result = await _validationService.RunSTDNormalizationAsync(
+                    SelectedFilePath,
+                    OnProgressUpdate);
+
+                if (result.IsSuccess)
+                {
+                    SetStatus("STD template normalized successfully!", false);
+                }
+                else
+                {
+                    SetStatus("Failed to normalize STD template.", true);
+                    _loggingService.LogError($"STD Normalizer failed: {result.Error}");
+                }
+            }
+            catch (Exception ex)
+            {
+                SetStatus("Failed to normalize STD template.", true);
+                _loggingService.LogError($"STD Normalizer failed: {ex}");
+            }
+            finally
+            {
+                IsRunning = false;
+            }
+        }
+
+        private bool ValidateSTDNormalizerInputs()
+        {
+            if (string.IsNullOrWhiteSpace(SelectedFilePath))
+            {
+                SetStatus("Please select a DOCX file.", true);
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(StdName))
+            {
+                SetStatus("Please enter STD Name.", true);
+                return false;
+            }
+
+            return true;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
