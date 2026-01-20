@@ -23,12 +23,19 @@ namespace ste_tool_studio.Constants
         public const string AutomationReportFileName = "automation_results.html";
         public const string RulesViolationsReportFileName = "rules_violations_report.html";
 
-        // Config Keys
+        // Baseline Verifier-specific Config Keys
         public const string ConfigKeyUrl = "url";
         public const string ConfigKeyExcelPath = "excel_path";
         public const string ConfigKeyStdName = "std_name";
         public const string ConfigKeyCurrentVersion = "current_version";
         public const string ConfigKeyIterationPath = "iteration_path";
+
+        // Template Normalizer-specific Config Keys
+        public const string ConfigKeyDocNumber = "doc_number";
+        public const string ConfigKeyProjectNumber = "project_number";
+        public const string ConfigKeyTestPlan = "test_plan";
+        public const string ConfigKeyPreparedBy = "prepared_by";
+        public const string ConfigKeyFooter = "footer";
 
         // Process Output Markers
         public const string ProgressTotalMarker = "PROGRESS_TOTAL:";

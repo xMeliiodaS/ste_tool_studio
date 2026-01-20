@@ -1,7 +1,8 @@
 using Newtonsoft.Json.Linq;
+using ste_tool_studio.Constants;
 using System;
 using System.IO;
-using ste_tool_studio.Constants;
+using System.Windows.Documents;
 using IOPath = System.IO.Path;
 
 namespace ste_tool_studio.Configuration
@@ -123,14 +124,62 @@ namespace ste_tool_studio.Configuration
             set => _config[AppConstants.ConfigKeyIterationPath] = value;
         }
 
+        // Template Normalizer
+        public string DocNumber
+        {
+            get => _config[AppConstants.ConfigKeyDocNumber]?.ToString() ?? string.Empty;
+            set => _config[AppConstants.ConfigKeyDocNumber] = value;
+        }
+
+        public string ProjectNumber
+        {
+            get => _config[AppConstants.ConfigKeyProjectNumber]?.ToString() ?? string.Empty;
+            set => _config[AppConstants.ConfigKeyProjectNumber] = value;
+        }
+
+        public string TestPlan
+        {
+            get => _config[AppConstants.ConfigKeyTestPlan]?.ToString() ?? string.Empty;
+            set => _config[AppConstants.ConfigKeyTestPlan] = value;
+        }
+
+        public string PreparedBy
+        {
+            get => _config[AppConstants.ConfigKeyPreparedBy]?.ToString() ?? string.Empty;
+            set => _config[AppConstants.ConfigKeyPreparedBy] = value;
+        }
+
+        public string Footer
+        {
+            get => _config[AppConstants.ConfigKeyFooter]?.ToString() ?? string.Empty;
+            set => _config[AppConstants.ConfigKeyFooter] = value;
+        }
+
         /// <summary>
         /// Updates multiple configuration values at once
         /// </summary>
-        public void UpdateConfig(string stdName, string iterationPath, string currentVersion)
+        public void UpdateBaselineVerifierConfig(string stdName, string iterationPath, string currentVersion)
         {
             StdName = stdName;
             IterationPath = iterationPath;
             CurrentVersion = currentVersion;
+
+            SaveConfiguration();
+        }
+
+        /// <summary>
+        /// Updates multiple configuration values at once
+        /// </summary>
+        public void UpdateTemplateNormalizerConfig(string stdName, string docNumber, string projectNumber,
+                                                    string testPlan, string preparedBy, string footer)
+        {
+            StdName = stdName;
+            DocNumber = docNumber;
+            ProjectNumber = projectNumber;
+            TestPlan = testPlan;
+            PreparedBy = preparedBy;
+            Footer = footer;
+
             SaveConfiguration();
         }
 

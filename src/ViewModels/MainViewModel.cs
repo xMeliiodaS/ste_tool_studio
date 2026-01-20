@@ -436,7 +436,7 @@ namespace ste_tool_studio.ViewModels
             try
             {
                 TrimAndNormalizeInputs();
-                _config.UpdateConfig(StdName, IterationPath, VvVersion);
+                _config.UpdateBaselineVerifierConfig(StdName, IterationPath, VvVersion);
 
                 var result = await _validationService.RunAutomationAsync(
                     SelectedFilePath,
@@ -618,6 +618,9 @@ namespace ste_tool_studio.ViewModels
                 TestPlan = TestPlan?.Trim() ?? string.Empty;
                 PreparedBy = PreparedBy?.Trim() ?? string.Empty;
                 Footer = Footer?.Trim() ?? string.Empty;
+
+                PreparedBy = PreparedBy?.Trim() ?? string.Empty;
+                _config.UpdateTemplateNormalizerConfig(StdName, DocNumber, ProjectNumber, TestPlan, PreparedBy, Footer);
 
                 var result = await _validationService.RunSTDNormalizationAsync(
                     SelectedFilePath,
