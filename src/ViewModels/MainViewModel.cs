@@ -2,15 +2,9 @@
 using ste_tool_studio.Configuration;
 using ste_tool_studio.Constants;
 using ste_tool_studio.Services;
-using System;
-using System.Collections;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Threading;
 using IOPath = System.IO.Path;
 
 namespace ste_tool_studio.ViewModels
@@ -50,10 +44,10 @@ namespace ste_tool_studio.ViewModels
         public string[] AllowedExtensions { get; set; } = new[] { ".xls", ".xlsx" };
 
         public MainViewModel(
-            AppConfiguration config,
-            ValidationService validationService,
-            IReportService reportService,
-            ILoggingService loggingService)
+                            AppConfiguration config,
+                            ValidationService validationService,
+                            IReportService reportService,
+                            ILoggingService loggingService)
         {
             _config = config ?? throw new ArgumentNullException(nameof(config));
             _validationService = validationService ?? throw new ArgumentNullException(nameof(validationService));

@@ -1,7 +1,5 @@
 using ste_tool_studio.Configuration;
-using System;
 using System.IO;
-using IOPath = System.IO.Path;
 
 namespace ste_tool_studio.Services
 {

@@ -1,5 +1,3 @@
-using System;
-
 namespace ste_tool_studio.Services
 {
     /// <summary>
