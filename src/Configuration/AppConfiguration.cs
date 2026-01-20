@@ -153,6 +153,12 @@ namespace ste_tool_studio.Configuration
             set => _config[AppConstants.ConfigKeyFooter] = value;
         }
 
+        public string SelectedFilePath
+        {
+            get => _config[AppConstants.ConfigFileName]?.ToString() ?? string.Empty;
+            set => _config[AppConstants.ConfigFileName] = value;
+        }
+
         /// <summary>
         /// Updates multiple configuration values at once
         /// </summary>
@@ -169,7 +175,7 @@ namespace ste_tool_studio.Configuration
         /// Updates multiple configuration values at once
         /// </summary>
         public void UpdateTemplateNormalizerConfig(string stdName, string docNumber, string projectNumber,
-                                                    string testPlan, string preparedBy, string footer)
+                                                    string testPlan, string preparedBy, string footer, string selectedFilePath)
         {
             StdName = stdName;
             DocNumber = docNumber;
@@ -177,6 +183,7 @@ namespace ste_tool_studio.Configuration
             TestPlan = testPlan;
             PreparedBy = preparedBy;
             Footer = footer;
+            SelectedFilePath = selectedFilePath;
 
             SaveConfiguration();
         }

@@ -614,10 +614,17 @@ namespace ste_tool_studio.ViewModels
                 Footer = Footer?.Trim() ?? string.Empty;
 
                 PreparedBy = PreparedBy?.Trim() ?? string.Empty;
-                _config.UpdateTemplateNormalizerConfig(StdName, DocNumber, ProjectNumber, TestPlan, PreparedBy, Footer);
+                _config.UpdateTemplateNormalizerConfig(StdName, DocNumber, ProjectNumber, TestPlan, PreparedBy, Footer, SelectedFilePath);
+
 
                 var result = await _validationService.RunSTDNormalizationAsync(
                     SelectedFilePath,
+                    StdName,
+                    DocNumber,
+                    ProjectNumber,
+                    TestPlan,
+                    PreparedBy,
+                    Footer,
                     OnProgressUpdate);
 
                 if (result.IsSuccess)

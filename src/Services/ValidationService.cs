@@ -19,10 +19,8 @@ namespace ste_tool_studio.Services
         /// <summary>
         /// Runs the automation validation process
         /// </summary>
-        public async Task<ProcessExecutionResult> RunAutomationAsync(
-            string excelFilePath,
-            string stdName,
-            System.Action<int, int, string> progressCallback = null)
+        public async Task<ProcessExecutionResult> RunAutomationAsync(string excelFilePath, string stdName,
+                                                                        Action<int, int, string> progressCallback = null)
         {
             _loggingService.LogSeparator();
             _loggingService.LogInfo($"Starting automation validation for: {excelFilePath}, STD: {stdName}");
@@ -49,9 +47,8 @@ namespace ste_tool_studio.Services
         /// <summary>
         /// Runs the violation check process
         /// </summary>
-        public async Task<ProcessExecutionResult> RunViolationCheckAsync(
-            string excelFilePath,
-            System.Action<int, int, string> progressCallback = null)
+        public async Task<ProcessExecutionResult> RunViolationCheckAsync(string excelFilePath,
+                                                                            Action<int, int, string> progressCallback = null)
         {
             _loggingService.LogSeparator();
             _loggingService.LogInfo($"Starting violation check for: {excelFilePath}");
@@ -80,12 +77,28 @@ namespace ste_tool_studio.Services
         /// </summary>
         public async Task<ProcessExecutionResult> RunSTDNormalizationAsync(
             string docxFilePath,
-            System.Action<int, int, string> progressCallback = null)
+            string stdName,
+            string docNumber,
+            string projectNumber,
+            string testPlan,
+            string preparedBy,
+            string footer,
+            Action<int, int, string> progressCallback = null)
         {
             _loggingService.LogSeparator();
             _loggingService.LogInfo($"Starting STD normalization for: {docxFilePath}");
 
-            string arguments = $"\"{docxFilePath}\"";
+            string arguments =
+                                $"\"{docxFilePath}\" " +
+                                $"\"{stdName}\" " +
+                                $"\"{docNumber}\" " +
+                                $"\"{projectNumber}\" " +
+                                $"\"{testPlan}\" " +
+                                $"\"{preparedBy}\" " +
+                                $"\"{footer}\"";
+
+            _loggingService.LogInfo($"STD Normalizer args: {arguments}");
+
             var result = await _processService.ExecuteAsync(
                 AppConstants.WordTableNormalizationExeName,
                 arguments,

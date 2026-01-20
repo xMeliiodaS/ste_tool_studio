@@ -68,6 +68,11 @@ namespace ste_tool_studio
             return "DOCX files (.docx)";
         }
 
+        private void NormalizeButton_Click(object sender, RoutedEventArgs e)
+        {
+            _viewModel.RunSTDNormalizer();
+        }
+
         protected override void HandleFileDrop(string filePath)
         {
             _viewModel.HandleFileSelection(filePath);
@@ -107,12 +112,6 @@ namespace ste_tool_studio
         private void SelectFileButton_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.SelectFile();
-        }
-
-        private void NormalizeButton_Click(object sender, RoutedEventArgs e)
-        {
-            // TODO: Implement generation logic
-            _viewModel.RunSTDNormalizer();
         }
     }
 }
