@@ -14,14 +14,14 @@ namespace ste_tool_studio
     /// </summary>
     public partial class BaselineVerifierWindow : BaseToolWindow
     {
-        private readonly MainViewModel _viewModel;
+        private readonly BaselineVerifierViewModel _viewModel;
         private Storyboard _automationSpinnerStoryboard;
         private Storyboard _violationSpinnerStoryboard;
 
         public BaselineVerifierWindow()
         {
             InitializeComponent();
-            _viewModel = ServiceFactory.CreateMainViewModel();
+            _viewModel = ServiceFactory.CreateBaselineVerifierViewModel();
             DataContext = _viewModel;
 
             // Initialize StatusTextBlock reference after InitializeComponent
@@ -36,26 +36,26 @@ namespace ste_tool_studio
             // Handle UI-specific updates based on ViewModel property changes
             switch (e.PropertyName)
             {
-                case nameof(MainViewModel.IsAutomationRunning):
+                case nameof(BaselineVerifierViewModel.IsAutomationRunning):
                     if (_viewModel.IsAutomationRunning)
                         StartButtonSpinner(RunAutomationButton, RunIcon, RunButtonText, ButtonSpinner, ButtonSpinnerRotate, ref _automationSpinnerStoryboard);
                     else
                         StopButtonSpinner(RunAutomationButton, RunIcon, RunButtonText, ButtonSpinner, ref _automationSpinnerStoryboard);
                     break;
 
-                case nameof(MainViewModel.IsViolationRunning):
+                case nameof(BaselineVerifierViewModel.IsViolationRunning):
                     if (_viewModel.IsViolationRunning)
                         StartButtonSpinner(RunViolationButton, ViolationIcon, RunViolationButtonText, ViolationButtonSpinner, ViolationButtonSpinnerRotate, ref _violationSpinnerStoryboard);
                     else
                         StopButtonSpinner(RunViolationButton, ViolationIcon, RunViolationButtonText, ViolationButtonSpinner, ref _violationSpinnerStoryboard);
                     break;
 
-                case nameof(MainViewModel.IsRunning):
+                case nameof(BaselineVerifierViewModel.IsRunning):
                     SetActionButtonsEnabled(!_viewModel.IsRunning);
                     break;
 
-                case nameof(MainViewModel.StatusMessage):
-                case nameof(MainViewModel.IsError):
+                case nameof(BaselineVerifierViewModel.StatusMessage):
+                case nameof(BaselineVerifierViewModel.IsError):
                     UpdateStatusDisplay();
                     break;
             }

@@ -11,7 +11,7 @@ namespace ste_tool_studio
     /// </summary>
     public partial class STDTemplateNormalizer : BaseToolWindow
     {
-        private readonly MainViewModel _viewModel;
+        private readonly STDTemplateNormalizerViewModel _viewModel;
 
         public STDTemplateNormalizer()
         {
@@ -20,11 +20,8 @@ namespace ste_tool_studio
             // Initialize StatusTextBlock reference after InitializeComponent
             StatusTextBlock = this.StatusText;
 
-            // Create and configure ViewModel for DOCX files
-            _viewModel = ServiceFactory.CreateMainViewModel();
-            _viewModel.FileFilter = "Word Documents (*.docx)|*.docx|All Files (*.*)|*.*";
-            _viewModel.FileDialogTitle = "Select DOCX File";
-            _viewModel.AllowedExtensions = new[] { ".docx" };
+            // Create ViewModel for DOCX files (already configured in ViewModel)
+            _viewModel = ServiceFactory.CreateSTDTemplateNormalizerViewModel();
             
             DataContext = _viewModel;
 
@@ -37,8 +34,8 @@ namespace ste_tool_studio
             // Handle UI-specific updates based on ViewModel property changes
             switch (e.PropertyName)
             {
-                case nameof(MainViewModel.StatusMessage):
-                case nameof(MainViewModel.IsError):
+                case nameof(STDTemplateNormalizerViewModel.StatusMessage):
+                case nameof(STDTemplateNormalizerViewModel.IsError):
                     UpdateStatusDisplay();
                     break;
             }

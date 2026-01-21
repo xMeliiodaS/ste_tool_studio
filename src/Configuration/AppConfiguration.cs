@@ -155,8 +155,8 @@ namespace ste_tool_studio.Configuration
 
         public string SelectedFilePath
         {
-            get => _config[AppConstants.ConfigFileName]?.ToString() ?? string.Empty;
-            set => _config[AppConstants.ConfigFileName] = value;
+            get => _config[AppConstants.ExportedSTD]?.ToString() ?? string.Empty;
+            set => _config[AppConstants.ExportedSTD] = value;
         }
 
         /// <summary>

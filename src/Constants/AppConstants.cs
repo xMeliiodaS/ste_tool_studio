@@ -13,6 +13,7 @@ namespace ste_tool_studio.Constants
         public const string ConfigFileName = "config.json";
         public const string LogFileName = "app.log";
         public const string AutomationLogFileName = "automation_log.log";
+        public const string ExportedSTD = "Exported_STD";
 
         // Executable Names
         public const string AutomationExeName = "test_bugs_std_validation.exe";
@@ -45,6 +46,8 @@ namespace ste_tool_studio.Constants
         // File Filters
         public const string ExcelFileFilter = "Excel Files|*.xls;*.xlsx";
         public const string ExcelFileDialogTitle = "Select an Excel File";
+        public const string DocxFileFilter = "Word Documents (*.docx)|*.docx|All Files (*.*)|*.*";
+        public const string DocxFileDialogTitle = "Select DOCX File";
 
         // Default Values
         public const string DefaultStdNamePlaceholder = "Enter STD name";

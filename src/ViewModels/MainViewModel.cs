@@ -612,8 +612,8 @@ namespace ste_tool_studio.ViewModels
                 TestPlan = TestPlan?.Trim() ?? string.Empty;
                 PreparedBy = PreparedBy?.Trim() ?? string.Empty;
                 Footer = Footer?.Trim() ?? string.Empty;
-
                 PreparedBy = PreparedBy?.Trim() ?? string.Empty;
+
                 _config.UpdateTemplateNormalizerConfig(StdName, DocNumber, ProjectNumber, TestPlan, PreparedBy, Footer, SelectedFilePath);
 
 
