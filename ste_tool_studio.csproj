@@ -23,9 +23,11 @@
     </Content>
     <Content Include="Scripts\test_excel_violations.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		<CopyToPublishDirectory>Always</CopyToPublishDirectory>
     </Content>
     <Content Include="Scripts\test_word_table_normalization.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
 
