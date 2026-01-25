@@ -52,7 +52,18 @@
                 BorderBrush="#555"
                 Margin="0,0,15,0"
                 MinWidth="40"
-                Cursor="Hand">
+                Cursor="Hand"
+                RenderTransformOrigin="0.5,0.5">
+                <Button.RenderTransform>
+                    <ScaleTransform x:Name="BackButtonScale" ScaleX="1" ScaleY="1"/>
+                </Button.RenderTransform>
+                <Button.Effect>
+                    <DropShadowEffect x:Name="BackButtonShadow" 
+                                      BlurRadius="0" 
+                                      ShadowDepth="0" 
+                                      Color="#FFFFFF" 
+                                      Opacity="0"/>
+                </Button.Effect>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
                         Text="&lt;"
@@ -65,6 +76,44 @@
                         Return to Main Menu
                     </ToolTip>
                 </Button.ToolTip>
+                <Button.Triggers>
+                    <EventTrigger RoutedEvent="MouseEnter">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="BackButtonScale"
+                                                 Storyboard.TargetProperty="ScaleX"
+                                                 To="1.1" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetName="BackButtonScale"
+                                                 Storyboard.TargetProperty="ScaleY"
+                                                 To="1.1" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetName="BackButtonShadow"
+                                                 Storyboard.TargetProperty="BlurRadius"
+                                                 To="10" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetName="BackButtonShadow"
+                                                 Storyboard.TargetProperty="Opacity"
+                                                 To="0.6" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                    <EventTrigger RoutedEvent="MouseLeave">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Storyboard.TargetName="BackButtonScale"
+                                                 Storyboard.TargetProperty="ScaleX"
+                                                 To="1" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetName="BackButtonScale"
+                                                 Storyboard.TargetProperty="ScaleY"
+                                                 To="1" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetName="BackButtonShadow"
+                                                 Storyboard.TargetProperty="BlurRadius"
+                                                 To="0" Duration="0:0:0.2"/>
+                                <DoubleAnimation Storyboard.TargetName="BackButtonShadow"
+                                                 Storyboard.TargetProperty="Opacity"
+                                                 To="0" Duration="0:0:0.2"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Button.Triggers>
             </Button>
 
             <!-- Title -->
@@ -97,8 +146,18 @@
                     Click="SelectFileButton_Click"
                     Style="{StaticResource PurpleButton}"
                     Margin="0,0,0,4"
-                    Cursor="Hand">
-
+                    Cursor="Hand"
+                    RenderTransformOrigin="0.5,0.5">
+                    <Button.RenderTransform>
+                        <ScaleTransform x:Name="SelectFileScale" ScaleX="1" ScaleY="1"/>
+                    </Button.RenderTransform>
+                    <Button.Effect>
+                        <DropShadowEffect x:Name="SelectFileShadow" 
+                                          BlurRadius="0" 
+                                          ShadowDepth="0" 
+                                          Color="#9C27B0" 
+                                          Opacity="0"/>
+                    </Button.Effect>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition
@@ -108,10 +167,16 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock
+                            x:Name="SelectFileIcon"
                             Text="📂"
                             FontSize="18"
                             Margin="0,0,8,0"
-                            VerticalAlignment="Center" />
+                            VerticalAlignment="Center"
+                            RenderTransformOrigin="0.5,0.5">
+                            <TextBlock.RenderTransform>
+                                <RotateTransform x:Name="SelectFileIconRotate" Angle="0"/>
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
 
                         <TextBlock
                             Grid.Column="1"
@@ -119,6 +184,50 @@
                             TextWrapping="Wrap"
                             VerticalAlignment="Center" />
                     </Grid>
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="SelectFileScale"
+                                                     Storyboard.TargetProperty="ScaleX"
+                                                     To="1.05" Duration="0:0:0.2"/>
+                                    <DoubleAnimation Storyboard.TargetName="SelectFileScale"
+                                                     Storyboard.TargetProperty="ScaleY"
+                                                     To="1.05" Duration="0:0:0.2"/>
+                                    <DoubleAnimation Storyboard.TargetName="SelectFileShadow"
+                                                     Storyboard.TargetProperty="BlurRadius"
+                                                     To="20" Duration="0:0:0.2"/>
+                                    <DoubleAnimation Storyboard.TargetName="SelectFileShadow"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="0.7" Duration="0:0:0.2"/>
+                                    <DoubleAnimation Storyboard.TargetName="SelectFileIconRotate"
+                                                     Storyboard.TargetProperty="Angle"
+                                                     To="15" Duration="0:0:0.2"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="SelectFileScale"
+                                                     Storyboard.TargetProperty="ScaleX"
+                                                     To="1" Duration="0:0:0.2"/>
+                                    <DoubleAnimation Storyboard.TargetName="SelectFileScale"
+                                                     Storyboard.TargetProperty="ScaleY"
+                                                     To="1" Duration="0:0:0.2"/>
+                                    <DoubleAnimation Storyboard.TargetName="SelectFileShadow"
+                                                     Storyboard.TargetProperty="BlurRadius"
+                                                     To="0" Duration="0:0:0.2"/>
+                                    <DoubleAnimation Storyboard.TargetName="SelectFileShadow"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="0" Duration="0:0:0.2"/>
+                                    <DoubleAnimation Storyboard.TargetName="SelectFileIconRotate"
+                                                     Storyboard.TargetProperty="Angle"
+                                                     To="0" Duration="0:0:0.2"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
                 </Button>
 
                 <!-- Drag & Drop Hint -->
@@ -510,7 +619,18 @@
                     MaxWidth="350"
                     Cursor="Hand"
                     Height="40"
-                    Margin="0,0,0,0">
+                    Margin="0,0,0,0"
+                    RenderTransformOrigin="0.5,0.5">
+                    <Button.RenderTransform>
+                        <ScaleTransform x:Name="NormalizeScale" ScaleX="1" ScaleY="1"/>
+                    </Button.RenderTransform>
+                    <Button.Effect>
+                        <DropShadowEffect x:Name="NormalizeShadow" 
+                                          BlurRadius="0" 
+                                          ShadowDepth="0" 
+                                          Color="#4CAF50" 
+                                          Opacity="0"/>
+                    </Button.Effect>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition
@@ -520,10 +640,16 @@
                         </Grid.ColumnDefinitions>
 
                         <TextBlock
+                            x:Name="NormalizeIcon"
                             Text="⚙"
                             FontSize="18"
                             Margin="0,0,8,0"
-                            VerticalAlignment="Center" />
+                            VerticalAlignment="Center"
+                            RenderTransformOrigin="0.5,0.5">
+                            <TextBlock.RenderTransform>
+                                <RotateTransform x:Name="NormalizeIconRotate" Angle="0"/>
+                            </TextBlock.RenderTransform>
+                        </TextBlock>
 
                         <TextBlock
                             Grid.Column="1"
@@ -531,6 +657,58 @@
                             TextWrapping="Wrap"
                             VerticalAlignment="Center" />
                     </Grid>
+                    <Button.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="NormalizeScale"
+                                                     Storyboard.TargetProperty="ScaleX"
+                                                     To="1.06" Duration="0:0:0.2"/>
+                                    <DoubleAnimation Storyboard.TargetName="NormalizeScale"
+                                                     Storyboard.TargetProperty="ScaleY"
+                                                     To="1.06" Duration="0:0:0.2"/>
+                                    <DoubleAnimation Storyboard.TargetName="NormalizeShadow"
+                                                     Storyboard.TargetProperty="BlurRadius"
+                                                     To="25" Duration="0:0:0.2"/>
+                                    <DoubleAnimation Storyboard.TargetName="NormalizeShadow"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="0.8" Duration="0:0:0.2"/>
+                                    <DoubleAnimation Storyboard.TargetName="NormalizeIconRotate"
+                                                     Storyboard.TargetProperty="Angle"
+                                                     To="180" Duration="0:0:0.5">
+                                        <DoubleAnimation.EasingFunction>
+                                            <CubicEase EasingMode="EaseInOut"/>
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <DoubleAnimation Storyboard.TargetName="NormalizeScale"
+                                                     Storyboard.TargetProperty="ScaleX"
+                                                     To="1" Duration="0:0:0.2"/>
+                                    <DoubleAnimation Storyboard.TargetName="NormalizeScale"
+                                                     Storyboard.TargetProperty="ScaleY"
+                                                     To="1" Duration="0:0:0.2"/>
+                                    <DoubleAnimation Storyboard.TargetName="NormalizeShadow"
+                                                     Storyboard.TargetProperty="BlurRadius"
+                                                     To="0" Duration="0:0:0.2"/>
+                                    <DoubleAnimation Storyboard.TargetName="NormalizeShadow"
+                                                     Storyboard.TargetProperty="Opacity"
+                                                     To="0" Duration="0:0:0.2"/>
+                                    <DoubleAnimation Storyboard.TargetName="NormalizeIconRotate"
+                                                     Storyboard.TargetProperty="Angle"
+                                                     To="0" Duration="0:0:0.3">
+                                        <DoubleAnimation.EasingFunction>
+                                            <CubicEase EasingMode="EaseInOut"/>
+                                        </DoubleAnimation.EasingFunction>
+                                    </DoubleAnimation>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                    </Button.Triggers>
                 </Button>
 
             </StackPanel>

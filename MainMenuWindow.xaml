@@ -67,13 +67,30 @@
                         Margin="10"
                         Cursor="Hand"
                         Padding="20"
-                        MinHeight="200">
+                        MinHeight="200"
+                        RenderTransformOrigin="0.5,0.5">
+                        <Button.RenderTransform>
+                            <ScaleTransform x:Name="BaselineVerifierScale" ScaleX="1" ScaleY="1"/>
+                        </Button.RenderTransform>
+                        <Button.Effect>
+                            <DropShadowEffect x:Name="BaselineVerifierShadow" 
+                                              BlurRadius="0" 
+                                              ShadowDepth="0" 
+                                              Color="#4CAF50" 
+                                              Opacity="0"/>
+                        </Button.Effect>
                         <StackPanel>
                             <TextBlock
+                                x:Name="BaselineVerifierIcon"
                                 Text="🔍"
                                 FontSize="48"
                                 HorizontalAlignment="Center"
-                                Margin="0,0,0,15" />
+                                Margin="0,0,0,15"
+                                RenderTransformOrigin="0.5,0.5">
+                                <TextBlock.RenderTransform>
+                                    <ScaleTransform x:Name="BaselineVerifierIconScale" ScaleX="1" ScaleY="1"/>
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
                             <TextBlock
                                 MaxWidth="190"
                                 TextAlignment="Center"
@@ -92,6 +109,56 @@
                                 Margin="0,10,0,0"
                                 TextWrapping="Wrap" />
                         </StackPanel>
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="BaselineVerifierScale"
+                                                         Storyboard.TargetProperty="ScaleX"
+                                                         To="1.08" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="BaselineVerifierScale"
+                                                         Storyboard.TargetProperty="ScaleY"
+                                                         To="1.08" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="BaselineVerifierShadow"
+                                                         Storyboard.TargetProperty="BlurRadius"
+                                                         To="30" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="BaselineVerifierShadow"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.9" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="BaselineVerifierIconScale"
+                                                         Storyboard.TargetProperty="ScaleX"
+                                                         To="1.2" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="BaselineVerifierIconScale"
+                                                         Storyboard.TargetProperty="ScaleY"
+                                                         To="1.2" Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="BaselineVerifierScale"
+                                                         Storyboard.TargetProperty="ScaleX"
+                                                         To="1" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="BaselineVerifierScale"
+                                                         Storyboard.TargetProperty="ScaleY"
+                                                         To="1" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="BaselineVerifierShadow"
+                                                         Storyboard.TargetProperty="BlurRadius"
+                                                         To="0" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="BaselineVerifierShadow"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="BaselineVerifierIconScale"
+                                                         Storyboard.TargetProperty="ScaleX"
+                                                         To="1" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="BaselineVerifierIconScale"
+                                                         Storyboard.TargetProperty="ScaleY"
+                                                         To="1" Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
                     </Button>
 
                     <!-- Placeholder for future tools -->
@@ -105,13 +172,30 @@
                         Cursor="Hand"
                         Padding="20"
                         MinHeight="200"
-                        IsEnabled="True">
+                        IsEnabled="True"
+                        RenderTransformOrigin="0.5,0.5">
+                        <Button.RenderTransform>
+                            <ScaleTransform x:Name="STDNormalizerScale" ScaleX="1" ScaleY="1"/>
+                        </Button.RenderTransform>
+                        <Button.Effect>
+                            <DropShadowEffect x:Name="STDNormalizerShadow" 
+                                              BlurRadius="0" 
+                                              ShadowDepth="0" 
+                                              Color="#9C27B0" 
+                                              Opacity="0"/>
+                        </Button.Effect>
                         <StackPanel>
                             <TextBlock
+                                x:Name="STDNormalizerIcon"
                                 Text="📄"
                                 FontSize="48"
                                 HorizontalAlignment="Center"
-                                Margin="0,0,0,15" />
+                                Margin="0,0,0,15"
+                                RenderTransformOrigin="0.5,0.5">
+                                <TextBlock.RenderTransform>
+                                    <ScaleTransform x:Name="STDNormalizerIconScale" ScaleX="1" ScaleY="1"/>
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
                             <TextBlock
                                 MaxWidth="200"
                                 Text="STD Template Normalizer"
@@ -130,6 +214,56 @@
                                 Margin="0,10,0,0"
                                 TextWrapping="Wrap" />
                         </StackPanel>
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="STDNormalizerScale"
+                                                         Storyboard.TargetProperty="ScaleX"
+                                                         To="1.08" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="STDNormalizerScale"
+                                                         Storyboard.TargetProperty="ScaleY"
+                                                         To="1.08" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="STDNormalizerShadow"
+                                                         Storyboard.TargetProperty="BlurRadius"
+                                                         To="30" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="STDNormalizerShadow"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.9" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="STDNormalizerIconScale"
+                                                         Storyboard.TargetProperty="ScaleX"
+                                                         To="1.2" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="STDNormalizerIconScale"
+                                                         Storyboard.TargetProperty="ScaleY"
+                                                         To="1.2" Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="STDNormalizerScale"
+                                                         Storyboard.TargetProperty="ScaleX"
+                                                         To="1" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="STDNormalizerScale"
+                                                         Storyboard.TargetProperty="ScaleY"
+                                                         To="1" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="STDNormalizerShadow"
+                                                         Storyboard.TargetProperty="BlurRadius"
+                                                         To="0" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="STDNormalizerShadow"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="STDNormalizerIconScale"
+                                                         Storyboard.TargetProperty="ScaleX"
+                                                         To="1" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="STDNormalizerIconScale"
+                                                         Storyboard.TargetProperty="ScaleY"
+                                                         To="1" Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
                     </Button>
                 </UniformGrid>
             </Grid>
