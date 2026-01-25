@@ -514,6 +514,44 @@
                                 Open Last Report
                             </ToolTip>
                         </Button.ToolTip>
+                        <Button.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="OpenBugsReportScale"
+                                                         Storyboard.TargetProperty="ScaleX"
+                                                         To="1.15" Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="OpenBugsReportScale"
+                                                         Storyboard.TargetProperty="ScaleY"
+                                                         To="1.15" Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="OpenBugsReportShadow"
+                                                         Storyboard.TargetProperty="BlurRadius"
+                                                         To="15" Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="OpenBugsReportShadow"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.7" Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="OpenBugsReportScale"
+                                                         Storyboard.TargetProperty="ScaleX"
+                                                         To="1" Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="OpenBugsReportScale"
+                                                         Storyboard.TargetProperty="ScaleY"
+                                                         To="1" Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="OpenBugsReportShadow"
+                                                         Storyboard.TargetProperty="BlurRadius"
+                                                         To="0" Duration="0:0:0.2"/>
+                                        <DoubleAnimation Storyboard.TargetName="OpenBugsReportShadow"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0" Duration="0:0:0.2"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                        </Button.Triggers>
                     </Button>
 
                     
@@ -668,7 +706,18 @@
                         VerticalAlignment="Center"
                         Click="OpenLastRulesReportButton_Click"
                         ToolTipService.InitialShowDelay="0"
-                        ToolTipService.BetweenShowDelay="0">
+                        ToolTipService.BetweenShowDelay="0"
+                        RenderTransformOrigin="0.5,0.5">
+                        <Button.RenderTransform>
+                            <ScaleTransform x:Name="OpenRulesReportScale" ScaleX="1" ScaleY="1"/>
+                        </Button.RenderTransform>
+                        <Button.Effect>
+                            <DropShadowEffect x:Name="OpenRulesReportShadow" 
+                                              BlurRadius="0" 
+                                              ShadowDepth="0" 
+                                              Color="#0D47A1" 
+                                              Opacity="0"/>
+                        </Button.Effect>
 
                     <Button.ToolTip>
                         <ToolTip Style="{StaticResource CustomToolTip}">
