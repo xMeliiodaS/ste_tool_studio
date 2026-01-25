@@ -83,11 +83,14 @@ namespace ste_tool_studio.Services
             string testPlan,
             string preparedBy,
             string footer,
+            bool isReportMode,
             Action<int, int, string> progressCallback = null)
         {
             _loggingService.LogSeparator();
             _loggingService.LogInfo($"Starting STD normalization for: {docxFilePath}");
+            _loggingService.LogInfo($"Mode: {(isReportMode ? "Report" : "Protocol")}");
 
+            string mode = isReportMode ? "Report" : "Protocol";
             string arguments =
                                 $"\"{docxFilePath}\" " +
                                 $"\"{stdName}\" " +
@@ -95,7 +98,8 @@ namespace ste_tool_studio.Services
                                 $"\"{projectNumber}\" " +
                                 $"\"{testPlan}\" " +
                                 $"\"{preparedBy}\" " +
-                                $"\"{footer}\"";
+                                $"\"{footer}\" " +
+                                $"\"{mode}\"";
 
             _loggingService.LogInfo($"STD Normalizer args: {arguments}");
 

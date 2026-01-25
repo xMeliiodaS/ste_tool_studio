@@ -625,6 +625,7 @@ namespace ste_tool_studio.ViewModels
                     TestPlan,
                     PreparedBy,
                     Footer,
+                    false, // Default to Protocol mode for MainViewModel (backward compatibility)
                     OnProgressUpdate);
 
                 if (result.IsSuccess)

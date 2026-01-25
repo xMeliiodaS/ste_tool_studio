@@ -18,6 +18,7 @@ namespace ste_tool_studio.ViewModels
         private string _testPlan;
         private string _preparedBy;
         private string _footer;
+        private bool _isReportMode = false; // Default to Protocol mode
 
         public STDTemplateNormalizerViewModel(
             AppConfiguration config,
@@ -118,6 +119,32 @@ namespace ste_tool_studio.ViewModels
             }
         }
 
+        public bool IsReportMode
+        {
+            get => _isReportMode;
+            set
+            {
+                if (_isReportMode != value)
+                {
+                    _isReportMode = value;
+                    OnPropertyChanged(nameof(IsReportMode));
+                    OnPropertyChanged(nameof(IsProtocolMode));
+                }
+            }
+        }
+
+        public bool IsProtocolMode
+        {
+            get => !_isReportMode;
+            set
+            {
+                if (IsProtocolMode != value)
+                {
+                    IsReportMode = !value;
+                }
+            }
+        }
+
         // Commands
         public ICommand RunSTDNormalizerCommand { get; }
 
@@ -194,6 +221,7 @@ namespace ste_tool_studio.ViewModels
                     TestPlan,
                     PreparedBy,
                     Footer,
+                    IsReportMode,
                     OnProgressUpdate);
 
                 if (result.IsSuccess)
