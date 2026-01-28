@@ -18,7 +18,7 @@ namespace ste_tool_studio.Constants
         // Executable Names
         public const string AutomationExeName = "test_bugs_std_validation.exe";
         public const string ViolationCheckExeName = "test_excel_violations.exe";
-        public const string WordTableNormalizationExeName = "test_word_table_normalization.exe";
+        public const string WordTableNormalizationExeName = "test_protocol_normalization.exe";
 
         // Report File Names
         public const string AutomationReportFileName = "automation_results.html";
