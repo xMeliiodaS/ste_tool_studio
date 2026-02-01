@@ -268,7 +268,7 @@
             FontSize="13"
             FontWeight="SemiBold"
                             HorizontalAlignment="Center"
-            Margin="6,2,0,8" />
+            Margin="6,2,0,5" />
 
                         <!-- Toggle Container -->
                         <Border
