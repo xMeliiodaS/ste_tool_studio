@@ -446,7 +446,7 @@
 
                 <!-- Input Fields -->
                 <StackPanel
-                    Margin="0,0,0,20"
+                    Margin="0,0,0,15"
                     HorizontalAlignment="Center">
                     
                     <!-- Row 1: STD Name (Full Width) -->
