@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using ste_tool_studio.Configuration;
 using ste_tool_studio.Constants;
 using ste_tool_studio.Services;
@@ -614,7 +614,7 @@ namespace ste_tool_studio.ViewModels
                 Footer = Footer?.Trim() ?? string.Empty;
                 PreparedBy = PreparedBy?.Trim() ?? string.Empty;
 
-                _config.UpdateTemplateNormalizerConfig(StdName, DocNumber, ProjectNumber, TestPlan, PreparedBy, Footer, SelectedFilePath);
+                _config.UpdateTemplateNormalizerConfig("protocol", StdName, DocNumber, ProjectNumber, TestPlan, PreparedBy, Footer, SelectedFilePath);
 
 
                 var result = await _validationService.RunSTDNormalizationAsync(

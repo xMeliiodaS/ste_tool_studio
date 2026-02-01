@@ -32,6 +32,7 @@ namespace ste_tool_studio.Constants
         public const string ConfigKeyIterationPath = "iteration_path";
 
         // Template Normalizer-specific Config Keys
+        public const string ConfigKeyDoctype = "doc_type";
         public const string ConfigKeyDocNumber = "doc_number";
         public const string ConfigKeyProjectNumber = "project_number";
         public const string ConfigKeyTestPlan = "test_plan";

@@ -3,5 +3,15 @@
   "excel_path": "",
   "std_name": "",
   "current_version": "",
-  "iteration_path":  ""
+  "iteration_path": "",
+  
+  "doc_type": "",
+  "doc_number": "",
+  "project_number": "",
+  "test_plan": "",
+  "prepared_by": "",
+  "footer": "",
+  "Exported_STD": "",
+  "Template_protocol": "",
+  "Normalized_protocol": ""
 }

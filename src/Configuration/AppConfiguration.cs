@@ -104,6 +104,12 @@ namespace ste_tool_studio.Configuration
             }
         }
 
+        public string DocType
+        {
+            get => _config[AppConstants.ConfigKeyDoctype]?.ToString() ?? string.Empty;
+            set => _config[AppConstants.ConfigKeyDoctype] = value;
+        }
+
         public string StdName
         {
             get => _config[AppConstants.ConfigKeyStdName]?.ToString() ?? string.Empty;
@@ -174,9 +180,10 @@ namespace ste_tool_studio.Configuration
         /// <summary>
         /// Updates multiple configuration values at once
         /// </summary>
-        public void UpdateTemplateNormalizerConfig(string stdName, string docNumber, string projectNumber,
+        public void UpdateTemplateNormalizerConfig(string docType ,string stdName, string docNumber, string projectNumber,
                                                     string testPlan, string preparedBy, string footer, string selectedFilePath)
         {
+            DocType = docType;
             StdName = stdName;
             DocNumber = docNumber;
             ProjectNumber = projectNumber;

@@ -12,6 +12,7 @@ namespace ste_tool_studio.ViewModels
     /// </summary>
     public class STDTemplateNormalizerViewModel : BaseViewModel
     {
+        private string _docType;
         private string _stdName;
         private string _docNumber;
         private string _projectNumber;
@@ -35,9 +36,26 @@ namespace ste_tool_studio.ViewModels
             // Initialize commands
             SelectFileCommand = new RelayCommand(ExecuteSelectFile);
             RunSTDNormalizerCommand = new AsyncRelayCommand(ExecuteSTDNormalizerCommand, CanRunAutomation);
+
+            // Initialize DocType based on default toggle (Protocol)
+            DocType = _isReportMode ? "report" : "protocol";
         }
 
         // STD Normalizer specific properties
+
+        public string DocType
+        {
+            get => _docType;
+            set
+            {
+                if (_docType != value)
+                {
+                    _docType = value;
+                    OnPropertyChanged(nameof(DocType));
+                }
+            }
+        }
+
         public string StdName
         {
             get => _stdName;
@@ -127,6 +145,7 @@ namespace ste_tool_studio.ViewModels
                 if (_isReportMode != value)
                 {
                     _isReportMode = value;
+                    DocType = _isReportMode ? "report" : "protocol";
                     OnPropertyChanged(nameof(IsReportMode));
                     OnPropertyChanged(nameof(IsProtocolMode));
                 }
@@ -211,7 +230,7 @@ namespace ste_tool_studio.ViewModels
                 PreparedBy = PreparedBy?.Trim() ?? string.Empty;
                 Footer = Footer?.Trim() ?? string.Empty;
 
-                _config.UpdateTemplateNormalizerConfig(StdName, DocNumber, ProjectNumber, TestPlan, PreparedBy, Footer, SelectedFilePath);
+                _config.UpdateTemplateNormalizerConfig(DocType, StdName, DocNumber, ProjectNumber, TestPlan, PreparedBy, Footer, SelectedFilePath);
 
                 var result = await _validationService.RunSTDNormalizationAsync(
                     SelectedFilePath,
