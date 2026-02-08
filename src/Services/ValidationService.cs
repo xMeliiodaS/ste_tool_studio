@@ -34,10 +34,12 @@ namespace ste_tool_studio.Services
             if (result.IsSuccess)
             {
                 _loggingService.LogInfo("Automation validation completed successfully");
+                if (result.HasStderrOutput)
+                    _loggingService.LogDebug($"Automation stderr (exit 0): {result.Error?.Trim()}");
             }
             else
             {
-                _loggingService.LogError($"Automation validation failed: {result.Error}");
+                _loggingService.LogError($"Automation validation failed (exit {result.ExitCode}): {result.Error}");
             }
 
             _loggingService.LogSeparator();
@@ -62,10 +64,12 @@ namespace ste_tool_studio.Services
             if (result.IsSuccess)
             {
                 _loggingService.LogInfo("Violation check completed successfully");
+                if (result.HasStderrOutput)
+                    _loggingService.LogDebug($"Violation check stderr (exit 0): {result.Error?.Trim()}");
             }
             else
             {
-                _loggingService.LogError($"Violation check failed: {result.Error}");
+                _loggingService.LogError($"Violation check failed (exit {result.ExitCode}): {result.Error}");
             }
 
             _loggingService.LogSeparator();
@@ -111,10 +115,12 @@ namespace ste_tool_studio.Services
             if (result.IsSuccess)
             {
                 _loggingService.LogInfo("STD normalization completed successfully");
+                if (result.HasStderrOutput)
+                    _loggingService.LogDebug($"STD normalizer stderr (exit 0): {result.Error?.Trim()}");
             }
             else
             {
-                _loggingService.LogError($"STD normalization failed: {result.Error}");
+                _loggingService.LogError($"STD normalization failed (exit {result.ExitCode}): {result.Error}");
             }
 
             _loggingService.LogSeparator();

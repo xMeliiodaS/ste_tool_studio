@@ -24,7 +24,7 @@ namespace ste_tool_studio.Configuration
 
             _userConfigPath = IOPath.Combine(appDataFolder, AppConstants.ConfigFileName);
             _defaultConfigPath = IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, AppConstants.ConfigFileName);
-            
+
             EnsureUserConfigExists();
             LoadConfiguration();
         }
@@ -180,7 +180,7 @@ namespace ste_tool_studio.Configuration
         /// <summary>
         /// Updates multiple configuration values at once
         /// </summary>
-        public void UpdateTemplateNormalizerConfig(string docType ,string stdName, string docNumber, string projectNumber,
+        public void UpdateTemplateNormalizerConfig(string docType, string stdName, string docNumber, string projectNumber,
                                                     string testPlan, string preparedBy, string footer, string selectedFilePath)
         {
             DocType = docType;
@@ -207,11 +207,14 @@ namespace ste_tool_studio.Configuration
         }
 
         /// <summary>
-        /// Gets the path to the log file
+        /// Gets the path to the log file (APPDATA, shared with Python so both write to one file).
         /// </summary>
         public string GetLogFilePath()
         {
-            return IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, AppConstants.LogFileName);
+            string appDataFolder = IOPath.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                AppConstants.AppName);
+            return IOPath.Combine(appDataFolder, AppConstants.LogFileName);
         }
     }
 }

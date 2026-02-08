@@ -18,17 +18,22 @@ namespace ste_tool_studio.Services
 
         public void LogError(string message)
         {
-            Log($"[ERROR {DateTime.Now}] {message}");
+            Log($"[ERROR {DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] {message}");
         }
 
         public void LogInfo(string message)
         {
-            Log($"[INFO {DateTime.Now}] {message}");
+            Log($"[INFO {DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] {message}");
         }
 
         public void LogWarning(string message)
         {
-            Log($"[WARNING {DateTime.Now}] {message}");
+            Log($"[WARNING {DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] {message}");
+        }
+
+        public void LogDebug(string message)
+        {
+            Log($"[DEBUG {DateTime.Now:yyyy-MM-dd HH:mm:ss.fff}] {message}");
         }
 
         public void LogSeparator()
@@ -40,6 +45,9 @@ namespace ste_tool_studio.Services
         {
             lock (_lockObject)
             {
+                string dir = System.IO.Path.GetDirectoryName(_logFilePath);
+                if (!string.IsNullOrEmpty(dir))
+                    Directory.CreateDirectory(dir);
                 File.AppendAllText(_logFilePath, $"\n{message}\n");
             }
         }

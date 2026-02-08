@@ -11,7 +11,8 @@ namespace ste_tool_studio.Constants
 
         // File Names
         public const string ConfigFileName = "config.json";
-        public const string LogFileName = "app.log";
+        /// <summary>Unified log file name used by both C# and Python (in APPDATA).</summary>
+        public const string LogFileName = "ste_tool_studio.log";
         public const string AutomationLogFileName = "automation_log.log";
         public const string ExportedSTD = "Exported_STD";
 

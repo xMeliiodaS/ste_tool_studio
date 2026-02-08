@@ -187,6 +187,9 @@ namespace ste_tool_studio.ViewModels
                 return;
             }
 
+            _loggingService.LogInfo("User clicked Run Automation.");
+            _loggingService.LogInfo($"Inputs: STD=\"{StdName}\", IterationPath=\"{IterationPath}\", VvVersion=\"{VvVersion}\", File=\"{SelectedFilePath}\"");
+
             IsAutomationRunning = true;
             SetStatus(AppConstants.DefaultStatusRunning, false);
 
@@ -202,16 +205,19 @@ namespace ste_tool_studio.ViewModels
 
                 if (result.IsSuccess)
                 {
+                    _loggingService.LogInfo("Output: Automation completed successfully.");
                     SetStatus(AppConstants.SuccessAutomationCompleted, false);
                 }
                 else
                 {
+                    _loggingService.LogInfo($"Output: Automation failed. ExitCode={result.ExitCode}. {result.Error?.Trim()}");
                     SetStatus(AppConstants.ErrorExecutionFailed, true);
                     _loggingService.LogError($"Automation failed: {result.Error}");
                 }
             }
             catch (Exception ex)
             {
+                _loggingService.LogInfo($"Output: Automation failed. {ex.Message}");
                 SetStatus(AppConstants.ErrorExecutionFailed, true);
                 _loggingService.LogError(ex.ToString());
             }
@@ -229,6 +235,9 @@ namespace ste_tool_studio.ViewModels
                 return;
             }
 
+            _loggingService.LogInfo("User clicked Run Violation Check.");
+            _loggingService.LogInfo($"Inputs: File=\"{SelectedFilePath}\"");
+
             IsViolationRunning = true;
             SetStatus(AppConstants.DefaultStatusRunning, false);
 
@@ -240,16 +249,19 @@ namespace ste_tool_studio.ViewModels
 
                 if (result.IsSuccess)
                 {
+                    _loggingService.LogInfo("Output: Violation check completed successfully.");
                     SetStatus(AppConstants.SuccessViolationCheckCompleted, false);
                 }
                 else
                 {
+                    _loggingService.LogInfo($"Output: Violation check failed. ExitCode={result.ExitCode}. {result.Error?.Trim()}");
                     SetStatus(AppConstants.ErrorExecutionFailed, true);
                     _loggingService.LogError($"Violation check failed: {result.Error}");
                 }
             }
             catch (Exception ex)
             {
+                _loggingService.LogInfo($"Output: Violation check failed. {ex.Message}");
                 SetStatus(AppConstants.ErrorExecutionFailed, true);
                 _loggingService.LogError(ex.ToString());
             }
@@ -287,8 +299,11 @@ namespace ste_tool_studio.ViewModels
 
         private void ExecuteOpenLastBugsReport(object obj)
         {
+            _loggingService.LogInfo("User clicked Open last bugs report.");
+
             if (!_reportService.ReportExists(AppConstants.AutomationReportFileName))
             {
+                _loggingService.LogInfo("Output: Report not found.");
                 MessageBox.Show(
                     AppConstants.ErrorNoReportFound,
                     "Info",
@@ -297,8 +312,11 @@ namespace ste_tool_studio.ViewModels
                 return;
             }
 
-            if (!_reportService.OpenReport(AppConstants.AutomationReportFileName))
+            if (_reportService.OpenReport(AppConstants.AutomationReportFileName))
+                _loggingService.LogInfo("Output: Opened bugs report.");
+            else
             {
+                _loggingService.LogInfo("Output: Failed to open report.");
                 MessageBox.Show(
                     string.Format(AppConstants.ErrorFailedToOpenReport, "Unknown error"),
                     "Error",
@@ -309,8 +327,11 @@ namespace ste_tool_studio.ViewModels
 
         private void ExecuteOpenLastRulesReport(object obj)
         {
+            _loggingService.LogInfo("User clicked Open last rules report.");
+
             if (!_reportService.ReportExists(AppConstants.RulesViolationsReportFileName))
             {
+                _loggingService.LogInfo("Output: Report not found.");
                 MessageBox.Show(
                     AppConstants.ErrorNoReportFound,
                     "Info",
@@ -319,8 +340,11 @@ namespace ste_tool_studio.ViewModels
                 return;
             }
 
-            if (!_reportService.OpenReport(AppConstants.RulesViolationsReportFileName))
+            if (_reportService.OpenReport(AppConstants.RulesViolationsReportFileName))
+                _loggingService.LogInfo("Output: Opened rules report.");
+            else
             {
+                _loggingService.LogInfo("Output: Failed to open report.");
                 MessageBox.Show(
                     string.Format(AppConstants.ErrorFailedToOpenReport, "Unknown error"),
                     "Error",

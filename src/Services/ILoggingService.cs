@@ -8,6 +8,7 @@ namespace ste_tool_studio.Services
         void LogError(string message);
         void LogInfo(string message);
         void LogWarning(string message);
+        void LogDebug(string message);
         void LogSeparator();
     }
 }

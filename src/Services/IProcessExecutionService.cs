@@ -26,7 +26,16 @@ namespace ste_tool_studio.Services
         public int ExitCode { get; set; }
         public string Output { get; set; }
         public string Error { get; set; }
-        public bool IsSuccess => ExitCode == 0 && string.IsNullOrEmpty(Error);
+        /// <summary>
+        /// True when the process exited with code 0. Stderr may still contain warnings/info
+        /// (e.g. from Python unittest or libraries); we do not treat that as failure.
+        /// </summary>
+        public bool IsSuccess => ExitCode == 0;
+
+        /// <summary>
+        /// True when exit code is 0 but stderr had output (e.g. warnings). Use for logging only.
+        /// </summary>
+        public bool HasStderrOutput => ExitCode == 0 && !string.IsNullOrWhiteSpace(Error);
     }
 }
 

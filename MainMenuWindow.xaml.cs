@@ -1,4 +1,6 @@
 using System.Windows;
+using ste_tool_studio.Configuration;
+using ste_tool_studio.Services;
 
 namespace ste_tool_studio
 {
@@ -9,12 +11,15 @@ namespace ste_tool_studio
     {
         private static BaselineVerifierWindow _baselineVerifierWindow;
         private static STDTemplateNormalizer _stdTemplateNormalizerWindow;
+        private static ILoggingService _loggingService;
         public static bool IsShuttingDown { get; internal set; } = false;
 
         public MainMenuWindow()
         {
             InitializeComponent();
             this.Closing += MainMenuWindow_Closing;
+            _loggingService ??= new FileLoggingService(new AppConfiguration());
+            _loggingService.LogInfo("App started. Main menu opened.");
         }
 
         private void MainMenuWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -40,7 +45,7 @@ namespace ste_tool_studio
                 }
             }
             catch { }
-            
+
             // Shut down the application
             try
             {
@@ -51,6 +56,7 @@ namespace ste_tool_studio
 
         private void BaselineVerifierButton_Click(object sender, RoutedEventArgs e)
         {
+            _loggingService?.LogInfo("User clicked Baseline Verifier.");
             // Show existing window or create new one
             if (_baselineVerifierWindow == null || !_baselineVerifierWindow.IsLoaded)
             {
@@ -59,13 +65,14 @@ namespace ste_tool_studio
             }
             _baselineVerifierWindow.Show();
             _baselineVerifierWindow.Activate();
-            
+
             // Hide this window instead of closing to preserve state
             this.Hide();
         }
 
         private void STDTemplateNormalizer_click(object sender, RoutedEventArgs e)
         {
+            _loggingService?.LogInfo("User clicked STD Template Normalizer.");
             // Show existing window or create new one
             if (_stdTemplateNormalizerWindow == null || !_stdTemplateNormalizerWindow.IsLoaded)
             {

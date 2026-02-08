@@ -159,10 +159,12 @@ namespace ste_tool_studio.ViewModels
         {
             if (string.IsNullOrEmpty(filePath) || !IsValidFile(filePath))
             {
+                _loggingService.LogInfo($"User tried to select file (invalid format): {filePath ?? "(empty)"}");
                 SetStatus($"Invalid file format. Expected: {string.Join(", ", AllowedExtensions)}", true);
                 return;
             }
 
+            _loggingService.LogInfo($"User selected file: {filePath}");
             SelectedFilePath = filePath;
             OnFileSelected(filePath);
             SetStatus($"File selected: {IOPath.GetFileName(filePath)}", false);

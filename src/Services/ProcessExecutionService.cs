@@ -17,7 +17,7 @@ namespace ste_tool_studio.Services
             System.Action<int, int, string> progressCallback = null)
         {
             string exePath = IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, exeName);
-            
+
             if (!File.Exists(exePath))
             {
                 throw new FileNotFoundException(
