@@ -272,9 +272,15 @@ namespace ste_tool_studio.ViewModels
                 return false;
             }
 
-            if (string.IsNullOrWhiteSpace(StdName))
+            if (string.IsNullOrWhiteSpace(StdName) ||
+                string.IsNullOrWhiteSpace(DocType) ||
+                string.IsNullOrWhiteSpace(DocNumber) ||
+                string.IsNullOrWhiteSpace(ProjectNumber) ||
+                string.IsNullOrWhiteSpace(TestPlan) ||
+                string.IsNullOrWhiteSpace(PreparedBy) ||
+                string.IsNullOrWhiteSpace(Footer))
             {
-                SetStatus("Please enter STD Name.", true);
+                SetStatus("Please fill all required fields.", true);
                 return false;
             }
 
