@@ -39,6 +39,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <!-- Back Button -->
@@ -126,6 +127,43 @@
                 VerticalAlignment="Center"
                 FontSize="26"
                 FontWeight="Bold" />
+
+            <!-- Cycle Selector -->
+            <StackPanel
+    Grid.Column="2"
+    Orientation="Horizontal"
+    VerticalAlignment="Center">
+
+                <TextBlock
+        Text="Cycle"
+        Foreground="LightGray"
+        FontSize="13"
+        Margin="0,0,8,0"
+        VerticalAlignment="Center"/>
+
+                <ComboBox
+        x:Name="CycleDropdown"
+    Style="{StaticResource DarkComboBox}"
+    
+        Width="130"
+        Height="30"
+        Background="#3C3C3C"
+        Foreground="White"
+        BorderBrush="#555"
+        Padding="6,2"
+        FontSize="13"
+        VerticalContentAlignment="Center">
+
+                    <ComboBox.ItemContainerStyle>
+                        <Style TargetType="ComboBoxItem">
+                            <Setter Property="Background" Value="#2D2D30"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </Style>
+                    </ComboBox.ItemContainerStyle>
+
+                </ComboBox>
+
+            </StackPanel>
         </Grid>
 
 
@@ -448,7 +486,7 @@
                 <StackPanel
                     Margin="0,0,0,15"
                     HorizontalAlignment="Center">
-                    
+
                     <!-- Row 1: STD Name (Full Width) -->
                     <Grid Margin="0,0,0,10" HorizontalAlignment="Center">
                         <TextBox
@@ -608,7 +646,7 @@
                             VerticalAlignment="Center"
                             IsHitTestVisible="False" />
                     </Grid>
-                    
+
                 </StackPanel>
 
                 <!-- Normalize Button -->
