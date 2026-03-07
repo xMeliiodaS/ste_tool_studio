@@ -99,12 +99,7 @@ You can add `cycle_2`, `cycle_3`, etc.
 
 ### Build
 ```bash
-dotnet build ste_tool_studio.sln
-```
-
-### Run
-```bash
-dotnet run --project ste_tool_studio.csproj
+dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true
 ```
 
 ---
