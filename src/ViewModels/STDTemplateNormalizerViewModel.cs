@@ -21,7 +21,9 @@ namespace ste_tool_studio.ViewModels
         private string _preparedBy;
         private string _footer;
         private bool _isReportMode = false; // Default to Protocol mode
-        private const string DefaultCycleOption = "Select";
+        private const string DefaultCycleOption = "Default";
+
+ main
         private string _selectedCycleId;
 
         public STDTemplateNormalizerViewModel(
@@ -195,16 +197,19 @@ namespace ste_tool_studio.ViewModels
                 CycleOptions.Add(cycleId);
             }
 
-            if (CycleOptions.Count > 0)
-            {
-                SelectedCycleId = CycleOptions[0];
-            }
+            // Default selection is a placeholder; no autofill until user chooses a real cycle
+            CycleOptions.Insert(0, DefaultCycleOption);
+            SelectedCycleId = DefaultCycleOption;
         }
 
         private void ApplyCycleDefaults(string cycleId)
         {
-            if (string.IsNullOrWhiteSpace(cycleId))
+            if (string.IsNullOrWhiteSpace(cycleId) || string.Equals(cycleId, DefaultCycleOption, StringComparison.OrdinalIgnoreCase))
             {
+                DocNumber = string.Empty;
+                ProjectNumber = string.Empty;
+                TestPlan = string.Empty;
+                Footer = string.Empty;
                 return;
             }
 

@@ -154,7 +154,7 @@
                     Text="Cycle" />
 
                 <Border
-                    Width="60"
+                    Width="80"
                     Height="30"
                     Background="#3C3C3C"
                     BorderBrush="#555"
