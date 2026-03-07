@@ -168,14 +168,14 @@
                         Padding="6,2"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
+                        ItemsSource="{Binding CycleOptions}"
+                        SelectedItem="{Binding SelectedCycleId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Background="Transparent"
                         BorderThickness="0"
                         FontSize="13"
                         Foreground="White"
-                        ItemsSource="{Binding CycleOptions}"
-                        SelectedItem="{Binding SelectedCycleId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        ToolTipService.BetweenShowDelay="0"
-                        ToolTipService.InitialShowDelay="300">
+                        ToolTipService.InitialShowDelay="300"
+                        ToolTipService.BetweenShowDelay="0">
 
                         <!--  Tooltip goes here, inside the ComboBox  -->
                         <ComboBox.ToolTip>
