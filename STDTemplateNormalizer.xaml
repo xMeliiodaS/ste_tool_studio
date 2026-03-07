@@ -166,6 +166,7 @@
                         Width="Auto"
                         Height="Auto"
                         Padding="6,2"
+                        HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         ItemsSource="{Binding CycleOptions}"
                         SelectedItem="{Binding SelectedCycleId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
