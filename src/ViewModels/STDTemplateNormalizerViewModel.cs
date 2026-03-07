@@ -21,6 +21,7 @@ namespace ste_tool_studio.ViewModels
         private string _preparedBy;
         private string _footer;
         private bool _isReportMode = false; // Default to Protocol mode
+        private const string DefaultCycleOption = "Select";
         private string _selectedCycleId;
 
         public STDTemplateNormalizerViewModel(
