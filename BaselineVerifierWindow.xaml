@@ -247,11 +247,10 @@
                     FontSize="14"
                     TextWrapping="Wrap"
                     Margin="0,10,0,0" />
-
                 <!-- STD Name with Placeholder -->
                 <Grid 
     Margin="0,3,0,7"
-    MaxWidth="310">
+    Width="325">
 
                     <TextBox
         x:Name="STDNameInput"
@@ -271,19 +270,19 @@
         HorizontalAlignment="Center"
         Foreground="Gray"
         VerticalAlignment="Center"
-        IsHitTestVisible="False"/>
+        IsHitTestVisible="False" FontSize="15"/>
                 </Grid>
 
 
                 <!-- Iteration Path + Current V&V Version -->
                 <Grid
     Margin="0,3,0,28"
-    Width="310">
+    Width="325">
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="148"/>
+                        <ColumnDefinition Width="190"/>
                         <ColumnDefinition Width="14"/>
-                        <ColumnDefinition Width="148"/>
+                        <ColumnDefinition Width="126"/>
                     </Grid.ColumnDefinitions>
 
 
@@ -308,7 +307,7 @@
             HorizontalAlignment="Center"
             Foreground="Gray"
             VerticalAlignment="Center"
-            IsHitTestVisible="False"/>
+            IsHitTestVisible="False" FontSize="15"/>
                     </Grid>
 
 
@@ -329,14 +328,16 @@
 
                         <TextBlock
             x:Name="VVVersionPlaceholder"
-            Text="Current VV Version"
+            Text="V&amp;V Version"
             HorizontalAlignment="Center"
             Foreground="Gray"
             VerticalAlignment="Center"
-            IsHitTestVisible="False"/>
+            IsHitTestVisible="False" FontSize="15"/>
                     </Grid>
 
                 </Grid>
+                
+
 
                 <!-- ACTION BUTTONS -->
                 <Grid
