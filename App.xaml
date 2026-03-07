@@ -1,8 +1,9 @@
-﻿<Application x:Class="ste_tool_studio.App"  
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"  
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  
-             StartupUri="MainMenuWindow.xaml">
+﻿<Application
+    x:Class="ste_tool_studio.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    StartupUri="MainMenuWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -10,8 +11,11 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign2.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <!-- Add your custom button style here -->
-            <Style x:Key="CustomMaterialButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignRaisedButton}">
+            <!--  Add your custom button style here  -->
+            <Style
+                x:Key="CustomMaterialButton"
+                BasedOn="{StaticResource MaterialDesignRaisedButton}"
+                TargetType="Button">
                 <Setter Property="MinWidth" Value="100" />
                 <Setter Property="Padding" Value="5" />
                 <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -19,58 +23,73 @@
                 <Setter Property="FontSize" Value="16" />
             </Style>
 
-            <!-- Blue Button Style -->
-            <Style x:Key="PurpleButton" TargetType="Button" BasedOn="{StaticResource CustomMaterialButton}">
+            <!--  Blue Button Style  -->
+            <Style
+                x:Key="PurpleButton"
+                BasedOn="{StaticResource CustomMaterialButton}"
+                TargetType="Button">
                 <Setter Property="Background" Value="{DynamicResource PrimaryHueMidBrush}" />
                 <Setter Property="MaxWidth" Value="200" />
                 <Setter Property="Foreground" Value="White" />
             </Style>
 
-            <!-- Green Button Style -->
-            <Style x:Key="GreenButton" TargetType="Button" BasedOn="{StaticResource CustomMaterialButton}">
+            <!--  Green Button Style  -->
+            <Style
+                x:Key="GreenButton"
+                BasedOn="{StaticResource CustomMaterialButton}"
+                TargetType="Button">
                 <Setter Property="Background" Value="{DynamicResource SecondaryHueMidBrush}" />
                 <Setter Property="Foreground" Value="White" />
                 <Setter Property="MaxWidth" Value="350" />
                 <Setter Property="Background" Value="#4CAF50" />
                 <Setter Property="BorderBrush" Value="#4CAF50" />
-                <!-- Material Design Green 500 -->
+                <!--  Material Design Green 500  -->
             </Style>
 
-            <!-- Blue Button (hardcoded color, stays blue regardless of theme) -->
-            <Style x:Key="BlueButton" TargetType="Button" BasedOn="{StaticResource CustomMaterialButton}">
-                <Setter Property="Background" Value="#0D47A1"/>
-                <!-- Material Design Blue 500 -->
+            <!--  Blue Button (hardcoded color, stays blue regardless of theme)  -->
+            <Style
+                x:Key="BlueButton"
+                BasedOn="{StaticResource CustomMaterialButton}"
+                TargetType="Button">
+                <Setter Property="Background" Value="#0D47A1" />
+                <!--  Material Design Blue 500  -->
                 <Setter Property="MaxWidth" Value="230" />
                 <Setter Property="Foreground" Value="White" />
                 <Setter Property="BorderBrush" Value="#0D47A1" />
             </Style>
 
-            
-            <Style x:Key="BugReportButton" TargetType="Button" BasedOn="{StaticResource CustomMaterialButton}">
+
+            <Style
+                x:Key="BugReportButton"
+                BasedOn="{StaticResource CustomMaterialButton}"
+                TargetType="Button">
                 <Setter Property="Background" Value="#4CAF50" />
                 <Setter Property="Foreground" Value="White" />
-                <!-- Only left border -->
+                <!--  Only left border  -->
                 <Setter Property="BorderBrush" Value="#555555" />
-                <!-- left border color -->
+                <!--  left border color  -->
                 <Setter Property="BorderThickness" Value="0.5,0,0,0" />
-                <!-- Left, Top, Right, Bottom -->
+                <!--  Left, Top, Right, Bottom  -->
                 <Setter Property="MinWidth" Value="5" />
                 <Setter Property="Effect" Value="{x:Null}" />
-                <!-- Remove corner radius so border is straight -->
+                <!--  Remove corner radius so border is straight  -->
                 <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="0" />
             </Style>
 
 
-            <Style x:Key="RulesReportButton" TargetType="Button" BasedOn="{StaticResource CustomMaterialButton}">
+            <Style
+                x:Key="RulesReportButton"
+                BasedOn="{StaticResource CustomMaterialButton}"
+                TargetType="Button">
                 <Setter Property="Background" Value="#0D47A1" />
                 <Setter Property="Foreground" Value="White" />
-                <!-- Only left border -->
+                <!--  Only left border  -->
                 <Setter Property="BorderBrush" Value="#555555" />
-                <!-- left border color -->
+                <!--  left border color  -->
                 <Setter Property="BorderThickness" Value="0.5,0,0,0" />
-                <!-- Left, Top, Right, Bottom -->
+                <!--  Left, Top, Right, Bottom  -->
                 <Setter Property="MinWidth" Value="5" />
-                <!-- Remove corner radius so border is straight -->
+                <!--  Remove corner radius so border is straight  -->
                 <Setter Property="materialDesign:ButtonAssist.CornerRadius" Value="0" />
                 <Setter Property="Effect" Value="{x:Null}" />
             </Style>
@@ -78,49 +97,55 @@
 
 
 
-            <Style x:Key="CustomToolTip" TargetType="ToolTip" BasedOn="{StaticResource MaterialDesignToolTip}">
-                <Setter Property="Background" Value="#333333"/>
-                <Setter Property="Foreground" Value="White"/>
-                <Setter Property="BorderBrush" Value="#555555"/>
-                <Setter Property="BorderThickness" Value="1"/>
-                <Setter Property="Padding" Value="6,4"/>
-                <Setter Property="FontSize" Value="14"/>
-                <Setter Property="HasDropShadow" Value="True"/>
-                <Setter Property="Placement" Value="Mouse"/>
+            <Style
+                x:Key="CustomToolTip"
+                BasedOn="{StaticResource MaterialDesignToolTip}"
+                TargetType="ToolTip">
+                <Setter Property="Background" Value="#333333" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="BorderBrush" Value="#555555" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Padding" Value="6,4" />
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="HasDropShadow" Value="True" />
+                <Setter Property="Placement" Value="Mouse" />
 
-                <!-- Timing -->
-                <Setter Property="ToolTipService.InitialShowDelay" Value="0"/>
-                <Setter Property="ToolTipService.BetweenShowDelay" Value="100"/>
+                <!--  Timing  -->
+                <Setter Property="ToolTipService.InitialShowDelay" Value="0" />
+                <Setter Property="ToolTipService.BetweenShowDelay" Value="100" />
             </Style>
 
 
-            <!-- Dark Themed ComboBox -->
-            <Style x:Key="DarkComboBox" TargetType="ComboBox" BasedOn="{StaticResource MaterialDesignComboBox}">
+            <!--  Dark Themed ComboBox  -->
+            <Style
+                x:Key="DarkComboBox"
+                BasedOn="{StaticResource MaterialDesignComboBox}"
+                TargetType="ComboBox">
 
-                <Setter Property="Width" Value="140"/>
-                <Setter Property="Height" Value="30"/>
-                <Setter Property="Background" Value="#3C3C3C"/>
-                <Setter Property="Foreground" Value="White"/>
-                <Setter Property="BorderBrush" Value="#555"/>
-                <Setter Property="Padding" Value="6,2"/>
-                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="Width" Value="140" />
+                <Setter Property="Height" Value="30" />
+                <Setter Property="Background" Value="#3C3C3C" />
+                <Setter Property="Foreground" Value="White" />
+                <Setter Property="BorderBrush" Value="#555" />
+                <Setter Property="Padding" Value="6,2" />
+                <Setter Property="FontSize" Value="13" />
 
-                <!-- Dropdown items -->
+                <!--  Dropdown items  -->
                 <Setter Property="ItemContainerStyle">
                     <Setter.Value>
                         <Style TargetType="ComboBoxItem">
-                            <Setter Property="Background" Value="#2D2D30"/>
-                            <Setter Property="Foreground" Value="White"/>
-                            <Setter Property="Padding" Value="6,4"/>
+                            <Setter Property="Background" Value="#2D2D30" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="Padding" Value="6,4" />
 
                             <Style.Triggers>
                                 <Trigger Property="IsHighlighted" Value="True">
-                                    <Setter Property="Background" Value="#444"/>
+                                    <Setter Property="Background" Value="#444" />
                                 </Trigger>
 
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="#4CAF50"/>
-                                    <Setter Property="Foreground" Value="White"/>
+                                    <Setter Property="Background" Value="#4CAF50" />
+                                    <Setter Property="Foreground" Value="White" />
                                 </Trigger>
 
                             </Style.Triggers>
@@ -134,4 +159,4 @@
 
         </ResourceDictionary>
     </Application.Resources>
-</Application> 
+</Application>
