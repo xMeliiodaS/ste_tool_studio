@@ -195,14 +195,15 @@ namespace ste_tool_studio.ViewModels
                 CycleOptions.Add(cycleId);
             }
 
-            // Default selection is a placeholder; no autofill until user chooses a real cycle
-            CycleOptions.Insert(0, DefaultCycleOption);
-            SelectedCycleId = DefaultCycleOption;
+            if (CycleOptions.Count > 0)
+            {
+                SelectedCycleId = CycleOptions[0];
+            }
         }
 
         private void ApplyCycleDefaults(string cycleId)
         {
-            if (string.IsNullOrWhiteSpace(cycleId) || string.Equals(cycleId, DefaultCycleOption, StringComparison.OrdinalIgnoreCase))
+            if (string.IsNullOrWhiteSpace(cycleId))
             {
                 return;
             }
