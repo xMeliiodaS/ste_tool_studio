@@ -1,6 +1,7 @@
 using Newtonsoft.Json.Linq;
 using ste_tool_studio.Constants;
 using System.IO;
+using System.Linq;
 using IOPath = System.IO.Path;
 
 namespace ste_tool_studio.Configuration
@@ -216,6 +217,56 @@ namespace ste_tool_studio.Configuration
                 AppConstants.AppName);
             return IOPath.Combine(appDataFolder, AppConstants.LogFileName);
         }
+
+        /// <summary>
+        /// Gets all configured cycle identifiers (e.g. "1" for key "cycle_1").
+        /// </summary>
+        public IReadOnlyList<string> GetAvailableCycleIds()
+        {
+            var cycles = _config.Properties()
+                .Where(p => p.Name.StartsWith("cycle_", StringComparison.OrdinalIgnoreCase) && p.Value.Type == JTokenType.Object)
+                .Select(p => p.Name.Substring("cycle_".Length))
+                .Where(id => !string.IsNullOrWhiteSpace(id))
+                .ToList();
+
+            return cycles
+                .OrderBy(id => int.TryParse(id, out var numericId) ? numericId : int.MaxValue)
+                .ThenBy(id => id, StringComparer.OrdinalIgnoreCase)
+                .ToList();
+        }
+
+        /// <summary>
+        /// Attempts to load template-normalizer defaults from a specific cycle key (cycle_{id}).
+        /// </summary>
+        public bool TryGetCycleTemplateDefaults(
+            string cycleId,
+            out string docNumber,
+            out string projectNumber,
+            out string testPlan,
+            out string footer)
+        {
+            docNumber = string.Empty;
+            projectNumber = string.Empty;
+            testPlan = string.Empty;
+            footer = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(cycleId))
+            {
+                return false;
+            }
+
+            string cycleKey = $"cycle_{cycleId.Trim()}";
+            if (_config[cycleKey] is not JObject cycleConfig)
+            {
+                return false;
+            }
+
+            docNumber = cycleConfig[AppConstants.ConfigKeyDocNumber]?.ToString() ?? string.Empty;
+            projectNumber = cycleConfig[AppConstants.ConfigKeyProjectNumber]?.ToString() ?? string.Empty;
+            testPlan = cycleConfig[AppConstants.ConfigKeyTestPlan]?.ToString() ?? string.Empty;
+            footer = cycleConfig[AppConstants.ConfigKeyFooter]?.ToString() ?? string.Empty;
+
+            return true;
+        }
     }
 }
-
