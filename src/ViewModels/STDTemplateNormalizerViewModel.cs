@@ -1,6 +1,7 @@
 using ste_tool_studio.Configuration;
 using ste_tool_studio.Constants;
 using ste_tool_studio.Services;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using IOPath = System.IO.Path;
@@ -20,6 +21,8 @@ namespace ste_tool_studio.ViewModels
         private string _preparedBy;
         private string _footer;
         private bool _isReportMode = false; // Default to Protocol mode
+        private const string DefaultCycleOption = "Default";
+        private string _selectedCycleId;
 
         public STDTemplateNormalizerViewModel(
             AppConfiguration config,
@@ -39,6 +42,8 @@ namespace ste_tool_studio.ViewModels
 
             // Initialize DocType based on default toggle (Protocol)
             DocType = _isReportMode ? "report" : "protocol";
+
+            InitializeCycleOptions();
         }
 
         // STD Normalizer specific properties
@@ -152,6 +157,7 @@ namespace ste_tool_studio.ViewModels
             }
         }
 
+
         public bool IsProtocolMode
         {
             get => !_isReportMode;
@@ -161,6 +167,56 @@ namespace ste_tool_studio.ViewModels
                 {
                     IsReportMode = !value;
                 }
+            }
+        }
+
+        public ObservableCollection<string> CycleOptions { get; } = new ObservableCollection<string>();
+
+        public string SelectedCycleId
+        {
+            get => _selectedCycleId;
+            set
+            {
+                if (_selectedCycleId != value)
+                {
+                    _selectedCycleId = value;
+                    OnPropertyChanged(nameof(SelectedCycleId));
+                    ApplyCycleDefaults(value);
+                }
+            }
+        }
+
+        private void InitializeCycleOptions()
+        {
+            CycleOptions.Clear();
+
+            foreach (var cycleId in _config.GetAvailableCycleIds())
+            {
+                CycleOptions.Add(cycleId);
+            }
+
+            // Default selection is a placeholder; no autofill until user chooses a real cycle
+            CycleOptions.Insert(0, DefaultCycleOption);
+            SelectedCycleId = DefaultCycleOption;
+        }
+
+        private void ApplyCycleDefaults(string cycleId)
+        {
+            if (string.IsNullOrWhiteSpace(cycleId) || string.Equals(cycleId, DefaultCycleOption, StringComparison.OrdinalIgnoreCase))
+            {
+                DocNumber = string.Empty;
+                ProjectNumber = string.Empty;
+                TestPlan = string.Empty;
+                Footer = string.Empty;
+                return;
+            }
+
+            if (_config.TryGetCycleTemplateDefaults(cycleId, out var docNumber, out var projectNumber, out var testPlan, out var footer))
+            {
+                DocNumber = docNumber;
+                ProjectNumber = projectNumber;
+                TestPlan = testPlan;
+                Footer = footer;
             }
         }
 
