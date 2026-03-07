@@ -23,7 +23,6 @@ namespace ste_tool_studio.ViewModels
         private bool _isReportMode = false; // Default to Protocol mode
         private const string DefaultCycleOption = "Default";
 
- main
         private string _selectedCycleId;
 
         public STDTemplateNormalizerViewModel(
