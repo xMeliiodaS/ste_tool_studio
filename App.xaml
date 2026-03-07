@@ -129,6 +129,7 @@
                 <Setter Property="BorderBrush" Value="#555" />
                 <Setter Property="Padding" Value="6,2" />
                 <Setter Property="FontSize" Value="13" />
+                
 
                 <!--  Dropdown items  -->
                 <Setter Property="ItemContainerStyle">

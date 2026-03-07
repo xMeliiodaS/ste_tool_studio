@@ -148,30 +148,44 @@
                 <TextBlock
                     Margin="0,0,8,0"
                     VerticalAlignment="Center"
-                    FontSize="13"
+                    FontSize="15"
+                    FontWeight="Bold"
                     Foreground="LightGray"
                     Text="Cycle" />
 
-                <ComboBox
-                    x:Name="CycleDropdown"
-                    Width="130"
+                <Border
+                    Width="60"
                     Height="30"
-                    Padding="6,2"
-                    VerticalContentAlignment="Center"
                     Background="#3C3C3C"
                     BorderBrush="#555"
-                    FontSize="13"
-                    Foreground="White"
-                    Style="{StaticResource DarkComboBox}">
+                    BorderThickness="1"
+                    CornerRadius="16">
 
-                    <ComboBox.ItemContainerStyle>
-                        <Style TargetType="ComboBoxItem">
-                            <Setter Property="Background" Value="#2D2D30" />
-                            <Setter Property="Foreground" Value="White" />
-                        </Style>
-                    </ComboBox.ItemContainerStyle>
+                    <ComboBox
+                        x:Name="CycleDropdown"
+                        Width="Auto"
+                        Height="Auto"
+                        Padding="6,2"
+                        VerticalContentAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        FontSize="13"
+                        Foreground="White"
+                                                ToolTipService.InitialShowDelay="300"
+                        ToolTipService.BetweenShowDelay="0">
 
-                </ComboBox>
+                        <!--  Tooltip goes here, inside the ComboBox  -->
+                        <ComboBox.ToolTip>
+                            <ToolTip MaxWidth="400" Style="{StaticResource CustomToolTip}">
+                                <TextBlock TextWrapping="Wrap">
+                                    Automatically fill DOC Number, Project Number, Test Plan, and Footer text input fields.
+                                </TextBlock>
+                            </ToolTip>
+                        </ComboBox.ToolTip>
+
+                    </ComboBox>
+
+                </Border>
 
             </StackPanel>
         </Grid>
