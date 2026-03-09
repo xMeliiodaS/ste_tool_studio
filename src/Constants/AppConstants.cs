@@ -48,8 +48,8 @@ namespace ste_tool_studio.Constants
         // File Filters
         public const string ExcelFileFilter = "Excel Files|*.xls;*.xlsx";
         public const string ExcelFileDialogTitle = "Select an Excel File";
-        public const string DocxFileFilter = "Word Documents (*.docx)|*.docx|All Files (*.*)|*.*";
-        public const string DocxFileDialogTitle = "Select DOCX File";
+        public const string XlsxFileFilter = "Excel Files (*.xlsx)|*.xlsx|All Files (*.*)|*.*";
+        public const string XlsxFileDialogTitle = "Select XLSX File";
 
         // Default Values
         public const string DefaultStdNamePlaceholder = "Enter STD name";

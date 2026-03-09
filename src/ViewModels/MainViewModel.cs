@@ -682,7 +682,7 @@ namespace ste_tool_studio.ViewModels
         {
             if (string.IsNullOrWhiteSpace(SelectedFilePath))
             {
-                SetStatus("Please select a DOCX file.", true);
+                SetStatus("Please select an XLSX file.", true);
                 return false;
             }
 
