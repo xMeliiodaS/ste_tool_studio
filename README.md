@@ -19,7 +19,7 @@ The UI is written in C#/.NET and executes packaged backend tools (`.exe`) that a
 - Displays status/progress and opens generated reports.
 
 ## 2) STD Template Normalizer
-- Lets users choose a DOCX file.
+- Lets users choose an Excel `.xlsx` file.
 - Sends form inputs (STD name, doc/project/test plan/prepared by/footer, mode) to:
   - `test_document_normalization.exe`
 - Supports **Cycle** dropdown values from config (`cycle_1`, `cycle_2`, ...).

@@ -321,7 +321,7 @@
                     FontSize="12"
                     FontStyle="Italic"
                     Foreground="LightGray"
-                    Text="Or drag and drop a DOCX file here" />
+                    Text="Or drag and drop an XLSX file here" />
 
                 <!--  Selected File Label  -->
                 <TextBlock

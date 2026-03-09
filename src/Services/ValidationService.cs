@@ -80,7 +80,7 @@ namespace ste_tool_studio.Services
         /// Runs the STD template normalization process
         /// </summary>
         public async Task<ProcessExecutionResult> RunSTDNormalizationAsync(
-            string docxFilePath,
+            string templateFilePath,
             string stdName,
             string docNumber,
             string projectNumber,
@@ -91,12 +91,12 @@ namespace ste_tool_studio.Services
             Action<int, int, string> progressCallback = null)
         {
             _loggingService.LogSeparator();
-            _loggingService.LogInfo($"Starting STD normalization for: {docxFilePath}");
+            _loggingService.LogInfo($"Starting STD normalization for: {templateFilePath}");
             _loggingService.LogInfo($"Mode: {(isReportMode ? "Report" : "Protocol")}");
 
             string mode = isReportMode ? "Report" : "Protocol";
             string arguments =
-                                $"\"{docxFilePath}\" " +
+                                $"\"{templateFilePath}\" " +
                                 $"\"{stdName}\" " +
                                 $"\"{docNumber}\" " +
                                 $"\"{projectNumber}\" " +
