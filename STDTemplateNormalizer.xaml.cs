@@ -16,18 +16,18 @@ namespace ste_tool_studio
         public STDTemplateNormalizer()
         {
             InitializeComponent();
-            
+
             // Initialize StatusTextBlock reference after InitializeComponent
             StatusTextBlock = this.StatusText;
 
             // Create ViewModel for DOCX files (already configured in ViewModel)
             _viewModel = ServiceFactory.CreateSTDTemplateNormalizerViewModel();
-            
+
             DataContext = _viewModel;
 
             // Subscribe to ViewModel property changes for UI updates
             _viewModel.PropertyChanged += ViewModel_PropertyChanged;
-            
+
             // Initialize toggle buttons
             UpdateToggleButtons();
         }
@@ -81,19 +81,19 @@ namespace ste_tool_studio
             HandlePlaceholderVisibility(PreparedByInput, PreparedByPlaceholder);
         }
 
-        private void PlanInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            HandlePlaceholderVisibility(ProjectNumberInput, ProjectNumberPlaceholder);
-        }
-
         private void TestPlanInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             HandlePlaceholderVisibility(TestPlanInput, TestPlanPlaceholder);
         }
 
-        private void FooterInput_TextChanged(object sender, TextChangedEventArgs e)
+        private void ReportNumberInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            HandlePlaceholderVisibility(FooterInput, FooterPlaceholder);
+            HandlePlaceholderVisibility(ReportNumberInput, ReportNumberPlaceholder);
+        }
+
+        private void StxNumberInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            HandlePlaceholderVisibility(StxNumberInput, StxNumberPlaceholder);
         }
 
         // Simple click handlers - just call ViewModel methods directly
@@ -122,7 +122,7 @@ namespace ste_tool_studio
                 ReportButton.Background = new System.Windows.Media.SolidColorBrush(
                     System.Windows.Media.Color.FromRgb(76, 175, 80)); // #4CAF50
                 ReportButton.Foreground = System.Windows.Media.Brushes.White;
-                
+
                 // Protocol mode - grey/black (unselected)
                 ProtocolButton.Background = new System.Windows.Media.SolidColorBrush(
                     System.Windows.Media.Color.FromRgb(30, 30, 30)); // #1E1E1E
@@ -134,7 +134,7 @@ namespace ste_tool_studio
                 ProtocolButton.Background = new System.Windows.Media.SolidColorBrush(
                     System.Windows.Media.Color.FromRgb(76, 175, 80)); // #4CAF50
                 ProtocolButton.Foreground = System.Windows.Media.Brushes.White;
-                
+
                 // Report mode - grey/black (unselected)
                 ReportButton.Background = new System.Windows.Media.SolidColorBrush(
                     System.Windows.Media.Color.FromRgb(30, 30, 30)); // #1E1E1E

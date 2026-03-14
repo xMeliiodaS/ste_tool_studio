@@ -16,8 +16,10 @@ namespace ste_tool_studio.ViewModels
         private string _docType;
         private string _stdName;
         private string _docNumber;
+        private string _reportNumber;
         private string _projectNumber;
         private string _testPlan;
+        private string _stxNumber;
         private string _preparedBy;
         private string _footer;
         private bool _isReportMode = false; // Default to Protocol mode
@@ -90,6 +92,22 @@ namespace ste_tool_studio.ViewModels
             }
         }
 
+        /// <summary>
+        /// Report number (used when Report mode is selected).
+        /// </summary>
+        public string ReportNumber
+        {
+            get => _reportNumber;
+            set
+            {
+                if (_reportNumber != value)
+                {
+                    _reportNumber = value;
+                    OnPropertyChanged(nameof(ReportNumber));
+                }
+            }
+        }
+
         public string ProjectNumber
         {
             get => _projectNumber;
@@ -112,6 +130,22 @@ namespace ste_tool_studio.ViewModels
                 {
                     _testPlan = value;
                     OnPropertyChanged(nameof(TestPlan));
+                }
+            }
+        }
+
+        /// <summary>
+        /// STx number, e.g. STD005 or STR014.
+        /// </summary>
+        public string StxNumber
+        {
+            get => _stxNumber;
+            set
+            {
+                if (_stxNumber != value)
+                {
+                    _stxNumber = value;
+                    OnPropertyChanged(nameof(StxNumber));
                 }
             }
         }
@@ -205,18 +239,17 @@ namespace ste_tool_studio.ViewModels
             if (string.IsNullOrWhiteSpace(cycleId) || string.Equals(cycleId, DefaultCycleOption, StringComparison.OrdinalIgnoreCase))
             {
                 DocNumber = string.Empty;
-                ProjectNumber = string.Empty;
                 TestPlan = string.Empty;
-                Footer = string.Empty;
+                ReportNumber = string.Empty;
+                StxNumber = string.Empty;
                 return;
             }
 
             if (_config.TryGetCycleTemplateDefaults(cycleId, out var docNumber, out var projectNumber, out var testPlan, out var footer))
             {
                 DocNumber = docNumber;
-                ProjectNumber = projectNumber;
                 TestPlan = testPlan;
-                Footer = footer;
+                // ReportNumber and StxNumber are user-entered, not driven by cycle defaults.
             }
         }
 
@@ -281,21 +314,29 @@ namespace ste_tool_studio.ViewModels
                 // Trim and normalize inputs
                 StdName = StdName?.Trim() ?? string.Empty;
                 DocNumber = DocNumber?.Trim() ?? string.Empty;
-                ProjectNumber = ProjectNumber?.Trim() ?? string.Empty;
                 TestPlan = TestPlan?.Trim() ?? string.Empty;
+                ReportNumber = ReportNumber?.Trim() ?? string.Empty;
+                StxNumber = StxNumber?.Trim() ?? string.Empty;
                 PreparedBy = PreparedBy?.Trim() ?? string.Empty;
-                Footer = Footer?.Trim() ?? string.Empty;
 
-                _config.UpdateTemplateNormalizerConfig(DocType, StdName, DocNumber, ProjectNumber, TestPlan, PreparedBy, Footer, SelectedFilePath);
+                _config.UpdateTemplateNormalizerConfig(
+                    DocType,
+                    StdName,
+                    DocNumber,
+                    ReportNumber,
+                    TestPlan,
+                    StxNumber,
+                    PreparedBy,
+                    SelectedFilePath);
 
                 var result = await _validationService.RunSTDNormalizationAsync(
                     SelectedFilePath,
                     StdName,
                     DocNumber,
-                    ProjectNumber,
+                    string.Empty, // projectNumber no longer used in Template Normalizer UI
                     TestPlan,
                     PreparedBy,
-                    Footer,
+                    string.Empty, // footer no longer used in Template Normalizer UI
                     IsReportMode,
                     OnProgressUpdate);
 
@@ -331,12 +372,17 @@ namespace ste_tool_studio.ViewModels
             if (string.IsNullOrWhiteSpace(StdName) ||
                 string.IsNullOrWhiteSpace(DocType) ||
                 string.IsNullOrWhiteSpace(DocNumber) ||
-                string.IsNullOrWhiteSpace(ProjectNumber) ||
                 string.IsNullOrWhiteSpace(TestPlan) ||
-                string.IsNullOrWhiteSpace(PreparedBy) ||
-                string.IsNullOrWhiteSpace(Footer))
+                string.IsNullOrWhiteSpace(StxNumber) ||
+                string.IsNullOrWhiteSpace(PreparedBy))
             {
                 SetStatus("Please fill all required fields.", true);
+                return false;
+            }
+
+            if (IsReportMode && string.IsNullOrWhiteSpace(ReportNumber))
+            {
+                SetStatus("Please enter Report number.", true);
                 return false;
             }
 

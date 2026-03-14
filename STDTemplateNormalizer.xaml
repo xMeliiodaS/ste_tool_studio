@@ -168,14 +168,14 @@
                         Padding="6,2"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
-                        ItemsSource="{Binding CycleOptions}"
-                        SelectedItem="{Binding SelectedCycleId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Background="Transparent"
                         BorderThickness="0"
                         FontSize="13"
                         Foreground="White"
-                        ToolTipService.InitialShowDelay="300"
-                        ToolTipService.BetweenShowDelay="0">
+                        ItemsSource="{Binding CycleOptions}"
+                        SelectedItem="{Binding SelectedCycleId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        ToolTipService.BetweenShowDelay="0"
+                        ToolTipService.InitialShowDelay="300">
 
                         <!--  Tooltip goes here, inside the ComboBox  -->
                         <ComboBox.ToolTip>
@@ -581,63 +581,66 @@
                             Text="STD Name" />
                     </Grid>
 
-                    <!--  Row 2: DOC # and Plan (Side by Side)  -->
-                    <Grid Margin="0,0,0,10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <!--  DOC # Input (Left)  -->
-                        <Grid Grid.Column="0" Margin="0,0,7,0">
-                            <TextBox
-                                x:Name="DOCNumberInput"
-                                Width="200"
-                                Padding="10,8"
-                                HorizontalContentAlignment="Center"
-                                Background="#3C3C3C"
-                                BorderBrush="#555"
-                                BorderThickness="1"
-                                FontSize="14"
-                                Foreground="White"
-                                Text="{Binding DocNumber, UpdateSourceTrigger=PropertyChanged}"
-                                TextChanged="DOCNumberInput_TextChanged" />
-                            <TextBlock
-                                x:Name="DOCNumberPlaceholder"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                Foreground="Gray"
-                                IsHitTestVisible="False"
-                                Text="DOC number" />
-                        </Grid>
-
-                        <!--  Plan Input (Right)  -->
-                        <Grid Grid.Column="1" Margin="7,0,0,0">
-                            <TextBox
-                                x:Name="ProjectNumberInput"
-                                Width="100"
-                                Padding="10,8"
-                                HorizontalContentAlignment="Center"
-                                Background="#3C3C3C"
-                                BorderBrush="#555"
-                                BorderThickness="1"
-                                FontSize="14"
-                                Foreground="White"
-                                Text="{Binding ProjectNumber, UpdateSourceTrigger=PropertyChanged}"
-                                TextChanged="PlanInput_TextChanged" />
-                            <TextBlock
-                                x:Name="ProjectNumberPlaceholder"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                Foreground="Gray"
-                                IsHitTestVisible="False"
-                                Text="Project number" />
-                        </Grid>
+                    <!--  Row 2: Protocol number (Full Width)  -->
+                    <Grid Margin="0,0,0,10" HorizontalAlignment="Center">
+                        <TextBox
+                            x:Name="DOCNumberInput"
+                            Width="314"
+                            Padding="10,8"
+                            HorizontalContentAlignment="Center"
+                            Background="#3C3C3C"
+                            BorderBrush="#555"
+                            BorderThickness="1"
+                            FontSize="14"
+                            Foreground="White"
+                            Text="{Binding DocNumber, UpdateSourceTrigger=PropertyChanged}"
+                            TextChanged="DOCNumberInput_TextChanged" />
+                        <TextBlock
+                            x:Name="DOCNumberPlaceholder"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Foreground="Gray"
+                            IsHitTestVisible="False"
+                            Text="Protocol number" />
                     </Grid>
 
-                    <!--  Row 3: Test plan and Prepared by (Side by Side)  -->
+                    <!--  Row 3: Report number (visible only in Report mode)  -->
+                    <Grid Margin="0,0,0,10" HorizontalAlignment="Center">
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsReportMode}" Value="True">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
+
+                        <TextBox
+                            x:Name="ReportNumberInput"
+                            Width="314"
+                            Padding="10,8"
+                            HorizontalContentAlignment="Center"
+                            Background="#3C3C3C"
+                            BorderBrush="#555"
+                            BorderThickness="1"
+                            FontSize="14"
+                            Foreground="White"
+                            Text="{Binding ReportNumber, UpdateSourceTrigger=PropertyChanged}"
+                            TextChanged="ReportNumberInput_TextChanged" />
+                        <TextBlock
+                            x:Name="ReportNumberPlaceholder"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Foreground="Gray"
+                            IsHitTestVisible="False"
+                            Text="Report number" />
+                    </Grid>
+
+                    <!--  Row 4: Test plan and STx number (Side by Side)  -->
                     <Grid Margin="0,0,0,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -668,10 +671,10 @@
                                 Text="Test plan" />
                         </Grid>
 
-                        <!--  Prepared by Input (Right)  -->
+                        <!--  STx number Input (Right)  -->
                         <Grid Grid.Column="1" Margin="7,0,0,0">
                             <TextBox
-                                x:Name="PreparedByInput"
+                                x:Name="StxNumberInput"
                                 Width="150"
                                 Padding="10,8"
                                 HorizontalContentAlignment="Center"
@@ -680,24 +683,24 @@
                                 BorderThickness="1"
                                 FontSize="14"
                                 Foreground="White"
-                                Text="{Binding PreparedBy, UpdateSourceTrigger=PropertyChanged}"
-                                TextChanged="PreparedByInput_TextChanged" />
+                                Text="{Binding StxNumber, UpdateSourceTrigger=PropertyChanged}"
+                                TextChanged="StxNumberInput_TextChanged" />
                             <TextBlock
-                                x:Name="PreparedByPlaceholder"
+                                x:Name="StxNumberPlaceholder"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 FontSize="14"
                                 Foreground="Gray"
                                 IsHitTestVisible="False"
-                                Text="Prepared by" />
+                                Text="STx number (e.g. STD005)" />
                         </Grid>
                     </Grid>
 
-                    <!--  Row 4: Footer (Centered)  -->
+                    <!--  Row 5: Prepared by (Centered)  -->
                     <Grid Margin="0,0,0,0" HorizontalAlignment="Center">
                         <TextBox
-                            x:Name="FooterInput"
-                            Width="150"
+                            x:Name="PreparedByInput"
+                            Width="314"
                             Padding="10,8"
                             HorizontalContentAlignment="Center"
                             Background="#3C3C3C"
@@ -705,16 +708,16 @@
                             BorderThickness="1"
                             FontSize="14"
                             Foreground="White"
-                            Text="{Binding Footer, UpdateSourceTrigger=PropertyChanged}"
-                            TextChanged="FooterInput_TextChanged" />
+                            Text="{Binding PreparedBy, UpdateSourceTrigger=PropertyChanged}"
+                            TextChanged="PreparedByInput_TextChanged" />
                         <TextBlock
-                            x:Name="FooterPlaceholder"
+                            x:Name="PreparedByPlaceholder"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             FontSize="14"
                             Foreground="Gray"
                             IsHitTestVisible="False"
-                            Text="Footer" />
+                            Text="Prepared by" />
                     </Grid>
 
                 </StackPanel>

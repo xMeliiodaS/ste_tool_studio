@@ -640,7 +640,15 @@ namespace ste_tool_studio.ViewModels
                 PreparedBy = PreparedBy?.Trim() ?? string.Empty;
                 Footer = Footer?.Trim() ?? string.Empty;
 
-                _config.UpdateTemplateNormalizerConfig("protocol", StdName, DocNumber, ProjectNumber, TestPlan, PreparedBy, Footer, SelectedFilePath);
+                _config.UpdateTemplateNormalizerConfig(
+                    "protocol",
+                    StdName,
+                    DocNumber,
+                    string.Empty,  // reportNumber not used in legacy MainViewModel flow
+                    TestPlan,
+                    string.Empty,  // stxNumber not used in legacy MainViewModel flow
+                    PreparedBy,
+                    SelectedFilePath);
 
 
                 var result = await _validationService.RunSTDNormalizationAsync(

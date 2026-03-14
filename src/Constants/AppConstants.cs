@@ -39,6 +39,8 @@ namespace ste_tool_studio.Constants
         public const string ConfigKeyTestPlan = "test_plan";
         public const string ConfigKeyPreparedBy = "prepared_by";
         public const string ConfigKeyFooter = "footer";
+        public const string ConfigKeyReportNumber = "report_number";
+        public const string ConfigKeyStxNumber = "stx_number";
 
         // Process Output Markers
         public const string ProgressTotalMarker = "PROGRESS_TOTAL:";
