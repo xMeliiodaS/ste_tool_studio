@@ -15,11 +15,11 @@ namespace ste_tool_studio.ViewModels
     {
         private string _docType;
         private string _stdName;
-        private string _docNumber;
-        private string _projectNumber;
+        private string _protocolNumber;
+        private string _reportNumber;
         private string _testPlan;
         private string _preparedBy;
-        private string _footer;
+        private string _stxNumber;
         private bool _isReportMode = false; // Default to Protocol mode
         private const string DefaultCycleOption = "Default";
         private string _selectedCycleId;
@@ -77,28 +77,28 @@ namespace ste_tool_studio.ViewModels
 
         public bool HasStdName => !string.IsNullOrWhiteSpace(StdName);
 
-        public string DocNumber
+        public string ProtocolNumber
         {
-            get => _docNumber;
+            get => _protocolNumber;
             set
             {
-                if (_docNumber != value)
+                if (_protocolNumber != value)
                 {
-                    _docNumber = value;
-                    OnPropertyChanged(nameof(DocNumber));
+                    _protocolNumber = value;
+                    OnPropertyChanged(nameof(ProtocolNumber));
                 }
             }
         }
 
-        public string ProjectNumber
+        public string ReportNumber
         {
-            get => _projectNumber;
+            get => _reportNumber;
             set
             {
-                if (_projectNumber != value)
+                if (_reportNumber != value)
                 {
-                    _projectNumber = value;
-                    OnPropertyChanged(nameof(ProjectNumber));
+                    _reportNumber = value;
+                    OnPropertyChanged(nameof(ReportNumber));
                 }
             }
         }
@@ -129,15 +129,15 @@ namespace ste_tool_studio.ViewModels
             }
         }
 
-        public string Footer
+        public string STxNumber
         {
-            get => _footer;
+            get => _stxNumber;
             set
             {
-                if (_footer != value)
+                if (_stxNumber != value)
                 {
-                    _footer = value;
-                    OnPropertyChanged(nameof(Footer));
+                    _stxNumber = value;
+                    OnPropertyChanged(nameof(STxNumber));
                 }
             }
         }
@@ -151,6 +151,11 @@ namespace ste_tool_studio.ViewModels
                 {
                     _isReportMode = value;
                     DocType = _isReportMode ? "report" : "protocol";
+                    if (!_isReportMode)
+                    {
+                        ReportNumber = string.Empty;
+                    }
+
                     OnPropertyChanged(nameof(IsReportMode));
                     OnPropertyChanged(nameof(IsProtocolMode));
                 }
@@ -204,19 +209,19 @@ namespace ste_tool_studio.ViewModels
         {
             if (string.IsNullOrWhiteSpace(cycleId) || string.Equals(cycleId, DefaultCycleOption, StringComparison.OrdinalIgnoreCase))
             {
-                DocNumber = string.Empty;
-                ProjectNumber = string.Empty;
+                ProtocolNumber = string.Empty;
+                ReportNumber = string.Empty;
                 TestPlan = string.Empty;
-                Footer = string.Empty;
+                STxNumber = string.Empty;
                 return;
             }
 
-            if (_config.TryGetCycleTemplateDefaults(cycleId, out var docNumber, out var projectNumber, out var testPlan, out var footer))
+            if (_config.TryGetCycleTemplateDefaults(cycleId, out var protocolNumber, out var reportNumber, out var testPlan, out var stxNumber))
             {
-                DocNumber = docNumber;
-                ProjectNumber = projectNumber;
+                ProtocolNumber = protocolNumber;
+                ReportNumber = reportNumber;
                 TestPlan = testPlan;
-                Footer = footer;
+                STxNumber = stxNumber;
             }
         }
 
@@ -280,22 +285,22 @@ namespace ste_tool_studio.ViewModels
             {
                 // Trim and normalize inputs
                 StdName = StdName?.Trim() ?? string.Empty;
-                DocNumber = DocNumber?.Trim() ?? string.Empty;
-                ProjectNumber = ProjectNumber?.Trim() ?? string.Empty;
+                ProtocolNumber = ProtocolNumber?.Trim() ?? string.Empty;
+                ReportNumber = ReportNumber?.Trim() ?? string.Empty;
                 TestPlan = TestPlan?.Trim() ?? string.Empty;
                 PreparedBy = PreparedBy?.Trim() ?? string.Empty;
-                Footer = Footer?.Trim() ?? string.Empty;
+                STxNumber = STxNumber?.Trim() ?? string.Empty;
 
-                _config.UpdateTemplateNormalizerConfig(DocType, StdName, DocNumber, ProjectNumber, TestPlan, PreparedBy, Footer, SelectedFilePath);
+                _config.UpdateTemplateNormalizerConfig(DocType, StdName, ProtocolNumber, ReportNumber, TestPlan, STxNumber, PreparedBy, SelectedFilePath);
 
                 var result = await _validationService.RunSTDNormalizationAsync(
                     SelectedFilePath,
                     StdName,
-                    DocNumber,
-                    ProjectNumber,
+                    ProtocolNumber,
+                    ReportNumber,
                     TestPlan,
+                    STxNumber,
                     PreparedBy,
-                    Footer,
                     IsReportMode,
                     OnProgressUpdate);
 
@@ -330,11 +335,16 @@ namespace ste_tool_studio.ViewModels
 
             if (string.IsNullOrWhiteSpace(StdName) ||
                 string.IsNullOrWhiteSpace(DocType) ||
-                string.IsNullOrWhiteSpace(DocNumber) ||
-                string.IsNullOrWhiteSpace(ProjectNumber) ||
+                string.IsNullOrWhiteSpace(ProtocolNumber) ||
                 string.IsNullOrWhiteSpace(TestPlan) ||
-                string.IsNullOrWhiteSpace(PreparedBy) ||
-                string.IsNullOrWhiteSpace(Footer))
+                string.IsNullOrWhiteSpace(STxNumber) ||
+                string.IsNullOrWhiteSpace(PreparedBy))
+            {
+                SetStatus("Please fill all required fields.", true);
+                return false;
+            }
+
+            if (IsReportMode && string.IsNullOrWhiteSpace(ReportNumber))
             {
                 SetStatus("Please fill all required fields.", true);
                 return false;

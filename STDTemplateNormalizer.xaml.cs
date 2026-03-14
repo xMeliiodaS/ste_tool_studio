@@ -71,9 +71,14 @@ namespace ste_tool_studio
             HandlePlaceholderVisibility(STDNameInput, STDNamePlaceholder);
         }
 
-        private void DOCNumberInput_TextChanged(object sender, TextChangedEventArgs e)
+        private void ProtocolNumberInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            HandlePlaceholderVisibility(DOCNumberInput, DOCNumberPlaceholder);
+            HandlePlaceholderVisibility(ProtocolNumberInput, ProtocolNumberPlaceholder);
+        }
+
+        private void ReportNumberInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            HandlePlaceholderVisibility(ReportNumberInput, ReportNumberPlaceholder);
         }
 
         private void PreparedByInput_TextChanged(object sender, TextChangedEventArgs e)
@@ -81,19 +86,15 @@ namespace ste_tool_studio
             HandlePlaceholderVisibility(PreparedByInput, PreparedByPlaceholder);
         }
 
-        private void PlanInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            HandlePlaceholderVisibility(ProjectNumberInput, ProjectNumberPlaceholder);
-        }
 
         private void TestPlanInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             HandlePlaceholderVisibility(TestPlanInput, TestPlanPlaceholder);
         }
 
-        private void FooterInput_TextChanged(object sender, TextChangedEventArgs e)
+        private void STxInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            HandlePlaceholderVisibility(FooterInput, FooterPlaceholder);
+            HandlePlaceholderVisibility(STxInput, STxPlaceholder);
         }
 
         // Simple click handlers - just call ViewModel methods directly
