@@ -223,9 +223,9 @@ namespace ste_tool_studio.Configuration
         }
 
 
-        // Backward-compatible overload
-        public void UpdateTemplateNormalizerConfig(string docType, string stdName, string docNumber, string projectNumber,
-                                                    string testPlan, string preparedBy, string footer, string selectedFilePath)
+        // Backward-compatible helper for older call sites (legacy argument order)
+        public void UpdateTemplateNormalizerConfigLegacy(string docType, string stdName, string docNumber, string projectNumber,
+                                                          string testPlan, string preparedBy, string footer, string selectedFilePath)
         {
             UpdateTemplateNormalizerConfig(docType, stdName, docNumber, projectNumber, testPlan, footer, preparedBy, selectedFilePath);
         }
