@@ -36,9 +36,12 @@ namespace ste_tool_studio.Constants
         public const string ConfigKeyDoctype = "doc_type";
         public const string ConfigKeyDocNumber = "doc_number";
         public const string ConfigKeyProjectNumber = "project_number";
+        public const string ConfigKeyFooter = "footer";
+        public const string ConfigKeyProtocolNumber = "protocol_number";
+        public const string ConfigKeyReportNumber = "report_number";
+        public const string ConfigKeySTxNumber = "stx_number";
         public const string ConfigKeyTestPlan = "test_plan";
         public const string ConfigKeyPreparedBy = "prepared_by";
-        public const string ConfigKeyFooter = "footer";
 
         // Process Output Markers
         public const string ProgressTotalMarker = "PROGRESS_TOTAL:";

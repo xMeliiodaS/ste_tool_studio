@@ -130,16 +130,20 @@ namespace ste_tool_studio.Configuration
         }
 
         // Template Normalizer
-        public string DocNumber
+        public string ProtocolNumber
         {
-            get => _config[AppConstants.ConfigKeyDocNumber]?.ToString() ?? string.Empty;
-            set => _config[AppConstants.ConfigKeyDocNumber] = value;
+            get => _config[AppConstants.ConfigKeyProtocolNumber]?.ToString()
+                   ?? _config[AppConstants.ConfigKeyDocNumber]?.ToString()
+                   ?? string.Empty;
+            set => _config[AppConstants.ConfigKeyProtocolNumber] = value;
         }
 
-        public string ProjectNumber
+        public string ReportNumber
         {
-            get => _config[AppConstants.ConfigKeyProjectNumber]?.ToString() ?? string.Empty;
-            set => _config[AppConstants.ConfigKeyProjectNumber] = value;
+            get => _config[AppConstants.ConfigKeyReportNumber]?.ToString()
+                   ?? _config[AppConstants.ConfigKeyProjectNumber]?.ToString()
+                   ?? string.Empty;
+            set => _config[AppConstants.ConfigKeyReportNumber] = value;
         }
 
         public string TestPlan
@@ -154,10 +158,32 @@ namespace ste_tool_studio.Configuration
             set => _config[AppConstants.ConfigKeyPreparedBy] = value;
         }
 
+        public string STxNumber
+        {
+            get => _config[AppConstants.ConfigKeySTxNumber]?.ToString()
+                   ?? _config[AppConstants.ConfigKeyFooter]?.ToString()
+                   ?? string.Empty;
+            set => _config[AppConstants.ConfigKeySTxNumber] = value;
+        }
+
+
+        // Backward-compatible aliases
+        public string DocNumber
+        {
+            get => ProtocolNumber;
+            set => ProtocolNumber = value;
+        }
+
+        public string ProjectNumber
+        {
+            get => ReportNumber;
+            set => ReportNumber = value;
+        }
+
         public string Footer
         {
-            get => _config[AppConstants.ConfigKeyFooter]?.ToString() ?? string.Empty;
-            set => _config[AppConstants.ConfigKeyFooter] = value;
+            get => STxNumber;
+            set => STxNumber = value;
         }
 
         public string SelectedFilePath
@@ -181,19 +207,27 @@ namespace ste_tool_studio.Configuration
         /// <summary>
         /// Updates multiple configuration values at once
         /// </summary>
-        public void UpdateTemplateNormalizerConfig(string docType, string stdName, string docNumber, string projectNumber,
-                                                    string testPlan, string preparedBy, string footer, string selectedFilePath)
+        public void UpdateTemplateNormalizerConfig(string docType, string stdName, string protocolNumber, string reportNumber,
+                                                    string testPlan, string stxNumber, string preparedBy, string selectedFilePath)
         {
             DocType = docType;
             StdName = stdName;
-            DocNumber = docNumber;
-            ProjectNumber = projectNumber;
+            ProtocolNumber = protocolNumber;
+            ReportNumber = reportNumber;
             TestPlan = testPlan;
+            STxNumber = stxNumber;
             PreparedBy = preparedBy;
-            Footer = footer;
             SelectedFilePath = selectedFilePath;
 
             SaveConfiguration();
+        }
+
+
+        // Backward-compatible helper for older call sites (legacy argument order)
+        public void UpdateTemplateNormalizerConfigLegacy(string docType, string stdName, string docNumber, string projectNumber,
+                                                          string testPlan, string preparedBy, string footer, string selectedFilePath)
+        {
+            UpdateTemplateNormalizerConfig(docType, stdName, docNumber, projectNumber, testPlan, footer, preparedBy, selectedFilePath);
         }
 
         /// <summary>
@@ -240,15 +274,15 @@ namespace ste_tool_studio.Configuration
         /// </summary>
         public bool TryGetCycleTemplateDefaults(
             string cycleId,
-            out string docNumber,
-            out string projectNumber,
+            out string protocolNumber,
+            out string reportNumber,
             out string testPlan,
-            out string footer)
+            out string stxNumber)
         {
-            docNumber = string.Empty;
-            projectNumber = string.Empty;
+            protocolNumber = string.Empty;
+            reportNumber = string.Empty;
             testPlan = string.Empty;
-            footer = string.Empty;
+            stxNumber = string.Empty;
 
             if (string.IsNullOrWhiteSpace(cycleId))
             {
@@ -261,10 +295,16 @@ namespace ste_tool_studio.Configuration
                 return false;
             }
 
-            docNumber = cycleConfig[AppConstants.ConfigKeyDocNumber]?.ToString() ?? string.Empty;
-            projectNumber = cycleConfig[AppConstants.ConfigKeyProjectNumber]?.ToString() ?? string.Empty;
+            protocolNumber = cycleConfig[AppConstants.ConfigKeyProtocolNumber]?.ToString()
+                             ?? cycleConfig[AppConstants.ConfigKeyDocNumber]?.ToString()
+                             ?? string.Empty;
+            reportNumber = cycleConfig[AppConstants.ConfigKeyReportNumber]?.ToString()
+                           ?? cycleConfig[AppConstants.ConfigKeyProjectNumber]?.ToString()
+                           ?? string.Empty;
             testPlan = cycleConfig[AppConstants.ConfigKeyTestPlan]?.ToString() ?? string.Empty;
-            footer = cycleConfig[AppConstants.ConfigKeyFooter]?.ToString() ?? string.Empty;
+            stxNumber = cycleConfig[AppConstants.ConfigKeySTxNumber]?.ToString()
+                        ?? cycleConfig[AppConstants.ConfigKeyFooter]?.ToString()
+                        ?? string.Empty;
 
             return true;
         }
