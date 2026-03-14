@@ -82,11 +82,11 @@ namespace ste_tool_studio.Services
         public async Task<ProcessExecutionResult> RunSTDNormalizationAsync(
             string templateFilePath,
             string stdName,
-            string docNumber,
-            string projectNumber,
+            string protocolNumber,
+            string reportNumber,
             string testPlan,
+            string stxNumber,
             string preparedBy,
-            string footer,
             bool isReportMode,
             Action<int, int, string> progressCallback = null)
         {
@@ -98,11 +98,11 @@ namespace ste_tool_studio.Services
             string arguments =
                                 $"\"{templateFilePath}\" " +
                                 $"\"{stdName}\" " +
-                                $"\"{docNumber}\" " +
-                                $"\"{projectNumber}\" " +
+                                $"\"{protocolNumber}\" " +
+                                $"\"{reportNumber}\" " +
                                 $"\"{testPlan}\" " +
+                                $"\"{stxNumber}\" " +
                                 $"\"{preparedBy}\" " +
-                                $"\"{footer}\" " +
                                 $"\"{mode}\"";
 
             _loggingService.LogInfo($"STD Normalizer args: {arguments}");

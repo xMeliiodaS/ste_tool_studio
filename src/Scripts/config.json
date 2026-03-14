@@ -4,14 +4,19 @@
   "std_name": "",
   "current_version": "",
   "iteration_path": "",
-  
   "doc_type": "",
-  "doc_number": "",
-  "project_number": "",
+  "protocol_number": "",
+  "report_number": "",
   "test_plan": "",
+  "stx_number": "",
   "prepared_by": "",
-  "footer": "",
   "Exported_STD": "",
   "Template_protocol": "",
-  "Normalized_protocol": ""
+  "Normalized_protocol": "",
+  "cycle_1": {
+    "protocol_number": "PROT-001",
+    "report_number": "RPT-001",
+    "test_plan": "TP-001",
+    "stx_number": "STD005"
+  }
 }

@@ -20,7 +20,7 @@ The UI is written in C#/.NET and executes packaged backend tools (`.exe`) that a
 
 ## 2) STD Template Normalizer
 - Lets users choose an Excel `.xlsx` file.
-- Sends form inputs (STD name, doc/project/test plan/prepared by/footer, mode) to:
+- Sends form inputs (STD name, protocol/report/test plan/STx/prepared by, mode) to:
   - `test_document_normalization.exe`
 - Supports **Cycle** dropdown values from config (`cycle_1`, `cycle_2`, ...).
 - Current UX behavior:
@@ -73,17 +73,17 @@ At first run, if this file does not exist, it is copied from the default `config
 - Baseline verifier:
   - `url`, `excel_path`, `std_name`, `current_version`, `iteration_path`
 - Template normalizer:
-  - `doc_type`, `doc_number`, `project_number`, `test_plan`, `prepared_by`, `footer`, `Exported_STD`
+  - `doc_type`, `protocol_number`, `report_number`, `test_plan`, `stx_number`, `prepared_by`, `Exported_STD`
 
 ### Cycle autofill keys
 Add top-level objects like:
 
 ```json
 "cycle_1": {
-  "doc_number": "DOC-001",
-  "project_number": "PRJ-001",
+  "protocol_number": "PROT-001",
+  "report_number": "RPT-001",
   "test_plan": "TP-001",
-  "footer": "Footer 1"
+  "stx_number": "STD005"
 }
 ```
 
