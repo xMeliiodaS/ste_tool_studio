@@ -1,17 +1,38 @@
 ﻿{
   "url": "https://www.google.com",
-  "excel_path": "",
-  "std_name": "",
-  "current_version": "",
-  "iteration_path": "",
-  
-  "doc_type": "",
-  "doc_number": "",
-  "project_number": "",
-  "test_plan": "",
-  "prepared_by": "",
-  "footer": "",
-  "Exported_STD": "",
-  "Template_protocol": "",
-  "Normalized_protocol": ""
+  "excel_path": "C:\\Users\\סלימאן\\Downloads\\STD_Validation_All_Possibilities.xlsx",
+  "std_name": "Enter STD name",
+  "current_version": "a",
+  "iteration_path": "a",
+  "doc_number": "DOC-001",
+  "project_number": "PRJ-001",
+  "test_plan": "Test Plan",
+  "prepared_by": "Prepared By",
+  "footer": "Footer for cycle 1",
+  "Exported_STD": "C:\\HW\\Book87.xlsx",
+  "Template_protocol": "C:\\HW\\Template.docx",
+  "Normalized_protocol": "C:\\HW\\Normalized_file.docx",
+  "doc_type": "protocol",
+
+  "cycle_1": {
+    "doc_number": "DOC-001",
+    "project_number": "PRJ-001",
+    "test_plan": "TP-001",
+    "footer": "Footer for cycle 1"
+  },
+  "cycle_2": {
+    "doc_number": "DOC-002",
+    "project_number": "PRJ-002",
+    "test_plan": "TP-002",
+    "footer": "Footer for cycle 2"
+  },
+  "cycle_3": {
+    "doc_number": "DOC-003",
+    "project_number": "PRJ-003",
+    "test_plan": "TP-003",
+    "footer": "Footer for cycle 3"
+  },
+  "report_number": "PRJ-001",
+  "stx_number": "STD00X",
+  "protocol_number": "Protocol Number"
 }
