@@ -581,63 +581,119 @@
                             Text="STD Name" />
                     </Grid>
 
-                    <!--  Row 2: Protocol number (Full Width)  -->
+                    <!--  Protocol + Report Row  -->
                     <Grid Margin="0,0,0,10" HorizontalAlignment="Center">
-                        <TextBox
-                            x:Name="DOCNumberInput"
-                            Width="314"
-                            Padding="10,8"
-                            HorizontalContentAlignment="Center"
-                            Background="#3C3C3C"
-                            BorderBrush="#555"
-                            BorderThickness="1"
-                            FontSize="14"
-                            Foreground="White"
-                            Text="{Binding DocNumber, UpdateSourceTrigger=PropertyChanged}"
-                            TextChanged="DOCNumberInput_TextChanged" />
-                        <TextBlock
-                            x:Name="DOCNumberPlaceholder"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Foreground="Gray"
-                            IsHitTestVisible="False"
-                            Text="Protocol number" />
-                    </Grid>
 
-                    <!--  Row 3: Report number (visible only in Report mode)  -->
-                    <Grid Margin="0,0,0,10" HorizontalAlignment="Center">
-                        <Grid.Style>
-                            <Style TargetType="Grid">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsReportMode}" Value="True">
-                                        <Setter Property="Visibility" Value="Visible" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Grid.Style>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                        <TextBox
-                            x:Name="ReportNumberInput"
-                            Width="314"
-                            Padding="10,8"
-                            HorizontalContentAlignment="Center"
-                            Background="#3C3C3C"
-                            BorderBrush="#555"
-                            BorderThickness="1"
-                            FontSize="14"
-                            Foreground="White"
-                            Text="{Binding ReportNumber, UpdateSourceTrigger=PropertyChanged}"
-                            TextChanged="ReportNumberInput_TextChanged" />
-                        <TextBlock
-                            x:Name="ReportNumberPlaceholder"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Foreground="Gray"
-                            IsHitTestVisible="False"
-                            Text="Report number" />
+                        <!--  Protocol Number  -->
+                        <Grid Grid.Column="0">
+
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+                                    <Setter Property="Margin" Value="0" />
+                                    <Style.Triggers>
+
+                                        <!--  When Report mode active add spacing  -->
+                                        <DataTrigger Binding="{Binding IsReportMode}" Value="True">
+                                            <Setter Property="Margin" Value="0,0,7,0" />
+                                        </DataTrigger>
+
+                                    </Style.Triggers>
+                                </Style>
+                            </Grid.Style>
+
+                            <TextBox
+                                x:Name="DOCNumberInput"
+                                Height="36.62"
+                                Padding="10,8"
+                                HorizontalContentAlignment="Center"
+                                Background="#3C3C3C"
+                                BorderBrush="#555"
+                                BorderThickness="1"
+                                FontSize="14"
+                                Foreground="White"
+                                Text="{Binding DocNumber, UpdateSourceTrigger=PropertyChanged}"
+                                TextChanged="DOCNumberInput_TextChanged">
+
+                                <TextBox.Style>
+                                    <Style TargetType="TextBox">
+
+                                        <!--  Default: Protocol mode  -->
+                                        <Setter Property="Width" Value="314" />
+
+                                        <Style.Triggers>
+
+                                            <!--  Report mode  -->
+                                            <DataTrigger Binding="{Binding IsReportMode}" Value="True">
+                                                <Setter Property="Width" Value="150" />
+                                            </DataTrigger>
+
+                                        </Style.Triggers>
+
+                                    </Style>
+                                </TextBox.Style>
+
+                            </TextBox>
+
+                            <TextBlock
+                                x:Name="DOCNumberPlaceholder"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Foreground="Gray"
+                                IsHitTestVisible="False"
+                                Text="Protocol number" />
+
+                        </Grid>
+
+
+                        <!--  Report Number  -->
+                        <Grid Grid.Column="1">
+
+                            <Grid.Style>
+                                <Style TargetType="Grid">
+
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Setter Property="Margin" Value="0" />
+
+                                    <Style.Triggers>
+
+                                        <DataTrigger Binding="{Binding IsReportMode}" Value="True">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                            <Setter Property="Margin" Value="7,0,0,0" />
+                                        </DataTrigger>
+
+                                    </Style.Triggers>
+
+                                </Style>
+                            </Grid.Style>
+
+                            <TextBox
+                                x:Name="ReportNumberInput"
+                                Width="150"
+                                Padding="10,8"
+                                HorizontalContentAlignment="Center"
+                                Background="#3C3C3C"
+                                BorderBrush="#555"
+                                BorderThickness="1"
+                                FontSize="14"
+                                Foreground="White"
+                                Text="{Binding ReportNumber, UpdateSourceTrigger=PropertyChanged}"
+                                TextChanged="ReportNumberInput_TextChanged" />
+
+                            <TextBlock
+                                x:Name="ReportNumberPlaceholder"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Foreground="Gray"
+                                IsHitTestVisible="False"
+                                Text="Report number" />
+                        </Grid>
                     </Grid>
 
                     <!--  Row 4: Test plan and STx number (Side by Side)  -->
@@ -692,7 +748,7 @@
                                 FontSize="14"
                                 Foreground="Gray"
                                 IsHitTestVisible="False"
-                                Text="STx number (e.g. STD005)" />
+                                Text="STD/R number" />
                         </Grid>
                     </Grid>
 
@@ -725,6 +781,7 @@
                 <!--  Normalize Button  -->
                 <Button
                     x:Name="NormalizeButton"
+                    Width="314"
                     Height="40"
                     MaxWidth="350"
                     Margin="0,0,0,0"
