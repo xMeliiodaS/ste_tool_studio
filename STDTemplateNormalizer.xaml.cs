@@ -129,6 +129,27 @@ namespace ste_tool_studio
             PlayPressAnimation(ReportScale);
         }
 
+
+        private void ProtocolButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            AnimateHoverState(ProtocolButton, ProtocolScale, ProtocolShadow, true, !_viewModel.IsReportMode);
+        }
+
+        private void ProtocolButton_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            UpdateToggleButtons();
+        }
+
+        private void ReportButton_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            AnimateHoverState(ReportButton, ReportScale, ReportShadow, true, _viewModel.IsReportMode);
+        }
+
+        private void ReportButton_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            UpdateToggleButtons();
+        }
+
         private void PlayPressAnimation(ScaleTransform scaleTransform)
         {
             var pressAnimation = new DoubleAnimation
@@ -234,6 +255,76 @@ namespace ste_tool_studio
                 {
                     To = targetOpacity,
                     Duration = TimeSpan.FromMilliseconds(220),
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                });
+        }
+
+
+        private static void AnimateHoverState(
+            Button button,
+            ScaleTransform scale,
+            DropShadowEffect shadow,
+            bool isHovering,
+            bool isSelected)
+        {
+            var targetScale = isHovering
+                ? (isSelected ? 1.1 : 1.06)
+                : (isSelected ? 1.04 : 1.0);
+            var targetBlur = isHovering
+                ? (isSelected ? 18.0 : 10.0)
+                : (isSelected ? 14.0 : 0.0);
+            var targetOpacity = isHovering
+                ? (isSelected ? 0.75 : 0.35)
+                : (isSelected ? 0.55 : 0.0);
+            var targetBorderColor = isHovering && !isSelected
+                ? Color.FromRgb(76, 175, 80)
+                : isSelected
+                    ? Color.FromRgb(129, 199, 132)
+                    : Color.FromRgb(30, 30, 30);
+
+            var borderBrush = EnsureAnimatableBorderBrush(button, targetBorderColor);
+            borderBrush.BeginAnimation(
+                SolidColorBrush.ColorProperty,
+                new ColorAnimation
+                {
+                    To = targetBorderColor,
+                    Duration = TimeSpan.FromMilliseconds(140),
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                });
+
+            scale.BeginAnimation(
+                ScaleTransform.ScaleXProperty,
+                new DoubleAnimation
+                {
+                    To = targetScale,
+                    Duration = TimeSpan.FromMilliseconds(140),
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                });
+
+            scale.BeginAnimation(
+                ScaleTransform.ScaleYProperty,
+                new DoubleAnimation
+                {
+                    To = targetScale,
+                    Duration = TimeSpan.FromMilliseconds(140),
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                });
+
+            shadow.BeginAnimation(
+                DropShadowEffect.BlurRadiusProperty,
+                new DoubleAnimation
+                {
+                    To = targetBlur,
+                    Duration = TimeSpan.FromMilliseconds(140),
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                });
+
+            shadow.BeginAnimation(
+                DropShadowEffect.OpacityProperty,
+                new DoubleAnimation
+                {
+                    To = targetOpacity,
+                    Duration = TimeSpan.FromMilliseconds(140),
                     EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
                 });
         }
