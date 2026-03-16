@@ -373,8 +373,12 @@
                                     MinWidth="90"
                                     Padding="18,8"
                                     Background="#1E1E1E"
-                                    BorderThickness="0"
+                                    BorderBrush="#1E1E1E"
+                                    BorderThickness="1"
                                     Click="ProtocolButton_Click"
+                                    PreviewMouseLeftButtonDown="ProtocolButton_PreviewMouseLeftButtonDown"
+                                    MouseEnter="ProtocolButton_MouseEnter"
+                                    MouseLeave="ProtocolButton_MouseLeave"
                                     Content="Protocol"
                                     Cursor="Hand"
                                     FontSize="13"
@@ -395,65 +399,16 @@
                                     </Button.Effect>
                                     <Button.Template>
                                         <ControlTemplate TargetType="Button">
-                                            <Border Background="{TemplateBinding Background}" CornerRadius="16">
+                                            <Border
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="16">
                                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                                             </Border>
                                         </ControlTemplate>
                                     </Button.Template>
-                                    <Button.Triggers>
-                                        <EventTrigger RoutedEvent="MouseEnter">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ProtocolScale"
-                                                        Storyboard.TargetProperty="ScaleX"
-                                                        To="1.08"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ProtocolScale"
-                                                        Storyboard.TargetProperty="ScaleY"
-                                                        To="1.08"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ProtocolShadow"
-                                                        Storyboard.TargetProperty="BlurRadius"
-                                                        To="12"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ProtocolShadow"
-                                                        Storyboard.TargetProperty="Opacity"
-                                                        To="0.5"
-                                                        Duration="0:0:0.2" />
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                        <EventTrigger RoutedEvent="MouseLeave">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ProtocolScale"
-                                                        Storyboard.TargetProperty="ScaleX"
-                                                        To="1"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ProtocolScale"
-                                                        Storyboard.TargetProperty="ScaleY"
-                                                        To="1"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ProtocolShadow"
-                                                        Storyboard.TargetProperty="BlurRadius"
-                                                        To="0"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ProtocolShadow"
-                                                        Storyboard.TargetProperty="Opacity"
-                                                        To="0"
-                                                        Duration="0:0:0.2" />
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                    </Button.Triggers>
+                                    
 
                                 </Button>
 
@@ -464,8 +419,12 @@
                                     MinWidth="90"
                                     Padding="18,8"
                                     Background="#1E1E1E"
-                                    BorderThickness="0"
+                                    BorderBrush="#1E1E1E"
+                                    BorderThickness="1"
                                     Click="ReportButton_Click"
+                                    PreviewMouseLeftButtonDown="ReportButton_PreviewMouseLeftButtonDown"
+                                    MouseEnter="ReportButton_MouseEnter"
+                                    MouseLeave="ReportButton_MouseLeave"
                                     Content="Report"
                                     Cursor="Hand"
                                     FontSize="13"
@@ -486,65 +445,16 @@
                                     </Button.Effect>
                                     <Button.Template>
                                         <ControlTemplate TargetType="Button">
-                                            <Border Background="{TemplateBinding Background}" CornerRadius="16">
+                                            <Border
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="16">
                                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                                             </Border>
                                         </ControlTemplate>
                                     </Button.Template>
-                                    <Button.Triggers>
-                                        <EventTrigger RoutedEvent="MouseEnter">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ReportScale"
-                                                        Storyboard.TargetProperty="ScaleX"
-                                                        To="1.08"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ReportScale"
-                                                        Storyboard.TargetProperty="ScaleY"
-                                                        To="1.08"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ReportShadow"
-                                                        Storyboard.TargetProperty="BlurRadius"
-                                                        To="12"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ReportShadow"
-                                                        Storyboard.TargetProperty="Opacity"
-                                                        To="0.5"
-                                                        Duration="0:0:0.2" />
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                        <EventTrigger RoutedEvent="MouseLeave">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ReportScale"
-                                                        Storyboard.TargetProperty="ScaleX"
-                                                        To="1"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ReportScale"
-                                                        Storyboard.TargetProperty="ScaleY"
-                                                        To="1"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ReportShadow"
-                                                        Storyboard.TargetProperty="BlurRadius"
-                                                        To="0"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ReportShadow"
-                                                        Storyboard.TargetProperty="Opacity"
-                                                        To="0"
-                                                        Duration="0:0:0.2" />
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                    </Button.Triggers>
+                                    
 
                                 </Button>
 
@@ -620,7 +530,7 @@
                                 TextChanged="DOCNumberInput_TextChanged">
 
                                 <TextBox.Style>
-                                    <Style TargetType="TextBox">
+                                    <Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="TextBox">
 
                                         <!--  Default: Protocol mode  -->
                                         <Setter Property="Width" Value="314" />
