@@ -530,7 +530,7 @@
                                 TextChanged="DOCNumberInput_TextChanged">
 
                                 <TextBox.Style>
-                                    <Style TargetType="TextBox">
+                                    <Style BasedOn="{StaticResource {x:Type TextBox}}" TargetType="TextBox">
 
                                         <!--  Default: Protocol mode  -->
                                         <Setter Property="Width" Value="314" />
