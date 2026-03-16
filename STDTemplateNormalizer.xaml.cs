@@ -1,8 +1,11 @@
-﻿using ste_tool_studio.Services;
+using ste_tool_studio.Services;
 using ste_tool_studio.ViewModels;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Media.Effects;
 
 namespace ste_tool_studio
 {
@@ -104,42 +107,118 @@ namespace ste_tool_studio
 
         private void ProtocolButton_Click(object sender, RoutedEventArgs e)
         {
+            PlayPressAnimation(ProtocolScale);
             _viewModel.IsReportMode = false;
             UpdateToggleButtons();
         }
 
         private void ReportButton_Click(object sender, RoutedEventArgs e)
         {
+            PlayPressAnimation(ReportScale);
             _viewModel.IsReportMode = true;
             UpdateToggleButtons();
         }
 
+        private void PlayPressAnimation(ScaleTransform scaleTransform)
+        {
+            var pressAnimation = new DoubleAnimation
+            {
+                To = 0.94,
+                Duration = TimeSpan.FromMilliseconds(80),
+                AutoReverse = true,
+                EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
+            };
+
+            scaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, pressAnimation);
+            scaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, pressAnimation);
+        }
+
+        private static SolidColorBrush EnsureAnimatableBackground(Button button, Color fallbackColor)
+        {
+            if (button.Background is SolidColorBrush existingBrush)
+            {
+                if (existingBrush.IsFrozen)
+                {
+                    var clone = existingBrush.Clone();
+                    button.Background = clone;
+                    return clone;
+                }
+
+                return existingBrush;
+            }
+
+            var brush = new SolidColorBrush(fallbackColor);
+            button.Background = brush;
+            return brush;
+        }
+
+        private static void AnimateToggleButton(
+            Button button,
+            ScaleTransform scale,
+            DropShadowEffect shadow,
+            bool isSelected)
+        {
+            var targetBackgroundColor = isSelected
+                ? Color.FromRgb(76, 175, 80) // #4CAF50
+                : Color.FromRgb(30, 30, 30); // #1E1E1E
+            var targetForeground = isSelected ? Brushes.White : Brushes.LightGray;
+            var targetScale = isSelected ? 1.04 : 1.0;
+            var targetBlur = isSelected ? 14.0 : 0.0;
+            var targetOpacity = isSelected ? 0.55 : 0.0;
+
+            button.Foreground = targetForeground;
+
+            var backgroundBrush = EnsureAnimatableBackground(button, targetBackgroundColor);
+            backgroundBrush.BeginAnimation(
+                SolidColorBrush.ColorProperty,
+                new ColorAnimation
+                {
+                    To = targetBackgroundColor,
+                    Duration = TimeSpan.FromMilliseconds(180),
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                });
+
+            scale.BeginAnimation(
+                ScaleTransform.ScaleXProperty,
+                new DoubleAnimation
+                {
+                    To = targetScale,
+                    Duration = TimeSpan.FromMilliseconds(180),
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                });
+
+            scale.BeginAnimation(
+                ScaleTransform.ScaleYProperty,
+                new DoubleAnimation
+                {
+                    To = targetScale,
+                    Duration = TimeSpan.FromMilliseconds(180),
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                });
+
+            shadow.BeginAnimation(
+                DropShadowEffect.BlurRadiusProperty,
+                new DoubleAnimation
+                {
+                    To = targetBlur,
+                    Duration = TimeSpan.FromMilliseconds(180),
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                });
+
+            shadow.BeginAnimation(
+                DropShadowEffect.OpacityProperty,
+                new DoubleAnimation
+                {
+                    To = targetOpacity,
+                    Duration = TimeSpan.FromMilliseconds(180),
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                });
+        }
+
         private void UpdateToggleButtons()
         {
-            if (_viewModel.IsReportMode)
-            {
-                // Report mode - green (selected)
-                ReportButton.Background = new System.Windows.Media.SolidColorBrush(
-                    System.Windows.Media.Color.FromRgb(76, 175, 80)); // #4CAF50
-                ReportButton.Foreground = System.Windows.Media.Brushes.White;
-
-                // Protocol mode - grey/black (unselected)
-                ProtocolButton.Background = new System.Windows.Media.SolidColorBrush(
-                    System.Windows.Media.Color.FromRgb(30, 30, 30)); // #1E1E1E
-                ProtocolButton.Foreground = System.Windows.Media.Brushes.LightGray;
-            }
-            else
-            {
-                // Protocol mode - green (selected)
-                ProtocolButton.Background = new System.Windows.Media.SolidColorBrush(
-                    System.Windows.Media.Color.FromRgb(76, 175, 80)); // #4CAF50
-                ProtocolButton.Foreground = System.Windows.Media.Brushes.White;
-
-                // Report mode - grey/black (unselected)
-                ReportButton.Background = new System.Windows.Media.SolidColorBrush(
-                    System.Windows.Media.Color.FromRgb(30, 30, 30)); // #1E1E1E
-                ReportButton.Foreground = System.Windows.Media.Brushes.LightGray;
-            }
+            AnimateToggleButton(ProtocolButton, ProtocolScale, ProtocolShadow, !_viewModel.IsReportMode);
+            AnimateToggleButton(ReportButton, ReportScale, ReportShadow, _viewModel.IsReportMode);
         }
 
         private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
