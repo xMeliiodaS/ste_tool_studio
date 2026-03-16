@@ -1,4 +1,4 @@
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using ste_tool_studio.Constants;
 using System.IO;
 using System.Linq;
@@ -129,11 +129,11 @@ namespace ste_tool_studio.Configuration
             set => _config[AppConstants.ConfigKeyIterationPath] = value;
         }
 
-        // Template Normalizer
+        // Template Normalizer (Protocol number → config key "protocol_number" → Word ADD_DOC_STD#)
         public string DocNumber
         {
-            get => _config[AppConstants.ConfigKeyDocNumber]?.ToString() ?? string.Empty;
-            set => _config[AppConstants.ConfigKeyDocNumber] = value;
+            get => _config[AppConstants.ConfigKeyProtocolNumber]?.ToString() ?? string.Empty;
+            set => _config[AppConstants.ConfigKeyProtocolNumber] = value;
         }
 
         public string ReportNumber
@@ -280,7 +280,7 @@ namespace ste_tool_studio.Configuration
                 return false;
             }
 
-            docNumber = cycleConfig[AppConstants.ConfigKeyDocNumber]?.ToString() ?? string.Empty;
+            docNumber = cycleConfig[AppConstants.ConfigKeyProtocolNumber]?.ToString() ?? string.Empty;
             projectNumber = cycleConfig[AppConstants.ConfigKeyProjectNumber]?.ToString() ?? string.Empty;
             testPlan = cycleConfig[AppConstants.ConfigKeyTestPlan]?.ToString() ?? string.Empty;
             footer = cycleConfig[AppConstants.ConfigKeyFooter]?.ToString() ?? string.Empty;

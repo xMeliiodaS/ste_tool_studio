@@ -32,15 +32,15 @@ namespace ste_tool_studio.Constants
         public const string ConfigKeyCurrentVersion = "current_version";
         public const string ConfigKeyIterationPath = "iteration_path";
 
-        // Template Normalizer-specific Config Keys
+        // Template Normalizer: field name = config key → Word placeholder
         public const string ConfigKeyDoctype = "doc_type";
-        public const string ConfigKeyDocNumber = "doc_number";
+        public const string ConfigKeyProtocolNumber = "protocol_number";  // → ADD_PROTOCOL_NUMBER#
         public const string ConfigKeyProjectNumber = "project_number";
-        public const string ConfigKeyTestPlan = "test_plan";
-        public const string ConfigKeyPreparedBy = "prepared_by";
+        public const string ConfigKeyTestPlan = "test_plan";               // → ADD_PLAN_NUMBER
+        public const string ConfigKeyPreparedBy = "prepared_by";          // → ADD_PREPARED_BY
         public const string ConfigKeyFooter = "footer";
-        public const string ConfigKeyReportNumber = "report_number";
-        public const string ConfigKeyStxNumber = "stx_number";
+        public const string ConfigKeyReportNumber = "report_number";      // → ADD_REPORT_NUMBER
+        public const string ConfigKeyStxNumber = "stx_number";            // → ADD_STX_NUMBER
 
         // Process Output Markers
         public const string ProgressTotalMarker = "PROGRESS_TOTAL:";
