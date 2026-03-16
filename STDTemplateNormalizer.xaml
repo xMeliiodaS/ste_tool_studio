@@ -373,8 +373,10 @@
                                     MinWidth="90"
                                     Padding="18,8"
                                     Background="#1E1E1E"
-                                    BorderThickness="0"
+                                    BorderBrush="#1E1E1E"
+                                    BorderThickness="1"
                                     Click="ProtocolButton_Click"
+                                    PreviewMouseLeftButtonDown="ProtocolButton_PreviewMouseLeftButtonDown"
                                     Content="Protocol"
                                     Cursor="Hand"
                                     FontSize="13"
@@ -395,7 +397,11 @@
                                     </Button.Effect>
                                     <Button.Template>
                                         <ControlTemplate TargetType="Button">
-                                            <Border Background="{TemplateBinding Background}" CornerRadius="16">
+                                            <Border
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="16">
                                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                                             </Border>
                                         </ControlTemplate>
@@ -411,8 +417,10 @@
                                     MinWidth="90"
                                     Padding="18,8"
                                     Background="#1E1E1E"
-                                    BorderThickness="0"
+                                    BorderBrush="#1E1E1E"
+                                    BorderThickness="1"
                                     Click="ReportButton_Click"
+                                    PreviewMouseLeftButtonDown="ReportButton_PreviewMouseLeftButtonDown"
                                     Content="Report"
                                     Cursor="Hand"
                                     FontSize="13"
@@ -433,7 +441,11 @@
                                     </Button.Effect>
                                     <Button.Template>
                                         <ControlTemplate TargetType="Button">
-                                            <Border Background="{TemplateBinding Background}" CornerRadius="16">
+                                            <Border
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="16">
                                                 <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                                             </Border>
                                         </ControlTemplate>

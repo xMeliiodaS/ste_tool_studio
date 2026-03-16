@@ -119,18 +119,28 @@ namespace ste_tool_studio
             UpdateToggleButtons();
         }
 
+        private void ProtocolButton_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            PlayPressAnimation(ProtocolScale);
+        }
+
+        private void ReportButton_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            PlayPressAnimation(ReportScale);
+        }
+
         private void PlayPressAnimation(ScaleTransform scaleTransform)
         {
             var pressAnimation = new DoubleAnimation
             {
-                To = 0.94,
-                Duration = TimeSpan.FromMilliseconds(80),
+                To = 0.88,
+                Duration = TimeSpan.FromMilliseconds(110),
                 AutoReverse = true,
                 EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut }
             };
 
             scaleTransform.BeginAnimation(ScaleTransform.ScaleXProperty, pressAnimation);
-            scaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, pressAnimation);
+            scaleTransform.BeginAnimation(ScaleTransform.ScaleYProperty, pressAnimation.Clone());
         }
 
         private static SolidColorBrush EnsureAnimatableBackground(Button button, Color fallbackColor)
@@ -165,6 +175,9 @@ namespace ste_tool_studio
             var targetScale = isSelected ? 1.04 : 1.0;
             var targetBlur = isSelected ? 14.0 : 0.0;
             var targetOpacity = isSelected ? 0.55 : 0.0;
+            var targetBorderColor = isSelected
+                ? Color.FromRgb(129, 199, 132)
+                : Color.FromRgb(30, 30, 30);
 
             button.Foreground = targetForeground;
 
@@ -174,7 +187,17 @@ namespace ste_tool_studio
                 new ColorAnimation
                 {
                     To = targetBackgroundColor,
-                    Duration = TimeSpan.FromMilliseconds(180),
+                    Duration = TimeSpan.FromMilliseconds(220),
+                    EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
+                });
+
+            var borderBrush = EnsureAnimatableBorderBrush(button, targetBorderColor);
+            borderBrush.BeginAnimation(
+                SolidColorBrush.ColorProperty,
+                new ColorAnimation
+                {
+                    To = targetBorderColor,
+                    Duration = TimeSpan.FromMilliseconds(220),
                     EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
                 });
 
@@ -183,7 +206,7 @@ namespace ste_tool_studio
                 new DoubleAnimation
                 {
                     To = targetScale,
-                    Duration = TimeSpan.FromMilliseconds(180),
+                    Duration = TimeSpan.FromMilliseconds(220),
                     EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
                 });
 
@@ -192,7 +215,7 @@ namespace ste_tool_studio
                 new DoubleAnimation
                 {
                     To = targetScale,
-                    Duration = TimeSpan.FromMilliseconds(180),
+                    Duration = TimeSpan.FromMilliseconds(220),
                     EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
                 });
 
@@ -201,7 +224,7 @@ namespace ste_tool_studio
                 new DoubleAnimation
                 {
                     To = targetBlur,
-                    Duration = TimeSpan.FromMilliseconds(180),
+                    Duration = TimeSpan.FromMilliseconds(220),
                     EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
                 });
 
@@ -210,9 +233,28 @@ namespace ste_tool_studio
                 new DoubleAnimation
                 {
                     To = targetOpacity,
-                    Duration = TimeSpan.FromMilliseconds(180),
+                    Duration = TimeSpan.FromMilliseconds(220),
                     EasingFunction = new CubicEase { EasingMode = EasingMode.EaseOut }
                 });
+        }
+
+        private static SolidColorBrush EnsureAnimatableBorderBrush(Button button, Color fallbackColor)
+        {
+            if (button.BorderBrush is SolidColorBrush existingBrush)
+            {
+                if (existingBrush.IsFrozen)
+                {
+                    var clone = existingBrush.Clone();
+                    button.BorderBrush = clone;
+                    return clone;
+                }
+
+                return existingBrush;
+            }
+
+            var brush = new SolidColorBrush(fallbackColor);
+            button.BorderBrush = brush;
+            return brush;
         }
 
         private void UpdateToggleButtons()
