@@ -107,12 +107,14 @@ namespace ste_tool_studio
 
         private void ProtocolButton_Click(object sender, RoutedEventArgs e)
         {
+            PlayPressAnimation(ProtocolScale);
             _viewModel.IsReportMode = false;
             UpdateToggleButtons();
         }
 
         private void ReportButton_Click(object sender, RoutedEventArgs e)
         {
+            PlayPressAnimation(ReportScale);
             _viewModel.IsReportMode = true;
             UpdateToggleButtons();
         }
