@@ -400,60 +400,7 @@
                                             </Border>
                                         </ControlTemplate>
                                     </Button.Template>
-                                    <Button.Triggers>
-                                        <EventTrigger RoutedEvent="MouseEnter">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ProtocolScale"
-                                                        Storyboard.TargetProperty="ScaleX"
-                                                        To="1.08"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ProtocolScale"
-                                                        Storyboard.TargetProperty="ScaleY"
-                                                        To="1.08"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ProtocolShadow"
-                                                        Storyboard.TargetProperty="BlurRadius"
-                                                        To="12"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ProtocolShadow"
-                                                        Storyboard.TargetProperty="Opacity"
-                                                        To="0.5"
-                                                        Duration="0:0:0.2" />
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                        <EventTrigger RoutedEvent="MouseLeave">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ProtocolScale"
-                                                        Storyboard.TargetProperty="ScaleX"
-                                                        To="1"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ProtocolScale"
-                                                        Storyboard.TargetProperty="ScaleY"
-                                                        To="1"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ProtocolShadow"
-                                                        Storyboard.TargetProperty="BlurRadius"
-                                                        To="0"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ProtocolShadow"
-                                                        Storyboard.TargetProperty="Opacity"
-                                                        To="0"
-                                                        Duration="0:0:0.2" />
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                    </Button.Triggers>
+                                    
 
                                 </Button>
 
@@ -491,60 +438,7 @@
                                             </Border>
                                         </ControlTemplate>
                                     </Button.Template>
-                                    <Button.Triggers>
-                                        <EventTrigger RoutedEvent="MouseEnter">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ReportScale"
-                                                        Storyboard.TargetProperty="ScaleX"
-                                                        To="1.08"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ReportScale"
-                                                        Storyboard.TargetProperty="ScaleY"
-                                                        To="1.08"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ReportShadow"
-                                                        Storyboard.TargetProperty="BlurRadius"
-                                                        To="12"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ReportShadow"
-                                                        Storyboard.TargetProperty="Opacity"
-                                                        To="0.5"
-                                                        Duration="0:0:0.2" />
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                        <EventTrigger RoutedEvent="MouseLeave">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ReportScale"
-                                                        Storyboard.TargetProperty="ScaleX"
-                                                        To="1"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ReportScale"
-                                                        Storyboard.TargetProperty="ScaleY"
-                                                        To="1"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ReportShadow"
-                                                        Storyboard.TargetProperty="BlurRadius"
-                                                        To="0"
-                                                        Duration="0:0:0.2" />
-                                                    <DoubleAnimation
-                                                        Storyboard.TargetName="ReportShadow"
-                                                        Storyboard.TargetProperty="Opacity"
-                                                        To="0"
-                                                        Duration="0:0:0.2" />
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
-                                    </Button.Triggers>
+                                    
 
                                 </Button>
 
