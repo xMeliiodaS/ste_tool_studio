@@ -4,14 +4,22 @@
   "std_name": "",
   "current_version": "",
   "iteration_path": "",
-  
   "doc_type": "",
+  "protocol_number": "",
+  "report_number": "",
+  "test_plan": "",
+  "stx_number": "",
+  "prepared_by": "",
+  "Exported_STD": "",
+  "Template_protocol": "C:\\HW\\Template.docx",
+  "Normalized_protocol": "C:\\HW\\Normalized_file.docx",
+  "cycle_1": {
+    "protocol_number": "PROT-001a",
+    "report_number": "RPT-001a",
+    "test_plan": "TP-001a",
+    "stx_number": "STD005a"
+  },
   "doc_number": "",
   "project_number": "",
-  "test_plan": "",
-  "prepared_by": "",
-  "footer": "",
-  "Exported_STD": "",
-  "Template_protocol": "",
-  "Normalized_protocol": ""
+  "footer": ""
 }
