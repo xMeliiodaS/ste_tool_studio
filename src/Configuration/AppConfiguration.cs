@@ -270,14 +270,11 @@ namespace ste_tool_studio.Configuration
         public bool TryGetCycleTemplateDefaults(
             string cycleId,
             out string docNumber,
-            out string projectNumber,
-            out string testPlan,
-            out string footer)
+            out string testPlan
+            )
         {
             docNumber = string.Empty;
-            projectNumber = string.Empty;
             testPlan = string.Empty;
-            footer = string.Empty;
 
             if (string.IsNullOrWhiteSpace(cycleId))
             {
@@ -291,9 +288,7 @@ namespace ste_tool_studio.Configuration
             }
 
             docNumber = cycleConfig[AppConstants.ConfigKeyProtocolNumber]?.ToString() ?? string.Empty;
-            projectNumber = cycleConfig[AppConstants.ConfigKeyProjectNumber]?.ToString() ?? string.Empty;
             testPlan = cycleConfig[AppConstants.ConfigKeyTestPlan]?.ToString() ?? string.Empty;
-            footer = cycleConfig[AppConstants.ConfigKeyFooter]?.ToString() ?? string.Empty;
 
             return true;
         }

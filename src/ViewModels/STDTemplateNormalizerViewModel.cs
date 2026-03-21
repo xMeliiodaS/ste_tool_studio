@@ -245,7 +245,7 @@ namespace ste_tool_studio.ViewModels
                 return;
             }
 
-            if (_config.TryGetCycleTemplateDefaults(cycleId, out var docNumber, out var projectNumber, out var testPlan, out var footer))
+            if (_config.TryGetCycleTemplateDefaults(cycleId, out var docNumber, out var testPlan))
             {
                 DocNumber = docNumber;
                 TestPlan = testPlan;

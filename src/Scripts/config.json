@@ -14,12 +14,7 @@
   "Template_protocol": "C:\\HW\\Template.docx",
   "Normalized_protocol": "C:\\HW\\Normalized_file.docx",
   "cycle_1": {
-    "protocol_number": "PROT-001a",
-    "report_number": "RPT-001a",
-    "test_plan": "TP-001a",
-    "stx_number": "STD005a"
-  },
-  "doc_number": "",
-  "project_number": "",
-  "footer": ""
+    "protocol_number": "2473596580",
+    "test_plan": "0685"
+  }
 }
