@@ -13,6 +13,7 @@ namespace ste_tool_studio.Configuration
     {
         private readonly string _userConfigPath;
         private readonly string _defaultConfigPath;
+        private readonly string[] _defaultConfigCandidates;
         private JObject _config;
 
         public AppConfiguration()
@@ -24,7 +25,13 @@ namespace ste_tool_studio.Configuration
             Directory.CreateDirectory(appDataFolder);
 
             _userConfigPath = IOPath.Combine(appDataFolder, AppConstants.ConfigFileName);
-            _defaultConfigPath = IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, AppConstants.ConfigFileName);
+            _defaultConfigCandidates =
+            [
+                IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, AppConstants.ConfigFileName),
+                IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts", AppConstants.ConfigFileName),
+                IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "src", "Scripts", AppConstants.ConfigFileName)
+            ];
+            _defaultConfigPath = _defaultConfigCandidates.FirstOrDefault(File.Exists) ?? _defaultConfigCandidates[0];
 
             EnsureUserConfigExists();
             LoadConfiguration();
@@ -46,7 +53,10 @@ namespace ste_tool_studio.Configuration
                     else
                     {
                         throw new FileNotFoundException(
-                            string.Format(AppConstants.ErrorConfigNotFound, AppConstants.ConfigFileName, _defaultConfigPath));
+                            string.Format(
+                                AppConstants.ErrorConfigNotFound,
+                                AppConstants.ConfigFileName,
+                                string.Join(", ", _defaultConfigCandidates)));
                     }
                 }
             }
