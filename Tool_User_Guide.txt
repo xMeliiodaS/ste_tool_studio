@@ -1,0 +1,131 @@
+Tools Studio User Guide
+======================
+
+This guide explains how to use the tool, starting from the Main Menu window and then covering the STDTemplateNormalizer.
+A full BaselineVerifierWindow guide is also included (based on your provided guide), with one important note:
+for the file selected in STDTemplateNormalizer ("Select STD File"), use the same DOORS export process and make sure Excel is closed before running normalization.
+
+
+1) Main Menu Window Explanation
+-------------------------------
+When you launch the application, the Main Menu window is the entry point.
+
+What the Main Menu is for:
+- It lets you choose which tool window to open.
+- It centralizes navigation so users can quickly move to the needed workflow.
+
+How to use it:
+1. Open the application executable.
+2. In the Main Menu, select the tool you want:
+   - Baseline Verifier
+   - STD Template Normalizer
+3. The selected tool window opens and you can continue with that workflow.
+
+Tip:
+- Return to the Main Menu whenever you need to switch between tool workflows.
+
+
+2) STDTemplateNormalizer User Guide
+-----------------------------------
+The STDTemplateNormalizer is used to normalize/prepare an exported STD Excel file into the required template structure.
+
+Before using STDTemplateNormalizer (DOORS + Excel export requirement):
+Use the same approach used for the verifier input file.
+
+Exporting STD to Excel from DOORS:
+1. Open DOORS and navigate to your assigned STD module.
+2. Go to File menu.
+3. Hover over Export.
+4. Select Microsoft Office -> Excel...
+
+Export settings:
+- Select Object Heading and Text.
+- Check "Preserve rich text formatting".
+
+Finalize exported Excel file:
+1. Review the exported content in Excel.
+2. Save the file to your designated location.
+3. Close Excel completely (EXCEL MUST BE CLOSED).
+
+Important note for STDTemplateNormalizer:
+- The file you choose in "Select STD File" must be this properly exported DOORS Excel file.
+- Excel must be closed before you run normalization.
+
+Using STDTemplateNormalizer:
+1. Open STDTemplateNormalizer from the Main Menu.
+2. Click "Select STD File".
+3. Browse to the DOORS-exported Excel file and select it.
+4. Provide any additional required fields/options shown in the window.
+5. Start the normalization process.
+6. Wait for completion and review the generated normalized output/report.
+
+Best practices:
+- Use a fresh export from DOORS for each run.
+- Avoid manual structural edits in Excel before normalization unless required by process.
+- If processing fails, verify:
+  - Correct source file selected
+  - File is not open/locked in Excel
+  - Required fields are filled correctly
+
+
+3) BaselineVerifierWindow User Guide
+------------------------------------
+STD Verifier Tool Guide
+
+Exporting STD to Excel
+Open DOORS -> Navigate to your assigned STD module.
+1. Navigate to the File menu.
+2. Hover over Export.
+3. Select Microsoft Office -> Excel...
+
+Export Settings
+In the export dialog:
+- Select Object Heading and Text.
+- Check the "Preserve rich text formatting" text box.
+
+Finalize Exported Excel File
+After the STD is exported and opened in Excel:
+1. Review the content to ensure formatting and structure are preserved.
+2. Click File -> Save As to store the file in your designated location.
+3. Close the Excel file to complete the export process (EXCEL MUST BE CLOSED).
+
+Accessing the STD Verifier Tool
+To launch the STD verification tool:
+1. Navigate to the following path: L:\Testing\Tools\TempTest\STD_Verifier_V1
+2. Locate the file named AT_baseline_verifier.exe
+3. You can either:
+   - Double-click to open it directly, or
+   - Right-click -> Send to -> Desktop (create shortcut) for quick future access.
+
+Using the STD Baseline Verifier Tool
+The STD Baseline Verifier is designed to validate exported STD Excel files against VSTS bug tracking and internal rule compliance.
+
+Tool Interface Overview:
+1. Select STD (Excel) - Button: Click or drag the exported STD Excel file from DOORS.
+2. STD Name - Input Field: Enter the name of the STD document.
+3. Iteration Path - Input Field: Specify the iteration path used.
+4. Current V&V Version - Input Field: Input the current V&V version.
+5. Check STD Bugs in VSTS - Button: Validates STD entries against VSTS fields (STD ID, Iteration Path, LastReproducedIn).
+6. Validate STD Rules - Button: Checks for rule violations:
+   Rule 1: Each Test with Expected Results has Test Results.
+   Rule 2: Tests with no expected results do not have test results.
+   Rule 3: Each Pass [Test Results] doesn't have defect number.
+   Rule 4: Each Fail [Test Results] has a defect number.
+7. Last Report - Button: Opens the most recent validation report.
+
+Running STD Validation and Bug Checks
+Bug Verification in VSTS:
+- Button: Check STD Bugs in VSTS
+- Function: Iterates through the STD Excel file and validates STD ID, Iteration Path, and LastReproducedIn fields against VSTS.
+
+STD Rule Validation:
+- Button: Validate STD Rules
+- Function: Checks for violations based on the following rules:
+   Rule 1: Each Test with Expected Results has Test Results.
+   Rule 2: Tests with no expected results do not have test results.
+   Rule 3: Each Pass [Test Results] doesn't have defect number.
+   Rule 4: Each Fail [Test Results] has a defect number.
+
+Accessing the Last Report:
+- Button: Last Report
+- Function: Opens the most recent validation report for review.
