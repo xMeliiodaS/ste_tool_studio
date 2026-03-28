@@ -16,12 +16,20 @@ namespace ste_tool_studio.Services
             string arguments,
             System.Action<int, int, string> progressCallback = null)
         {
-            string exePath = IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, exeName);
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string[] candidatePaths =
+            {
+                IOPath.Combine(baseDirectory, "Scripts", exeName),
+                IOPath.Combine(baseDirectory, exeName)
+            };
 
-            if (!File.Exists(exePath))
+            string exePath = candidatePaths.FirstOrDefault(File.Exists);
+
+            if (string.IsNullOrWhiteSpace(exePath))
             {
                 throw new FileNotFoundException(
-                    string.Format(AppConstants.ErrorExeNotFound, exeName), exePath);
+                    string.Format(AppConstants.ErrorExeNotFound, exeName),
+                    IOPath.Combine(baseDirectory, "Scripts", exeName));
             }
 
             var result = new ProcessExecutionResult();
@@ -100,4 +108,3 @@ namespace ste_tool_studio.Services
         }
     }
 }
-
