@@ -19,8 +19,8 @@ namespace ste_tool_studio.Services
             string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string[] candidatePaths =
             {
-                IOPath.Combine(baseDirectory, "Scripts", exeName),
-                IOPath.Combine(baseDirectory, exeName)
+                IOPath.Combine(baseDirectory, exeName),
+                IOPath.Combine(baseDirectory, "Scripts", exeName)
             };
 
             string exePath = candidatePaths.FirstOrDefault(File.Exists);
@@ -29,7 +29,7 @@ namespace ste_tool_studio.Services
             {
                 throw new FileNotFoundException(
                     string.Format(AppConstants.ErrorExeNotFound, exeName),
-                    IOPath.Combine(baseDirectory, "Scripts", exeName));
+                    IOPath.Combine(baseDirectory, exeName));
             }
 
             var result = new ProcessExecutionResult();
