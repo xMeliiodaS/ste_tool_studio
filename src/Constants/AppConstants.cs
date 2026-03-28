@@ -11,6 +11,8 @@ namespace ste_tool_studio.Constants
 
         // File Names
         public const string ConfigFileName = "config.json";
+        public const string ToolsDirectoryName = "tools";
+        public const string ScriptsDirectoryName = "Scripts";
         /// <summary>Unified log file name used by both C# and Python (in APPDATA).</summary>
         public const string LogFileName = "ste_tool_studio.log";
         public const string AutomationLogFileName = "automation_log.log";
@@ -91,4 +93,3 @@ namespace ste_tool_studio.Constants
         public const string DeveloperCredit = "Developed by Bahaa";
     }
 }
-

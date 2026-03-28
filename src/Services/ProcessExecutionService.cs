@@ -1,6 +1,7 @@
 using ste_tool_studio.Constants;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using IOPath = System.IO.Path;
 
@@ -16,7 +17,14 @@ namespace ste_tool_studio.Services
             string arguments,
             System.Action<int, int, string> progressCallback = null)
         {
-            string exePath = IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, exeName);
+            string baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string[] exePathCandidates =
+            [
+                IOPath.Combine(baseDirectory, exeName),
+                IOPath.Combine(baseDirectory, AppConstants.ToolsDirectoryName, exeName),
+                IOPath.Combine(baseDirectory, AppConstants.ScriptsDirectoryName, exeName)
+            ];
+            string exePath = exePathCandidates.FirstOrDefault(File.Exists) ?? exePathCandidates[0];
 
             if (!File.Exists(exePath))
             {
@@ -100,4 +108,3 @@ namespace ste_tool_studio.Services
         }
     }
 }
-

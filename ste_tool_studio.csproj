@@ -20,19 +20,24 @@
     <Content Include="Scripts\test_bugs_std_validation.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      <TargetPath>tools\test_bugs_std_validation.exe</TargetPath>
     </Content>
     <Content Include="Scripts\test_excel_violations.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      <TargetPath>tools\test_excel_violations.exe</TargetPath>
     </Content>
     <Content Include="Scripts\test_document_normalization.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      <TargetPath>tools\test_document_normalization.exe</TargetPath>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="src\Scripts\config.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
 
@@ -40,6 +45,7 @@
 		<None Update="Scripts\config.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+      <TargetPath>tools\config.json</TargetPath>
 		</None>
 	</ItemGroup>
 

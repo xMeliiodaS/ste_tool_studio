@@ -28,7 +28,8 @@ namespace ste_tool_studio.Configuration
             _defaultConfigCandidates =
             [
                 IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, AppConstants.ConfigFileName),
-                IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts", AppConstants.ConfigFileName),
+                IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, AppConstants.ToolsDirectoryName, AppConstants.ConfigFileName),
+                IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, AppConstants.ScriptsDirectoryName, AppConstants.ConfigFileName),
                 IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "src", "Scripts", AppConstants.ConfigFileName)
             ];
             _defaultConfigPath = _defaultConfigCandidates.FirstOrDefault(File.Exists) ?? _defaultConfigCandidates[0];
