@@ -371,20 +371,20 @@
                                     x:Name="ProtocolButton"
                                     Grid.Column="0"
                                     MinWidth="90"
-                                    Padding="18,8"
                                     Margin="0,0,5,0"
+                                    Padding="18,8"
                                     Background="#1E1E1E"
                                     BorderBrush="#1E1E1E"
                                     BorderThickness="1"
                                     Click="ProtocolButton_Click"
-                                    PreviewMouseLeftButtonDown="ProtocolButton_PreviewMouseLeftButtonDown"
-                                    MouseEnter="ProtocolButton_MouseEnter"
-                                    MouseLeave="ProtocolButton_MouseLeave"
                                     Content="Protocol"
                                     Cursor="Hand"
                                     FontSize="13"
                                     FontWeight="SemiBold"
                                     Foreground="LightGray"
+                                    MouseEnter="ProtocolButton_MouseEnter"
+                                    MouseLeave="ProtocolButton_MouseLeave"
+                                    PreviewMouseLeftButtonDown="ProtocolButton_PreviewMouseLeftButtonDown"
                                     RenderTransformOrigin="0.5,0.5">
 
                                     <Button.RenderTransform>
@@ -409,7 +409,7 @@
                                             </Border>
                                         </ControlTemplate>
                                     </Button.Template>
-                                    
+
 
                                 </Button>
 
@@ -423,14 +423,14 @@
                                     BorderBrush="#1E1E1E"
                                     BorderThickness="1"
                                     Click="ReportButton_Click"
-                                    PreviewMouseLeftButtonDown="ReportButton_PreviewMouseLeftButtonDown"
-                                    MouseEnter="ReportButton_MouseEnter"
-                                    MouseLeave="ReportButton_MouseLeave"
                                     Content="Report"
                                     Cursor="Hand"
                                     FontSize="13"
                                     FontWeight="SemiBold"
                                     Foreground="LightGray"
+                                    MouseEnter="ReportButton_MouseEnter"
+                                    MouseLeave="ReportButton_MouseLeave"
+                                    PreviewMouseLeftButtonDown="ReportButton_PreviewMouseLeftButtonDown"
                                     RenderTransformOrigin="0.5,0.5">
 
                                     <Button.RenderTransform>
@@ -455,7 +455,7 @@
                                             </Border>
                                         </ControlTemplate>
                                     </Button.Template>
-                                    
+
 
                                 </Button>
 
@@ -651,12 +651,15 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
 
-                                    <Border Grid.Column="0" Background="#2F2F2F" Padding="10,8">
+                                    <Border
+                                        Grid.Column="0"
+                                        Padding="10,8"
+                                        Background="#2F2F2F">
                                         <TextBlock
                                             VerticalAlignment="Center"
                                             FontSize="14"
-                                            Foreground="#9A9A9A"
                                             FontWeight="SemiBold"
+                                            Foreground="#9A9A9A"
                                             Text="{Binding RequiredStxPrefix}" />
                                     </Border>
 
@@ -681,7 +684,7 @@
                                 FontSize="14"
                                 Foreground="Gray"
                                 IsHitTestVisible="False"
-                                Text="number" />
+                                Text="Number" />
                         </Grid>
                     </Grid>
 
