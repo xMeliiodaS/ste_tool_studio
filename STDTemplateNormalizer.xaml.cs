@@ -94,9 +94,9 @@ namespace ste_tool_studio
             HandlePlaceholderVisibility(ReportNumberInput, ReportNumberPlaceholder);
         }
 
-        private void StxNumberInput_TextChanged(object sender, TextChangedEventArgs e)
+        private void StxNumberSuffixInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            HandlePlaceholderVisibility(StxNumberInput, StxNumberPlaceholder);
+            HandlePlaceholderVisibility(StxNumberSuffixInput, StxNumberPlaceholder);
         }
 
         // Simple click handlers - just call ViewModel methods directly
