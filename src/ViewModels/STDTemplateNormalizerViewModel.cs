@@ -26,6 +26,8 @@ namespace ste_tool_studio.ViewModels
         private const string DefaultCycleOption = "Default";
         private string _selectedCycleId;
 
+        private string RequiredStxPrefix => _isReportMode ? "STR" : "STD";
+
         public STDTemplateNormalizerViewModel(
             AppConfiguration config,
             ValidationService validationService,
@@ -44,6 +46,7 @@ namespace ste_tool_studio.ViewModels
 
             // Initialize DocType based on default toggle (Protocol)
             DocType = _isReportMode ? "report" : "protocol";
+            StxNumber = RequiredStxPrefix;
 
             InitializeCycleOptions();
         }
@@ -136,15 +139,17 @@ namespace ste_tool_studio.ViewModels
 
         /// <summary>
         /// STx number, e.g. STD005 or STR014.
+        /// Always keeps an undeletable STD/STR prefix according to selected document type.
         /// </summary>
         public string StxNumber
         {
             get => _stxNumber;
             set
             {
-                if (_stxNumber != value)
+                string normalized = NormalizeStxNumber(value);
+                if (_stxNumber != normalized)
                 {
-                    _stxNumber = value;
+                    _stxNumber = normalized;
                     OnPropertyChanged(nameof(StxNumber));
                 }
             }
@@ -183,8 +188,13 @@ namespace ste_tool_studio.ViewModels
             {
                 if (_isReportMode != value)
                 {
+                    string previousPrefix = RequiredStxPrefix;
                     _isReportMode = value;
                     DocType = _isReportMode ? "report" : "protocol";
+
+                    // Keep numeric/user-entered suffix while switching required prefix.
+                    StxNumber = NormalizeStxNumber(_stxNumber, previousPrefix);
+
                     OnPropertyChanged(nameof(IsReportMode));
                     OnPropertyChanged(nameof(IsProtocolMode));
                 }
@@ -241,7 +251,7 @@ namespace ste_tool_studio.ViewModels
                 DocNumber = string.Empty;
                 TestPlan = string.Empty;
                 ReportNumber = string.Empty;
-                StxNumber = string.Empty;
+                StxNumber = RequiredStxPrefix;
                 return;
             }
 
@@ -251,6 +261,29 @@ namespace ste_tool_studio.ViewModels
                 TestPlan = testPlan;
                 // ReportNumber and StxNumber are user-entered, not driven by cycle defaults.
             }
+        }
+
+        private string NormalizeStxNumber(string candidate, string previousPrefix = null)
+        {
+            string requiredPrefix = RequiredStxPrefix;
+            string value = (candidate ?? string.Empty).Trim();
+
+            if (!string.IsNullOrEmpty(previousPrefix) &&
+                value.StartsWith(previousPrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                value = value.Substring(previousPrefix.Length).TrimStart();
+            }
+
+            if (value.StartsWith("STD", StringComparison.OrdinalIgnoreCase))
+            {
+                value = value.Substring(3).TrimStart();
+            }
+            else if (value.StartsWith("STR", StringComparison.OrdinalIgnoreCase))
+            {
+                value = value.Substring(3).TrimStart();
+            }
+
+            return requiredPrefix + value;
         }
 
         // Commands
