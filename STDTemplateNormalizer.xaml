@@ -640,26 +640,47 @@
 
                         <!--  STx number Input (Right)  -->
                         <Grid Grid.Column="1" Margin="7,0,0,0">
-                            <TextBox
-                                x:Name="StxNumberInput"
-                                Width="150"
-                                Padding="10,8"
-                                HorizontalContentAlignment="Center"
-                                Background="#3C3C3C"
-                                BorderBrush="#555"
-                                BorderThickness="1"
-                                FontSize="14"
-                                Foreground="White"
-                                Text="{Binding StxNumber, UpdateSourceTrigger=PropertyChanged}"
-                                TextChanged="StxNumberInput_TextChanged" />
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0">
+                                <TextBox
+                                    x:Name="StxNumberInput"
+                                    Width="150"
+                                    Padding="10,8"
+                                    HorizontalContentAlignment="Center"
+                                    Background="#3C3C3C"
+                                    BorderBrush="#555"
+                                    BorderThickness="1"
+                                    FontSize="14"
+                                    Foreground="White"
+                                    Text="{Binding StxNumber, UpdateSourceTrigger=PropertyChanged}"
+                                    TextChanged="StxNumberInput_TextChanged">
+                                    <TextBox.ToolTip>
+                                        <ToolTip Style="{StaticResource CustomToolTip}">
+                                            Enter the number/suffix after the auto-filled prefix.
+                                        </ToolTip>
+                                    </TextBox.ToolTip>
+                                </TextBox>
+                                <TextBlock
+                                    x:Name="StxNumberPlaceholder"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="Gray"
+                                    IsHitTestVisible="False"
+                                    Text="Enter number (e.g. 005)" />
+                            </Grid>
+
                             <TextBlock
-                                x:Name="StxNumberPlaceholder"
+                                Grid.Row="1"
+                                Margin="0,4,0,0"
                                 HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                Foreground="Gray"
-                                IsHitTestVisible="False"
-                                Text="STD/R number" />
+                                FontSize="11"
+                                Foreground="LightGray"
+                                Text="Enter number only (prefix is automatic)" />
                         </Grid>
                     </Grid>
 
