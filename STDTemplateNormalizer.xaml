@@ -640,26 +640,48 @@
 
                         <!--  STx number Input (Right)  -->
                         <Grid Grid.Column="1" Margin="7,0,0,0">
-                            <TextBox
-                                x:Name="StxNumberInput"
+                            <Border
                                 Width="150"
-                                Padding="10,8"
-                                HorizontalContentAlignment="Center"
                                 Background="#3C3C3C"
                                 BorderBrush="#555"
-                                BorderThickness="1"
-                                FontSize="14"
-                                Foreground="White"
-                                Text="{Binding StxNumber, UpdateSourceTrigger=PropertyChanged}"
-                                TextChanged="StxNumberInput_TextChanged" />
+                                BorderThickness="1">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border Grid.Column="0" Background="#2F2F2F" Padding="10,8">
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Foreground="#9A9A9A"
+                                            FontWeight="SemiBold"
+                                            Text="{Binding RequiredStxPrefix}" />
+                                    </Border>
+
+                                    <TextBox
+                                        x:Name="StxNumberSuffixInput"
+                                        Grid.Column="1"
+                                        Padding="8,8"
+                                        HorizontalContentAlignment="Center"
+                                        Background="Transparent"
+                                        BorderThickness="0"
+                                        FontSize="14"
+                                        Foreground="White"
+                                        Text="{Binding StxNumberSuffix, UpdateSourceTrigger=PropertyChanged}"
+                                        TextChanged="StxNumberSuffixInput_TextChanged" />
+                                </Grid>
+                            </Border>
                             <TextBlock
                                 x:Name="StxNumberPlaceholder"
+                                Margin="48,0,0,0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
                                 FontSize="14"
                                 Foreground="Gray"
                                 IsHitTestVisible="False"
-                                Text="STD/R number" />
+                                Text="number" />
                         </Grid>
                     </Grid>
 

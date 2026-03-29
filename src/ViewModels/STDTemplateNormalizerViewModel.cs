@@ -26,7 +26,7 @@ namespace ste_tool_studio.ViewModels
         private const string DefaultCycleOption = "Default";
         private string _selectedCycleId;
 
-        private string RequiredStxPrefix => _isReportMode ? "STR" : "STD";
+        public string RequiredStxPrefix => _isReportMode ? "STR" : "STD";
 
         public STDTemplateNormalizerViewModel(
             AppConfiguration config,
@@ -151,8 +151,15 @@ namespace ste_tool_studio.ViewModels
                 {
                     _stxNumber = normalized;
                     OnPropertyChanged(nameof(StxNumber));
+                    OnPropertyChanged(nameof(StxNumberSuffix));
                 }
             }
+        }
+
+        public string StxNumberSuffix
+        {
+            get => _stxNumber.Length > 3 ? _stxNumber.Substring(3) : string.Empty;
+            set => StxNumber = RequiredStxPrefix + (value ?? string.Empty);
         }
 
         public string PreparedBy
@@ -197,6 +204,8 @@ namespace ste_tool_studio.ViewModels
 
                     OnPropertyChanged(nameof(IsReportMode));
                     OnPropertyChanged(nameof(IsProtocolMode));
+                    OnPropertyChanged(nameof(RequiredStxPrefix));
+                    OnPropertyChanged(nameof(StxNumberSuffix));
                 }
             }
         }
@@ -423,4 +432,3 @@ namespace ste_tool_studio.ViewModels
         }
     }
 }
-
