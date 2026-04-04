@@ -76,6 +76,7 @@ namespace ste_tool_studio.ViewModels
                     _stdName = value;
                     OnPropertyChanged(nameof(StdName));
                     OnPropertyChanged(nameof(HasStdName));
+                    LogInputChanged(nameof(StdName), value);
                 }
             }
         }
@@ -91,6 +92,7 @@ namespace ste_tool_studio.ViewModels
                 {
                     _docNumber = value;
                     OnPropertyChanged(nameof(DocNumber));
+                    LogInputChanged(nameof(DocNumber), value);
                 }
             }
         }
@@ -107,6 +109,7 @@ namespace ste_tool_studio.ViewModels
                 {
                     _reportNumber = value;
                     OnPropertyChanged(nameof(ReportNumber));
+                    LogInputChanged(nameof(ReportNumber), value);
                 }
             }
         }
@@ -120,6 +123,7 @@ namespace ste_tool_studio.ViewModels
                 {
                     _projectNumber = value;
                     OnPropertyChanged(nameof(ProjectNumber));
+                    LogInputChanged(nameof(ProjectNumber), value);
                 }
             }
         }
@@ -133,6 +137,7 @@ namespace ste_tool_studio.ViewModels
                 {
                     _testPlan = value;
                     OnPropertyChanged(nameof(TestPlan));
+                    LogInputChanged(nameof(TestPlan), value);
                 }
             }
         }
@@ -152,6 +157,7 @@ namespace ste_tool_studio.ViewModels
                     _stxNumber = normalized;
                     OnPropertyChanged(nameof(StxNumber));
                     OnPropertyChanged(nameof(StxNumberSuffix));
+                    LogInputChanged(nameof(StxNumber), normalized);
                 }
             }
         }
@@ -171,6 +177,7 @@ namespace ste_tool_studio.ViewModels
                 {
                     _preparedBy = value;
                     OnPropertyChanged(nameof(PreparedBy));
+                    LogInputChanged(nameof(PreparedBy), value);
                 }
             }
         }
@@ -184,6 +191,7 @@ namespace ste_tool_studio.ViewModels
                 {
                     _footer = value;
                     OnPropertyChanged(nameof(Footer));
+                    LogInputChanged(nameof(Footer), value);
                 }
             }
         }
@@ -234,6 +242,7 @@ namespace ste_tool_studio.ViewModels
                 {
                     _selectedCycleId = value;
                     OnPropertyChanged(nameof(SelectedCycleId));
+                    _loggingService.LogInfo($"User selected cycle: {value}");
                     ApplyCycleDefaults(value);
                 }
             }
@@ -261,6 +270,7 @@ namespace ste_tool_studio.ViewModels
                 TestPlan = string.Empty;
                 ReportNumber = string.Empty;
                 StxNumber = RequiredStxPrefix;
+                _loggingService.LogInfo("Cycle defaults reset to manual entry values.");
                 return;
             }
 
@@ -269,6 +279,11 @@ namespace ste_tool_studio.ViewModels
                 DocNumber = docNumber;
                 TestPlan = testPlan;
                 // ReportNumber and StxNumber are user-entered, not driven by cycle defaults.
+                _loggingService.LogInfo($"Cycle defaults applied for cycle {cycleId}: DocNumber=\"{docNumber}\", TestPlan=\"{testPlan}\"");
+            }
+            else
+            {
+                _loggingService.LogWarning($"No cycle defaults found for cycle {cycleId}.");
             }
         }
 
@@ -323,6 +338,9 @@ namespace ste_tool_studio.ViewModels
             StdName = isPlaceholder
                         ? AppConstants.DefaultStdNamePlaceholder
                         : fileNameWithoutExt;
+
+            _loggingService.LogInfo($"Template file selected: {filePath}");
+            _loggingService.LogInfo($"Auto-filled STD name from file: {StdName}");
 
             // Request focus and select all text if placeholder was set
             if (isPlaceholder)
