@@ -28,7 +28,7 @@ namespace ste_tool_studio
         {
             // If already shutting down, don't do anything
             if (MainMenuWindow.IsShuttingDown) return;
-            _loggingService?.LogInfo($"Window closing requested: {GetType().Name}. Triggering app shutdown.");
+            _loggingService?.LogInfo("Application shutdown initiated.");
 
             // If closing via X button (not hiding), shut down the application
             try
