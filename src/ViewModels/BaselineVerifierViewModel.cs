@@ -163,6 +163,9 @@ namespace ste_tool_studio.ViewModels
                         ? AppConstants.DefaultStdNamePlaceholder
                         : fileNameWithoutExt;
 
+            _loggingService.LogInfo($"Baseline input file selected: {filePath}");
+            _loggingService.LogInfo($"Auto-filled STD name from file: {StdName}");
+
             // Request focus and select all text if placeholder was set
             if (isPlaceholder)
             {
@@ -354,4 +357,3 @@ namespace ste_tool_studio.ViewModels
         }
     }
 }
-

@@ -143,6 +143,7 @@ namespace ste_tool_studio.ViewModels
         // Common Methods
         public void SelectFile()
         {
+            _loggingService.LogInfo($"User opened file picker: {FileDialogTitle}");
             var openFileDialog = new Microsoft.Win32.OpenFileDialog
             {
                 Filter = FileFilter,
@@ -152,6 +153,10 @@ namespace ste_tool_studio.ViewModels
             if (openFileDialog.ShowDialog() == true)
             {
                 HandleFileSelection(openFileDialog.FileName);
+            }
+            else
+            {
+                _loggingService.LogInfo("User canceled file selection dialog.");
             }
         }
 
@@ -213,6 +218,28 @@ namespace ste_tool_studio.ViewModels
             });
         }
 
+        public void LogInputCommitted(string fieldName, string value)
+        {
+            if (string.IsNullOrWhiteSpace(fieldName))
+            {
+                return;
+            }
+
+            string safeValue = value ?? string.Empty;
+            if (safeValue.Length > 120)
+            {
+                safeValue = safeValue.Substring(0, 120) + "...";
+            }
+
+            _loggingService.LogDebug($"Input committed: {fieldName}=\"{safeValue}\"");
+        }
+
+        [Obsolete("Use LogInputCommitted instead.")]
+        public void LogInputChanged(string fieldName, string value)
+        {
+            LogInputCommitted(fieldName, value);
+        }
+
         // INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -222,4 +249,3 @@ namespace ste_tool_studio.ViewModels
         }
     }
 }
-

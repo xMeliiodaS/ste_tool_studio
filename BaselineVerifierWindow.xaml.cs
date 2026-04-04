@@ -27,6 +27,10 @@ namespace ste_tool_studio
             // Initialize StatusTextBlock reference after InitializeComponent
             StatusTextBlock = this.StatusText;
 
+            STDNameInput.LostKeyboardFocus += STDNameInput_LostKeyboardFocus;
+            IterationPathInput.LostKeyboardFocus += IterationPathInput_LostKeyboardFocus;
+            VVVersionInput.LostKeyboardFocus += VVVersionInput_LostKeyboardFocus;
+
             // Subscribe to ViewModel property changes for UI updates
             _viewModel.PropertyChanged += ViewModel_PropertyChanged;
         }
@@ -81,6 +85,21 @@ namespace ste_tool_studio
         private void VVVersionInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             HandlePlaceholderVisibility(VVVersionInput, VVVersionPlaceholder);
+        }
+
+        private void STDNameInput_LostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        {
+            _viewModel.LogInputCommitted(nameof(BaselineVerifierViewModel.StdName), _viewModel.StdName);
+        }
+
+        private void IterationPathInput_LostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        {
+            _viewModel.LogInputCommitted(nameof(BaselineVerifierViewModel.IterationPath), _viewModel.IterationPath);
+        }
+
+        private void VVVersionInput_LostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        {
+            _viewModel.LogInputCommitted(nameof(BaselineVerifierViewModel.VvVersion), _viewModel.VvVersion);
         }
 
         // Implement abstract methods from BaseToolWindow
@@ -177,4 +196,3 @@ namespace ste_tool_studio
         }
     }
 }
-

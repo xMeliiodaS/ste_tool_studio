@@ -12,6 +12,7 @@ namespace ste_tool_studio
         private static BaselineVerifierWindow _baselineVerifierWindow;
         private static STDTemplateNormalizer _stdTemplateNormalizerWindow;
         private static ILoggingService _loggingService;
+        private static bool _hasLoggedAppStart;
         public static bool IsShuttingDown { get; internal set; } = false;
 
         public MainMenuWindow()
@@ -19,7 +20,16 @@ namespace ste_tool_studio
             InitializeComponent();
             this.Closing += MainMenuWindow_Closing;
             _loggingService ??= new FileLoggingService(new AppConfiguration());
-            _loggingService.LogInfo("App started. Main menu opened.");
+
+            if (!_hasLoggedAppStart)
+            {
+                _loggingService.LogInfo("App started. Main menu opened.");
+                _hasLoggedAppStart = true;
+            }
+            else
+            {
+                _loggingService.LogInfo("Main menu opened.");
+            }
         }
 
         private void MainMenuWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -68,6 +78,7 @@ namespace ste_tool_studio
 
             // Hide this window instead of closing to preserve state
             this.Hide();
+            _loggingService?.LogInfo("Output: Main menu hidden. Baseline Verifier shown.");
         }
 
         private void STDTemplateNormalizer_click(object sender, RoutedEventArgs e)
@@ -84,7 +95,7 @@ namespace ste_tool_studio
 
             // Hide this window instead of closing to preserve state
             this.Hide();
+            _loggingService?.LogInfo("Output: Main menu hidden. STD Template Normalizer shown.");
         }
     }
 }
-

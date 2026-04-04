@@ -1,5 +1,8 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Linq;
+using ste_tool_studio.Configuration;
+using ste_tool_studio.Services;
 
 namespace ste_tool_studio
 {
@@ -9,11 +12,13 @@ namespace ste_tool_studio
     public abstract class BaseToolWindow : Window
     {
         protected static MainMenuWindow _mainMenuWindow;
+        private static ILoggingService _loggingService;
         protected TextBlock StatusTextBlock { get; set; }
 
         protected BaseToolWindow()
         {
             this.Closing += BaseToolWindow_Closing;
+            _loggingService ??= new FileLoggingService(new AppConfiguration());
         }
 
         /// <summary>
@@ -23,6 +28,7 @@ namespace ste_tool_studio
         {
             // If already shutting down, don't do anything
             if (MainMenuWindow.IsShuttingDown) return;
+            _loggingService?.LogInfo($"Window closing requested: {GetType().Name}. Triggering app shutdown.");
 
             // If closing via X button (not hiding), shut down the application
             try
@@ -45,17 +51,25 @@ namespace ste_tool_studio
         /// </summary>
         public void BackButton_Click(object sender, RoutedEventArgs e)
         {
+            _loggingService?.LogInfo($"User clicked Back from {GetType().Name}.");
+
+            _mainMenuWindow = Application.Current?.Windows
+                .OfType<MainMenuWindow>()
+                .FirstOrDefault(window => window.IsLoaded);
+
             // Show existing main menu or create new one
             if (_mainMenuWindow == null || !_mainMenuWindow.IsLoaded)
             {
                 _mainMenuWindow = new MainMenuWindow();
                 _mainMenuWindow.Closed += (s, args) => _mainMenuWindow = null;
             }
+
             _mainMenuWindow.Show();
             _mainMenuWindow.Activate();
-            
+
             // Hide this window instead of closing to preserve state
             this.Hide();
+            _loggingService?.LogInfo($"Output: Returned to main menu from {GetType().Name}.");
         }
 
         /// <summary>
@@ -147,4 +161,3 @@ namespace ste_tool_studio
         protected abstract void HandleFileDrop(string filePath);
     }
 }
-
