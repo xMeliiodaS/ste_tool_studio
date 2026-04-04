@@ -234,6 +234,7 @@ namespace ste_tool_studio.ViewModels
                 {
                     _selectedCycleId = value;
                     OnPropertyChanged(nameof(SelectedCycleId));
+                    _loggingService.LogInfo($"User selected cycle: {value}");
                     ApplyCycleDefaults(value);
                 }
             }
@@ -261,6 +262,7 @@ namespace ste_tool_studio.ViewModels
                 TestPlan = string.Empty;
                 ReportNumber = string.Empty;
                 StxNumber = RequiredStxPrefix;
+                _loggingService.LogInfo("Cycle defaults reset to manual entry values.");
                 return;
             }
 
@@ -269,6 +271,11 @@ namespace ste_tool_studio.ViewModels
                 DocNumber = docNumber;
                 TestPlan = testPlan;
                 // ReportNumber and StxNumber are user-entered, not driven by cycle defaults.
+                _loggingService.LogInfo($"Cycle defaults applied for cycle {cycleId}: DocNumber=\"{docNumber}\", TestPlan=\"{testPlan}\"");
+            }
+            else
+            {
+                _loggingService.LogWarning($"No cycle defaults found for cycle {cycleId}.");
             }
         }
 
@@ -323,6 +330,9 @@ namespace ste_tool_studio.ViewModels
             StdName = isPlaceholder
                         ? AppConstants.DefaultStdNamePlaceholder
                         : fileNameWithoutExt;
+
+            _loggingService.LogInfo($"Template file selected: {filePath}");
+            _loggingService.LogInfo($"Auto-filled STD name from file: {StdName}");
 
             // Request focus and select all text if placeholder was set
             if (isPlaceholder)
