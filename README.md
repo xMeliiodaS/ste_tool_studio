@@ -108,3 +108,20 @@ dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=
 - Logs are written under `%APPDATA%\ste_tool_studio`.
 - Reports are generated/opened through the app services.
 - If dropdown cycles appear empty, verify you edited the APPDATA config (not only repo copies), then restart the app.
+
+---
+
+## Logging guidelines
+
+If you want to add more logs, follow these rules:
+
+- Use dependency-injected `ILoggingService` (`LogInfo`, `LogWarning`, `LogError`, `LogDebug`).
+- Do **not** write logs directly with `File.AppendAllText`, `Console.WriteLine`, or ad-hoc file paths.
+- Log at workflow boundaries and key user actions:
+  - user click/action
+  - validated input snapshot (non-sensitive)
+  - process start / finish
+  - non-zero exit and exceptions
+- Keep log messages concise and structured (consistent prefixes such as `Inputs:` / `Output:` are preferred).
+- Do not log sensitive secrets or large payload dumps.
+- Shared log destination is `%APPDATA%\ste_tool_studio\ste_tool_studio.log` (used by both C# app and Python automation).
