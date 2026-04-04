@@ -37,6 +37,7 @@ namespace ste_tool_studio
 
             // Subscribe to ViewModel property changes for UI updates
             _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+            _viewModel.RequestStdNameFocus += OnRequestStdNameFocus;
 
             // Initialize toggle buttons
             UpdateToggleButtons();
@@ -52,6 +53,12 @@ namespace ste_tool_studio
                         ? System.Windows.Media.Color.FromRgb(255, 102, 102)
                         : System.Windows.Media.Color.FromRgb(255, 255, 255));
             }
+        }
+
+        private void OnRequestStdNameFocus()
+        {
+            STDNameInput.Focus();
+            STDNameInput.SelectAll();
         }
 
         // Implement abstract methods from BaseToolWindow

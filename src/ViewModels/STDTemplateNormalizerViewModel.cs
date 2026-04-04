@@ -328,11 +328,17 @@ namespace ste_tool_studio.ViewModels
 
         protected override void OnFileSelected(string filePath)
         {
+            if (!string.IsNullOrWhiteSpace(StdName))
+            {
+                _loggingService.LogInfo($"Template file selected without STD name auto-fill (STD name already provided): {filePath}");
+                return;
+            }
+
             string fileNameWithoutExt = IOPath.GetFileNameWithoutExtension(filePath);
             bool isPlaceholder = fileNameWithoutExt.Contains("Book");
             StdName = isPlaceholder
-                        ? AppConstants.DefaultStdNamePlaceholder
-                        : fileNameWithoutExt;
+                ? AppConstants.DefaultStdNamePlaceholder
+                : fileNameWithoutExt;
 
             _loggingService.LogInfo($"Template file selected: {filePath}");
             _loggingService.LogInfo($"Auto-filled STD name from file: {StdName}");
