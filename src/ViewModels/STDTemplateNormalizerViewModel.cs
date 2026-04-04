@@ -195,12 +195,15 @@ namespace ste_tool_studio.ViewModels
             {
                 if (_isReportMode != value)
                 {
+                    string selectedMode = value ? "Report" : "Protocol";
                     string previousPrefix = RequiredStxPrefix;
                     _isReportMode = value;
                     DocType = _isReportMode ? "report" : "protocol";
 
                     // Keep numeric/user-entered suffix while switching required prefix.
                     StxNumber = NormalizeStxNumber(_stxNumber, previousPrefix);
+
+                    _loggingService.LogInfo($"User selected mode: {selectedMode}");
 
                     OnPropertyChanged(nameof(IsReportMode));
                     OnPropertyChanged(nameof(IsProtocolMode));
