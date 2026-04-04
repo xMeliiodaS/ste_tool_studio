@@ -218,7 +218,7 @@ namespace ste_tool_studio.ViewModels
             });
         }
 
-        protected void LogInputChanged(string fieldName, string value)
+        public void LogInputCommitted(string fieldName, string value)
         {
             if (string.IsNullOrWhiteSpace(fieldName))
             {
@@ -231,7 +231,7 @@ namespace ste_tool_studio.ViewModels
                 safeValue = safeValue.Substring(0, 120) + "...";
             }
 
-            _loggingService.LogDebug($"Input changed: {fieldName}=\"{safeValue}\"");
+            _loggingService.LogDebug($"Input committed: {fieldName}=\"{safeValue}\"");
         }
 
         // INotifyPropertyChanged

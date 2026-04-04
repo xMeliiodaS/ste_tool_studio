@@ -28,6 +28,13 @@ namespace ste_tool_studio
 
             DataContext = _viewModel;
 
+            STDNameInput.LostKeyboardFocus += STDNameInput_LostKeyboardFocus;
+            DOCNumberInput.LostKeyboardFocus += DOCNumberInput_LostKeyboardFocus;
+            TestPlanInput.LostKeyboardFocus += TestPlanInput_LostKeyboardFocus;
+            ReportNumberInput.LostKeyboardFocus += ReportNumberInput_LostKeyboardFocus;
+            StxNumberSuffixInput.LostKeyboardFocus += StxNumberSuffixInput_LostKeyboardFocus;
+            PreparedByInput.LostKeyboardFocus += PreparedByInput_LostKeyboardFocus;
+
             // Subscribe to ViewModel property changes for UI updates
             _viewModel.PropertyChanged += ViewModel_PropertyChanged;
 
@@ -97,6 +104,36 @@ namespace ste_tool_studio
         private void StxNumberSuffixInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             HandlePlaceholderVisibility(StxNumberSuffixInput, StxNumberPlaceholder);
+        }
+
+        private void STDNameInput_LostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        {
+            _viewModel.LogInputCommitted(nameof(STDTemplateNormalizerViewModel.StdName), _viewModel.StdName);
+        }
+
+        private void DOCNumberInput_LostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        {
+            _viewModel.LogInputCommitted(nameof(STDTemplateNormalizerViewModel.DocNumber), _viewModel.DocNumber);
+        }
+
+        private void TestPlanInput_LostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        {
+            _viewModel.LogInputCommitted(nameof(STDTemplateNormalizerViewModel.TestPlan), _viewModel.TestPlan);
+        }
+
+        private void ReportNumberInput_LostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        {
+            _viewModel.LogInputCommitted(nameof(STDTemplateNormalizerViewModel.ReportNumber), _viewModel.ReportNumber);
+        }
+
+        private void StxNumberSuffixInput_LostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        {
+            _viewModel.LogInputCommitted(nameof(STDTemplateNormalizerViewModel.StxNumber), _viewModel.StxNumber);
+        }
+
+        private void PreparedByInput_LostKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+        {
+            _viewModel.LogInputCommitted(nameof(STDTemplateNormalizerViewModel.PreparedBy), _viewModel.PreparedBy);
         }
 
         // Simple click handlers - just call ViewModel methods directly
