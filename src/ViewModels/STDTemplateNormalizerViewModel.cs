@@ -76,6 +76,7 @@ namespace ste_tool_studio.ViewModels
                     _stdName = value;
                     OnPropertyChanged(nameof(StdName));
                     OnPropertyChanged(nameof(HasStdName));
+                    LogInputChanged(nameof(StdName), value);
                 }
             }
         }
@@ -91,6 +92,7 @@ namespace ste_tool_studio.ViewModels
                 {
                     _docNumber = value;
                     OnPropertyChanged(nameof(DocNumber));
+                    LogInputChanged(nameof(DocNumber), value);
                 }
             }
         }
@@ -107,6 +109,7 @@ namespace ste_tool_studio.ViewModels
                 {
                     _reportNumber = value;
                     OnPropertyChanged(nameof(ReportNumber));
+                    LogInputChanged(nameof(ReportNumber), value);
                 }
             }
         }
@@ -120,6 +123,7 @@ namespace ste_tool_studio.ViewModels
                 {
                     _projectNumber = value;
                     OnPropertyChanged(nameof(ProjectNumber));
+                    LogInputChanged(nameof(ProjectNumber), value);
                 }
             }
         }
@@ -133,6 +137,7 @@ namespace ste_tool_studio.ViewModels
                 {
                     _testPlan = value;
                     OnPropertyChanged(nameof(TestPlan));
+                    LogInputChanged(nameof(TestPlan), value);
                 }
             }
         }
@@ -152,6 +157,7 @@ namespace ste_tool_studio.ViewModels
                     _stxNumber = normalized;
                     OnPropertyChanged(nameof(StxNumber));
                     OnPropertyChanged(nameof(StxNumberSuffix));
+                    LogInputChanged(nameof(StxNumber), normalized);
                 }
             }
         }
@@ -171,6 +177,7 @@ namespace ste_tool_studio.ViewModels
                 {
                     _preparedBy = value;
                     OnPropertyChanged(nameof(PreparedBy));
+                    LogInputChanged(nameof(PreparedBy), value);
                 }
             }
         }
@@ -184,6 +191,7 @@ namespace ste_tool_studio.ViewModels
                 {
                     _footer = value;
                     OnPropertyChanged(nameof(Footer));
+                    LogInputChanged(nameof(Footer), value);
                 }
             }
         }

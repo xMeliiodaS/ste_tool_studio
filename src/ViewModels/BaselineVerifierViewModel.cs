@@ -49,6 +49,7 @@ namespace ste_tool_studio.ViewModels
                     _stdName = value;
                     OnPropertyChanged(nameof(StdName));
                     OnPropertyChanged(nameof(HasStdName));
+                    LogInputChanged(nameof(StdName), value);
                 }
             }
         }
@@ -64,6 +65,7 @@ namespace ste_tool_studio.ViewModels
                 {
                     _iterationPath = value;
                     OnPropertyChanged(nameof(IterationPath));
+                    LogInputChanged(nameof(IterationPath), value);
                 }
             }
         }
@@ -77,6 +79,7 @@ namespace ste_tool_studio.ViewModels
                 {
                     _vvVersion = value;
                     OnPropertyChanged(nameof(VvVersion));
+                    LogInputChanged(nameof(VvVersion), value);
                 }
             }
         }
