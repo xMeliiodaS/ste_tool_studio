@@ -1,93 +1,170 @@
 # ste_tool_studio (WPF .NET 8)
 
-Desktop WPF application for two QA workflows:
+Desktop WPF application that standardizes two internal QA workflows for STD artifacts exported from DOORS:
 
 1. **STD Baseline Verifier**
 2. **STD Template Normalizer**
 
-The UI is written in C#/.NET and executes packaged backend tools (`.exe`) that are produced from Python automation.
+The app is a **workflow orchestrator** (UI + validation + logging + configuration). Core domain processing is executed by packaged backend executables built from Python automation.
 
 ---
 
-## What this app does
+## Why this tool exists
+
+Before this tool, engineers had to manually run validation/normalization steps and manage multiple scripts and inputs. `ste_tool_studio` was built to:
+
+- reduce user error in repetitive QA operations,
+- centralize workflow steps in one Windows UI,
+- preserve configuration defaults per user,
+- provide consistent execution logging/report access,
+- lower onboarding time for new users by exposing guided actions.
+
+---
+
+## High-level concept
+
+- **Frontend:** WPF desktop app (.NET 8).
+- **Application layer:** MVVM ViewModels + services for process execution, reporting, and logging.
+- **Execution layer:** Python-packaged executables (`.exe`) invoked by C#.
+- **Persistence:** User-scoped config + logs under `%APPDATA%\ste_tool_studio`.
+
+This means feature logic is split between:
+- **C# app responsibilities:** user input capture/validation, state/progress handling, config persistence, invoking executables.
+- **Python executable responsibilities:** domain-specific validation/normalization.
+
+---
+
+## Functional overview
 
 ## 1) STD Baseline Verifier
-- Lets users choose an Excel file (`.xls` / `.xlsx`).
-- Runs two backend executables:
-  - `test_bugs_std_validation.exe`
-  - `test_excel_violations.exe`
-- Displays status/progress and opens generated reports.
+
+### Purpose
+Validate exported STD Excel files for:
+- bug/VSTS consistency checks,
+- STD rule violations.
+
+### User inputs
+- Excel file (`.xls` / `.xlsx`)
+- STD Name
+- Iteration Path
+- Current V&V Version
+
+### Actions
+- **Check STD Bugs in VSTS** → runs `test_bugs_std_validation.exe`
+- **Validate STD Rules** → runs `test_excel_violations.exe`
+- **Last Report** actions open generated reports.
+
+### Notes
+- App attempts to auto-fill `STD Name` from selected filename (unless user already entered one).
+- File should be a DOORS-exported Excel and must be closed before execution.
+
+---
 
 ## 2) STD Template Normalizer
-- Lets users choose an Excel `.xlsx` file.
-- Sends form inputs (STD name, doc/project/test plan/prepared by/footer, mode) to:
-  - `test_document_normalization.exe`
-- Supports **Cycle** dropdown values from config (`cycle_1`, `cycle_2`, ...).
-- Current UX behavior:
-  - Default dropdown value is `Default`.
-  - No cycle autofill is applied until the user selects a real cycle.
+
+### Purpose
+Normalize an exported STD `.xlsx` file to required output template conventions.
+
+### User inputs
+- Source Excel file (`.xlsx`)
+- STD Name
+- Document mode (**Protocol** or **Report**)
+- Doc Number (required)
+- Test Plan (required)
+- STx Number (required; enforced prefix)
+- Prepared By (required)
+- Report Number (required only in Report mode)
+
+### Optional behavior
+- **Cycle dropdown** (`Default`, then configured cycles like `1`, `2`, ...).
+- Selecting a real cycle can auto-fill fields from config.
+- `Default` intentionally keeps manual entry behavior.
+
+### Execution
+- Runs `test_document_normalization.exe`
+- Passes selected mode (`Protocol`/`Report`) and user fields.
+
+### Important UX rule
+- STx prefix is mode-driven and normalized by UI:
+  - Protocol mode → `STD...`
+  - Report mode → `STR...`
 
 ---
 
-## Tech stack
-- .NET 8 (`net8.0-windows`)
-- WPF (XAML + MVVM-style ViewModels)
-- Newtonsoft.Json
-- MaterialDesignThemes / MaterialDesignColors
+## Input source constraints (DOORS export)
+
+For both workflows, source files should be produced from DOORS export with:
+- **Object Heading and Text** selected,
+- **Preserve rich text formatting** enabled,
+- Excel file saved and **closed** before running this tool.
 
 ---
 
-## Repo structure (important files)
+## Architecture and key code areas
 
-- `MainMenuWindow.xaml` — main tool launcher window.
-- `BaselineVerifierWindow.xaml` — baseline verifier UI.
-- `STDTemplateNormalizer.xaml` — template normalizer UI.
-- `src/ViewModels/` — ViewModels for each tool.
-- `src/Configuration/AppConfiguration.cs` — config load/save + APPDATA path management.
-- `src/Services/ValidationService.cs` — executes backend tools.
-- `Scripts/` — packaged backend executables and script-side resources.
+- `MainMenuWindow.xaml` — entry/launcher window.
+- `BaselineVerifierWindow.xaml` — Baseline Verifier UI.
+- `STDTemplateNormalizer.xaml` — Template Normalizer UI.
+- `src/ViewModels/` — state + command logic (MVVM).
+- `src/Services/ValidationService.cs` — executable invocation wrappers.
+- `src/Services/ProcessExecutionService.cs` — process execution plumbing.
+- `src/Services/ReportService.cs` — report open/find behavior.
+- `src/Configuration/AppConfiguration.cs` — config lifecycle + APPDATA management.
+- `Scripts/` — packaged backend executables/resources.
 
 ---
 
-## Python-backed executable files (important)
+## Backend executables (required runtime dependencies)
 
-These files are expected by the app and are included/copy-managed by the project file:
+The following files must be present at runtime:
 
 - `Scripts/test_bugs_std_validation.exe`
 - `Scripts/test_excel_violations.exe`
 - `Scripts/test_document_normalization.exe`
 
-If any of these are missing from the output, the related feature will fail.
+If any are missing, related features fail.
 
 ---
 
-## Configuration (`config.json`)
+## Configuration model (`config.json`)
 
-The app uses a **user-specific config** in:
+The application reads/writes a user-specific config at:
 
 `%APPDATA%\ste_tool_studio\config.json`
 
-At first run, if this file does not exist, it is copied from the default `config.json` next to the app executable.
+On first run, if absent, it is copied from the default config near the app binaries.
 
-### Common keys
+### Typical keys
 - Baseline verifier:
   - `url`, `excel_path`, `std_name`, `current_version`, `iteration_path`
 - Template normalizer:
-  - `doc_type`, `doc_number`, `project_number`, `test_plan`, `prepared_by`, `footer`, `Exported_STD`
+  - `doc_type`, `protocol_number`, `report_number`, `test_plan`, `stx_number`, `prepared_by`, `Exported_STD`
 
-### Cycle autofill keys
-Add top-level objects like:
+### Cycle defaults
+Add top-level keys like `cycle_1`, `cycle_2`, ...:
 
 ```json
 "cycle_1": {
   "doc_number": "DOC-001",
-  "project_number": "PRJ-001",
-  "test_plan": "TP-001",
-  "footer": "Footer 1"
+  "test_plan": "TP-001"
 }
 ```
 
-You can add `cycle_2`, `cycle_3`, etc.
+Cycle IDs are discovered from keys prefixed with `cycle_`.
+
+---
+
+## Reports and logging
+
+- Logs: `%APPDATA%\ste_tool_studio\ste_tool_studio.log`
+- Reports: opened/generated through report services and backend tools.
+- Shared logging path allows both C# app and Python automation to contribute to one log file.
+
+Logging extension guidelines:
+- Use DI `ILoggingService` (`LogInfo`, `LogWarning`, `LogError`, `LogDebug`).
+- Avoid direct `Console.WriteLine` / ad-hoc file writes.
+- Log key workflow boundaries (inputs, process start/end, non-zero exits, exceptions).
+- Keep logs concise and avoid sensitive data.
 
 ---
 
@@ -95,33 +172,19 @@ You can add `cycle_2`, `cycle_3`, etc.
 
 ### Prerequisites
 - .NET SDK 8.0+
-- Windows environment (WPF)
+- Windows (WPF target)
 
-### Build
+### Build/publish
 ```bash
 dotnet publish -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true
 ```
 
 ---
 
-## Notes
-- Logs are written under `%APPDATA%\ste_tool_studio`.
-- Reports are generated/opened through the app services.
-- If dropdown cycles appear empty, verify you edited the APPDATA config (not only repo copies), then restart the app.
+## FRS-oriented summary (quick reference)
 
----
+- **Product goal:** provide controlled UI orchestration for STD verification and normalization workflows.
+- **Primary actors:** QA/Test engineers processing DOORS-exported STD files.
+- **Core capabilities:** input collection, validation, mode/cycle behavior, backend process execution, status/progress, report/log accessibility, config persistence.
+- **Key dependency risk:** missing backend `.exe` files or invalid input export format.
 
-## Logging guidelines
-
-If you want to add more logs, follow these rules:
-
-- Use dependency-injected `ILoggingService` (`LogInfo`, `LogWarning`, `LogError`, `LogDebug`).
-- Do **not** write logs directly with `File.AppendAllText`, `Console.WriteLine`, or ad-hoc file paths.
-- Log at workflow boundaries and key user actions:
-  - user click/action
-  - validated input snapshot (non-sensitive)
-  - process start / finish
-  - non-zero exit and exceptions
-- Keep log messages concise and structured (consistent prefixes such as `Inputs:` / `Output:` are preferred).
-- Do not log sensitive secrets or large payload dumps.
-- Shared log destination is `%APPDATA%\ste_tool_studio\ste_tool_studio.log` (used by both C# app and Python automation).
