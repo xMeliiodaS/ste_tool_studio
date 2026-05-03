@@ -2,6 +2,7 @@
 bin/
 obj/
 
+/Scripts/Template.docx
 # User-specific files
 *.user
 *.suo
