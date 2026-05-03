@@ -14,6 +14,8 @@ namespace ste_tool_studio.Configuration
         private readonly string _userConfigPath;
         private readonly string _defaultConfigPath;
         private readonly string[] _defaultConfigCandidates;
+        private readonly string _userTemplatePath;
+        private readonly string[] _defaultTemplateCandidates;
         private JObject _config;
 
         public AppConfiguration()
@@ -25,16 +27,25 @@ namespace ste_tool_studio.Configuration
             Directory.CreateDirectory(appDataFolder);
 
             _userConfigPath = IOPath.Combine(appDataFolder, AppConstants.ConfigFileName);
+            _userTemplatePath = IOPath.Combine(appDataFolder, "Template.docx");
             _defaultConfigCandidates =
             [
                 IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, AppConstants.ConfigFileName),
                 IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts", AppConstants.ConfigFileName),
                 IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "src", "Scripts", AppConstants.ConfigFileName)
             ];
+            _defaultTemplateCandidates =
+            [
+                IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "Template.docx"),
+                IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts", "Template.docx"),
+                IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "src", "Scripts", "Template.docx")
+            ];
             _defaultConfigPath = _defaultConfigCandidates.FirstOrDefault(File.Exists) ?? _defaultConfigCandidates[0];
 
             EnsureUserConfigExists();
+            EnsureTemplateExists();
             LoadConfiguration();
+            EnsureTemplatePathInConfiguration();
         }
 
         /// <summary>
@@ -68,6 +79,24 @@ namespace ste_tool_studio.Configuration
         }
 
         /// <summary>
+        /// Ensures the template document in APPDATA is refreshed from bundled defaults on every startup.
+        /// </summary>
+        private void EnsureTemplateExists()
+        {
+            try
+            {
+                string defaultTemplatePath = _defaultTemplateCandidates.FirstOrDefault(File.Exists)
+                    ?? throw new FileNotFoundException($"Template.docx not found in expected locations: {string.Join(", ", _defaultTemplateCandidates)}");
+
+                File.Copy(defaultTemplatePath, _userTemplatePath, true);
+            }
+            catch (Exception ex)
+            {
+                throw new IOException($"Failed to copy Template.docx to APPDATA: {ex.Message}", ex);
+            }
+        }
+
+        /// <summary>
         /// Loads configuration from the user config file
         /// </summary>
         private void LoadConfiguration()
@@ -80,6 +109,20 @@ namespace ste_tool_studio.Configuration
             catch (Exception ex)
             {
                 throw new InvalidOperationException($"Failed to load configuration: {ex.Message}", ex);
+            }
+        }
+
+
+        /// <summary>
+        /// Ensures config.json always points Template_protocol to the APPDATA template path.
+        /// </summary>
+        private void EnsureTemplatePathInConfiguration()
+        {
+            string currentTemplatePath = _config[AppConstants.ConfigKeyTemplateProtocol]?.ToString() ?? string.Empty;
+            if (!string.Equals(currentTemplatePath, _userTemplatePath, StringComparison.OrdinalIgnoreCase))
+            {
+                _config[AppConstants.ConfigKeyTemplateProtocol] = _userTemplatePath;
+                SaveConfiguration();
             }
         }
 

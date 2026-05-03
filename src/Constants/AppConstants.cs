@@ -41,6 +41,7 @@ namespace ste_tool_studio.Constants
         public const string ConfigKeyFooter = "footer";
         public const string ConfigKeyReportNumber = "report_number";      // → ADD_REPORT_NUMBER
         public const string ConfigKeyStxNumber = "stx_number";            // → ADD_STX_NUMBER
+        public const string ConfigKeyTemplateProtocol = "Template_protocol";
 
         // Process Output Markers
         public const string ProgressTotalMarker = "PROGRESS_TOTAL:";
