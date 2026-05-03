@@ -33,6 +33,7 @@ namespace ste_tool_studio
 
             // Subscribe to ViewModel property changes for UI updates
             _viewModel.PropertyChanged += ViewModel_PropertyChanged;
+            _viewModel.RequestStdNameFocus += OnRequestStdNameFocus;
         }
 
         private void ViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -68,6 +69,12 @@ namespace ste_tool_studio
         private void UpdateStatusDisplay()
         {
             SetStatusMessage(_viewModel.StatusMessage, _viewModel.IsError);
+        }
+
+        private void OnRequestStdNameFocus()
+        {
+            STDNameInput.Focus();
+            STDNameInput.SelectAll();
         }
 
         // UI Event Handlers - Minimal code-behind for UI-specific behavior

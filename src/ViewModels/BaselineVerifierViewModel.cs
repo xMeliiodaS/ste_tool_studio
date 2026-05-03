@@ -49,7 +49,6 @@ namespace ste_tool_studio.ViewModels
                     _stdName = value;
                     OnPropertyChanged(nameof(StdName));
                     OnPropertyChanged(nameof(HasStdName));
-                    LogInputChanged(nameof(StdName), value);
                 }
             }
         }
@@ -65,7 +64,6 @@ namespace ste_tool_studio.ViewModels
                 {
                     _iterationPath = value;
                     OnPropertyChanged(nameof(IterationPath));
-                    LogInputChanged(nameof(IterationPath), value);
                 }
             }
         }
@@ -79,7 +77,6 @@ namespace ste_tool_studio.ViewModels
                 {
                     _vvVersion = value;
                     OnPropertyChanged(nameof(VvVersion));
-                    LogInputChanged(nameof(VvVersion), value);
                 }
             }
         }
@@ -160,11 +157,17 @@ namespace ste_tool_studio.ViewModels
 
         protected override void OnFileSelected(string filePath)
         {
+            if (!string.IsNullOrWhiteSpace(StdName))
+            {
+                _loggingService.LogInfo($"Baseline input file selected without STD name auto-fill (STD name already provided): {filePath}");
+                return;
+            }
+
             string fileNameWithoutExt = IOPath.GetFileNameWithoutExtension(filePath);
             bool isPlaceholder = fileNameWithoutExt.Contains("Book");
             StdName = isPlaceholder
-                        ? AppConstants.DefaultStdNamePlaceholder
-                        : fileNameWithoutExt;
+                ? AppConstants.DefaultStdNamePlaceholder
+                : fileNameWithoutExt;
 
             _loggingService.LogInfo($"Baseline input file selected: {filePath}");
             _loggingService.LogInfo($"Auto-filled STD name from file: {StdName}");

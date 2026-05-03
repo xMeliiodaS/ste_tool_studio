@@ -76,7 +76,6 @@ namespace ste_tool_studio.ViewModels
                     _stdName = value;
                     OnPropertyChanged(nameof(StdName));
                     OnPropertyChanged(nameof(HasStdName));
-                    LogInputChanged(nameof(StdName), value);
                 }
             }
         }
@@ -92,7 +91,6 @@ namespace ste_tool_studio.ViewModels
                 {
                     _docNumber = value;
                     OnPropertyChanged(nameof(DocNumber));
-                    LogInputChanged(nameof(DocNumber), value);
                 }
             }
         }
@@ -109,7 +107,6 @@ namespace ste_tool_studio.ViewModels
                 {
                     _reportNumber = value;
                     OnPropertyChanged(nameof(ReportNumber));
-                    LogInputChanged(nameof(ReportNumber), value);
                 }
             }
         }
@@ -123,7 +120,6 @@ namespace ste_tool_studio.ViewModels
                 {
                     _projectNumber = value;
                     OnPropertyChanged(nameof(ProjectNumber));
-                    LogInputChanged(nameof(ProjectNumber), value);
                 }
             }
         }
@@ -137,7 +133,6 @@ namespace ste_tool_studio.ViewModels
                 {
                     _testPlan = value;
                     OnPropertyChanged(nameof(TestPlan));
-                    LogInputChanged(nameof(TestPlan), value);
                 }
             }
         }
@@ -157,7 +152,6 @@ namespace ste_tool_studio.ViewModels
                     _stxNumber = normalized;
                     OnPropertyChanged(nameof(StxNumber));
                     OnPropertyChanged(nameof(StxNumberSuffix));
-                    LogInputChanged(nameof(StxNumber), normalized);
                 }
             }
         }
@@ -177,7 +171,6 @@ namespace ste_tool_studio.ViewModels
                 {
                     _preparedBy = value;
                     OnPropertyChanged(nameof(PreparedBy));
-                    LogInputChanged(nameof(PreparedBy), value);
                 }
             }
         }
@@ -191,7 +184,6 @@ namespace ste_tool_studio.ViewModels
                 {
                     _footer = value;
                     OnPropertyChanged(nameof(Footer));
-                    LogInputChanged(nameof(Footer), value);
                 }
             }
         }
@@ -203,12 +195,15 @@ namespace ste_tool_studio.ViewModels
             {
                 if (_isReportMode != value)
                 {
+                    string selectedMode = value ? "Report" : "Protocol";
                     string previousPrefix = RequiredStxPrefix;
                     _isReportMode = value;
                     DocType = _isReportMode ? "report" : "protocol";
 
                     // Keep numeric/user-entered suffix while switching required prefix.
                     StxNumber = NormalizeStxNumber(_stxNumber, previousPrefix);
+
+                    _loggingService.LogInfo($"User selected mode: {selectedMode}");
 
                     OnPropertyChanged(nameof(IsReportMode));
                     OnPropertyChanged(nameof(IsProtocolMode));
@@ -333,11 +328,17 @@ namespace ste_tool_studio.ViewModels
 
         protected override void OnFileSelected(string filePath)
         {
+            if (!string.IsNullOrWhiteSpace(StdName))
+            {
+                _loggingService.LogInfo($"Template file selected without STD name auto-fill (STD name already provided): {filePath}");
+                return;
+            }
+
             string fileNameWithoutExt = IOPath.GetFileNameWithoutExtension(filePath);
             bool isPlaceholder = fileNameWithoutExt.Contains("Book");
             StdName = isPlaceholder
-                        ? AppConstants.DefaultStdNamePlaceholder
-                        : fileNameWithoutExt;
+                ? AppConstants.DefaultStdNamePlaceholder
+                : fileNameWithoutExt;
 
             _loggingService.LogInfo($"Template file selected: {filePath}");
             _loggingService.LogInfo($"Auto-filled STD name from file: {StdName}");
