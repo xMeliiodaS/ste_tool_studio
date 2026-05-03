@@ -234,20 +234,10 @@ namespace ste_tool_studio.ViewModels
             _loggingService.LogDebug($"Input committed: {fieldName}=\"{safeValue}\"");
         }
 
-        protected void LogInputChanged(string fieldName, string value)
+        [Obsolete("Use LogInputCommitted instead.")]
+        public void LogInputChanged(string fieldName, string value)
         {
-            if (string.IsNullOrWhiteSpace(fieldName))
-            {
-                return;
-            }
-
-            string safeValue = value ?? string.Empty;
-            if (safeValue.Length > 120)
-            {
-                safeValue = safeValue.Substring(0, 120) + "...";
-            }
-
-            _loggingService.LogDebug($"Input changed: {fieldName}=\"{safeValue}\"");
+            LogInputCommitted(fieldName, value);
         }
 
         // INotifyPropertyChanged
