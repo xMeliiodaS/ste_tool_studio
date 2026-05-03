@@ -14,6 +14,8 @@ namespace ste_tool_studio.Configuration
         private readonly string _userConfigPath;
         private readonly string _defaultConfigPath;
         private readonly string[] _defaultConfigCandidates;
+        private readonly string _userTemplatePath;
+        private readonly string[] _defaultTemplateCandidates;
         private JObject _config;
 
         public AppConfiguration()
@@ -25,15 +27,23 @@ namespace ste_tool_studio.Configuration
             Directory.CreateDirectory(appDataFolder);
 
             _userConfigPath = IOPath.Combine(appDataFolder, AppConstants.ConfigFileName);
+            _userTemplatePath = IOPath.Combine(appDataFolder, "Template.docx");
             _defaultConfigCandidates =
             [
                 IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, AppConstants.ConfigFileName),
                 IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts", AppConstants.ConfigFileName),
                 IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "src", "Scripts", AppConstants.ConfigFileName)
             ];
+            _defaultTemplateCandidates =
+            [
+                IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "Template.docx"),
+                IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "Scripts", "Template.docx"),
+                IOPath.Combine(AppDomain.CurrentDomain.BaseDirectory, "src", "Scripts", "Template.docx")
+            ];
             _defaultConfigPath = _defaultConfigCandidates.FirstOrDefault(File.Exists) ?? _defaultConfigCandidates[0];
 
             EnsureUserConfigExists();
+            EnsureTemplateExists();
             LoadConfiguration();
         }
 
@@ -64,6 +74,24 @@ namespace ste_tool_studio.Configuration
             {
                 throw new IOException(
                     string.Format(AppConstants.ErrorConfigCreationFailed, ex.Message), ex);
+            }
+        }
+
+        /// <summary>
+        /// Ensures the template document in APPDATA is refreshed from bundled defaults on every startup.
+        /// </summary>
+        private void EnsureTemplateExists()
+        {
+            try
+            {
+                string defaultTemplatePath = _defaultTemplateCandidates.FirstOrDefault(File.Exists)
+                    ?? throw new FileNotFoundException($"Template.docx not found in expected locations: {string.Join(", ", _defaultTemplateCandidates)}");
+
+                File.Copy(defaultTemplatePath, _userTemplatePath, true);
+            }
+            catch (Exception ex)
+            {
+                throw new IOException($"Failed to copy Template.docx to APPDATA: {ex.Message}", ex);
             }
         }
 
