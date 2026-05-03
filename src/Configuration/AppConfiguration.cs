@@ -45,6 +45,7 @@ namespace ste_tool_studio.Configuration
             EnsureUserConfigExists();
             EnsureTemplateExists();
             LoadConfiguration();
+            EnsureTemplatePathInConfiguration();
         }
 
         /// <summary>
@@ -108,6 +109,20 @@ namespace ste_tool_studio.Configuration
             catch (Exception ex)
             {
                 throw new InvalidOperationException($"Failed to load configuration: {ex.Message}", ex);
+            }
+        }
+
+
+        /// <summary>
+        /// Ensures config.json always points Template_protocol to the APPDATA template path.
+        /// </summary>
+        private void EnsureTemplatePathInConfiguration()
+        {
+            string currentTemplatePath = _config[AppConstants.ConfigKeyTemplateProtocol]?.ToString() ?? string.Empty;
+            if (!string.Equals(currentTemplatePath, _userTemplatePath, StringComparison.OrdinalIgnoreCase))
+            {
+                _config[AppConstants.ConfigKeyTemplateProtocol] = _userTemplatePath;
+                SaveConfiguration();
             }
         }
 
