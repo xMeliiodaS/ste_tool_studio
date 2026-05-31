@@ -407,8 +407,8 @@ namespace ste_tool_studio.ViewModels
                 }
                 else
                 {
-                    SetStatus("Failed to normalize STD template.", true);
-                    _loggingService.LogError($"STD Normalizer failed: {result.Error}");
+                    SetStatus("Normalization done, but verification found issues. Check the output.", true);
+                    _loggingService.LogError($"STD Normalizer verification issues: {result.Error}");
                 }
             }
             catch (Exception ex)

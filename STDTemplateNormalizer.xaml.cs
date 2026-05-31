@@ -65,7 +65,7 @@ namespace ste_tool_studio
         protected override bool IsValidFileType(string filePath)
         {
             if (string.IsNullOrEmpty(filePath)) return false;
-            return Path.GetExtension(filePath).Equals(".docx", StringComparison.OrdinalIgnoreCase);
+            return Path.GetExtension(filePath).Equals(".xlsx", StringComparison.OrdinalIgnoreCase);
         }
 
         protected override string GetExpectedFileType()
