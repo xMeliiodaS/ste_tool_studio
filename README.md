@@ -63,10 +63,10 @@ Validate exported STD Excel files for:
 ## 2) STD Template Normalizer
 
 ### Purpose
-Normalize an exported STD `.xlsx` file to required output template conventions.
+Normalize an exported STD Excel file (`.xls` / `.xlsx`) to required output template conventions.
 
 ### User inputs
-- Source Excel file (`.xlsx`)
+- Source Excel file (`.xls` / `.xlsx`)
 - STD Name
 - Document mode (**Protocol** or **Report**)
 - Doc Number (required)
@@ -122,7 +122,7 @@ The following files must be present at runtime:
 - `Scripts/test_excel_violations.exe`
 - `Scripts/test_document_normalization.exe`
 
-If any are missing, related features fail.
+If any are missing, related features fail. `Scripts/Template.docx` is also required at build/publish time and is copied to `%APPDATA%\ste_tool_studio\Template.docx` on startup.
 
 ---
 
@@ -145,7 +145,7 @@ Add top-level keys like `cycle_1`, `cycle_2`, ...:
 
 ```json
 "cycle_1": {
-  "doc_number": "DOC-001",
+  "protocol_number": "DOC-001",
   "test_plan": "TP-001"
 }
 ```

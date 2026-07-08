@@ -65,12 +65,14 @@ namespace ste_tool_studio
         protected override bool IsValidFileType(string filePath)
         {
             if (string.IsNullOrEmpty(filePath)) return false;
-            return Path.GetExtension(filePath).Equals(".xlsx", StringComparison.OrdinalIgnoreCase);
+            string extension = Path.GetExtension(filePath);
+            return extension.Equals(".xls", StringComparison.OrdinalIgnoreCase) ||
+                   extension.Equals(".xlsx", StringComparison.OrdinalIgnoreCase);
         }
 
         protected override string GetExpectedFileType()
         {
-            return "DOCX files (.docx)";
+            return "Excel files (.xls, .xlsx)";
         }
 
         private void NormalizeButton_Click(object sender, RoutedEventArgs e)

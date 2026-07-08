@@ -35,10 +35,10 @@ namespace ste_tool_studio.ViewModels
             ILoggingService loggingService)
             : base(config, validationService, reportService, loggingService)
         {
-            // Configure for XLSX files
+            // Configure for Excel files
             FileFilter = AppConstants.XlsxFileFilter;
             FileDialogTitle = AppConstants.XlsxFileDialogTitle;
-            AllowedExtensions = new[] { ".xlsx" };
+            AllowedExtensions = new[] { ".xls", ".xlsx" };
 
             // Initialize commands
             SelectFileCommand = new RelayCommand(ExecuteSelectFile);
@@ -426,7 +426,7 @@ namespace ste_tool_studio.ViewModels
         {
             if (string.IsNullOrWhiteSpace(SelectedFilePath))
             {
-                SetStatus("Please select an XLSX file.", true);
+                SetStatus("Please select an Excel file.", true);
                 return false;
             }
 
