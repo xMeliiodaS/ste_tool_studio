@@ -95,9 +95,17 @@ namespace ste_tool_studio.Services
                     process.Start();
                     process.BeginOutputReadLine();
                     process.BeginErrorReadLine();
-                    process.WaitForExit();
 
-                    result.ExitCode = process.ExitCode;
+                    if (!process.WaitForExit(AppConstants.ProcessTimeoutMs))
+                    {
+                        try { process.Kill(true); } catch { }
+                        result.ExitCode = -1;
+                        errorBuilder.AppendLine($"Process timed out after {AppConstants.ProcessTimeoutMs} ms and was terminated.");
+                    }
+                    else
+                    {
+                        result.ExitCode = process.ExitCode;
+                    }
                 }
             });
 

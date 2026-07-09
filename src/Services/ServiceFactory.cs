@@ -44,17 +44,6 @@ namespace ste_tool_studio.Services
                 reportService,
                 loggingService);
         }
-
-        /// <summary>
-        /// Legacy method for backward compatibility - creates BaselineVerifierViewModel
-        /// </summary>
-        [Obsolete("Use CreateBaselineVerifierViewModel() instead")]
-        public static MainViewModel CreateMainViewModel()
-        {
-            // For backward compatibility, return a BaselineVerifierViewModel wrapped as MainViewModel
-            // This should be removed once all references are updated
-            throw new NotSupportedException("MainViewModel is deprecated. Use CreateBaselineVerifierViewModel() or CreateSTDTemplateNormalizerViewModel() instead.");
-        }
     }
 }
 

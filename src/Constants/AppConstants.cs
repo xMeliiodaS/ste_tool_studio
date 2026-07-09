@@ -7,6 +7,7 @@ namespace ste_tool_studio.Constants
     {
         // Application Info
         public const string AppName = "ste_tool_studio";
+        public const int ProcessTimeoutMs = 10 * 60 * 1000; // 10 minutes
         public const string AppDisplayName = "STD Baseline Verifier";
 
         // File Names

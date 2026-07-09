@@ -19,6 +19,13 @@ namespace ste_tool_studio
         {
             this.Closing += BaseToolWindow_Closing;
             _loggingService ??= new FileLoggingService(new AppConfiguration());
+
+            // Wire drag-drop in code so it works regardless of XAML.
+            // Preview (tunneling) events fire at the window BEFORE any child control
+            // can swallow the drop (a common WPF drag-drop failure).
+            this.AllowDrop = true;
+            this.PreviewDragOver += Window_DragOver;
+            this.PreviewDrop += Window_Drop;
         }
 
         /// <summary>

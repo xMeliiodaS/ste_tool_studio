@@ -85,14 +85,16 @@ namespace ste_tool_studio.Configuration
         {
             try
             {
-                string defaultTemplatePath = _defaultTemplateCandidates.FirstOrDefault(File.Exists)
-                    ?? throw new FileNotFoundException($"Template.docx not found in expected locations: {string.Join(", ", _defaultTemplateCandidates)}");
-
+                string defaultTemplatePath = _defaultTemplateCandidates.FirstOrDefault(File.Exists);
+                if (defaultTemplatePath == null)
+                {
+                    return; // Degrade gracefully; normalizer surfaces a clear error when used.
+                }
                 File.Copy(defaultTemplatePath, _userTemplatePath, true);
             }
-            catch (Exception ex)
+            catch
             {
-                throw new IOException($"Failed to copy Template.docx to APPDATA: {ex.Message}", ex);
+                // Non-fatal: never crash app startup because the template couldn't be staged.
             }
         }
 
