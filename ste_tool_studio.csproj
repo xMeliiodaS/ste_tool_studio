@@ -17,8 +17,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Scripts\config.json" />
-    <None Remove="Scripts\test_bugs_std_validation.exe" />
+	<None Remove="src\Scripts\config.json" />
+	<None Remove="Scripts\test_bugs_std_validation.exe" />
     <None Remove="Scripts\test_excel_violations.exe" />
     <None Remove="Scripts\test_document_normalization.exe" />
     <None Remove="Scripts\Template.docx" />
@@ -48,15 +48,27 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="src\Scripts\config.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <CopyToPublishDirectory>Always</CopyToPublishDirectory>
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="src\Scripts\config.json">
+			<Link>Scripts\config.json</Link>
+			<TargetPath>Scripts\config.json</TargetPath>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+		</Content>
+	</ItemGroup>
 
-  <ItemGroup>
+	<!-- Prevent the WPF project from compiling the nested test project. -->
+	<ItemGroup>
+		<Compile Remove="ste_tool_studio.Tests\**\*.cs" />
+		<EmbeddedResource Remove="ste_tool_studio.Tests\**\*" />
+		<Content Remove="ste_tool_studio.Tests\**\*" />
+		<None Remove="ste_tool_studio.Tests\**\*" />
+		<Page Remove="ste_tool_studio.Tests\**\*.xaml" />
+		<ApplicationDefinition Remove="ste_tool_studio.Tests\**\*.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
     <PackageReference Include="MaterialDesignColors" Version="5.2.1" />
     <PackageReference Include="MaterialDesignThemes" Version="5.2.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />

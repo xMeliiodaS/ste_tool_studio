@@ -1,5 +1,6 @@
 ﻿{
-  "url": "https://www.google.com",
+  "config_version": 2,
+  "url": "https://bwiiltiadotfs.eu.jnj.com/tfs/BiosenseCollection/Innovation_IRE/_workitems/assignedtome/",
   "excel_path": "",
   "std_name": "",
   "current_version": "",
@@ -12,5 +13,9 @@
   "prepared_by": "",
   "Exported_STD": "",
   "Template_protocol": "",
-  "Normalized_protocol": ""
+  "Normalized_protocol": "",
+  "cycle_1": {
+    "protocol_number": "2473596580",
+    "test_plan": "0685"
+  }
 }

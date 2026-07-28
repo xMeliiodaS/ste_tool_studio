@@ -48,7 +48,10 @@ namespace ste_tool_studio.Services
                 string dir = System.IO.Path.GetDirectoryName(_logFilePath);
                 if (!string.IsNullOrEmpty(dir))
                     Directory.CreateDirectory(dir);
-                File.AppendAllText(_logFilePath, $"\n{message}\n");
+                File.AppendAllText(
+                    _logFilePath,
+                    message + Environment.NewLine);
+
             }
         }
     }

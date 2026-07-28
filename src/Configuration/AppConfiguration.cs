@@ -45,7 +45,30 @@ namespace ste_tool_studio.Configuration
             EnsureUserConfigExists();
             EnsureTemplateExists();
             LoadConfiguration();
+            MergeMissingKeysFromDefault();
+            ValidateConfiguration();
             EnsureTemplatePathInConfiguration();
+        }
+
+        /// <summary>
+        /// Adds any keys present in the bundled default config that are missing from the
+        /// user's APPDATA config, so shipped schema changes reach existing configs.
+        /// Delegates the merge to ConfigSchemaMerger (unit tested).
+        /// </summary>
+        private void MergeMissingKeysFromDefault()
+        {
+            try
+            {
+                if (!File.Exists(_defaultConfigPath)) return;
+
+                var defaults = JObject.Parse(File.ReadAllText(_defaultConfigPath));
+                if (ConfigSchemaMerger.MergeMissingKeys(_config, defaults))
+                    SaveConfiguration();
+            }
+            catch
+            {
+                // Non-fatal: a malformed default must never block app startup.
+            }
         }
 
         /// <summary>
@@ -114,6 +137,49 @@ namespace ste_tool_studio.Configuration
             }
         }
 
+        private void ValidateConfiguration()
+        {
+            JToken? configVersionToken = _config["config_version"];
+
+            if (configVersionToken == null ||
+                configVersionToken.Type != JTokenType.Integer)
+            {
+                throw new InvalidDataException(
+                    "Configuration key 'config_version' must be an integer.");
+            }
+
+            foreach (JProperty property in _config.Properties()
+                         .Where(property =>
+                             property.Name.StartsWith(
+                                 "cycle_",
+                                 StringComparison.OrdinalIgnoreCase)))
+            {
+                if (property.Value is not JObject cycleConfig)
+                {
+                    throw new InvalidDataException(
+                        $"Configuration key '{property.Name}' must be an object.");
+                }
+
+                JToken? protocolNumber = cycleConfig["protocol_number"];
+                JToken? testPlan = cycleConfig["test_plan"];
+
+                if (protocolNumber == null ||
+                    protocolNumber.Type != JTokenType.String)
+                {
+                    throw new InvalidDataException(
+                        $"Configuration preset '{property.Name}' must contain " +
+                        "a string property named 'protocol_number'.");
+                }
+
+                if (testPlan == null ||
+                    testPlan.Type != JTokenType.String)
+                {
+                    throw new InvalidDataException(
+                        $"Configuration preset '{property.Name}' must contain " +
+                        "a string property named 'test_plan'.");
+                }
+            }
+        }
 
         /// <summary>
         /// Ensures config.json always points Template_protocol to the APPDATA template path.
