@@ -23,10 +23,27 @@ namespace ste_tool_studio.Configuration
             bool changed = false;
             foreach (var prop in defaults.Properties())
             {
-                if (user[prop.Name] == null)              // only add missing keys
+                JToken? existingValue = user[prop.Name];
+
+                if (existingValue == null)                // only add missing keys
                 {
                     user[prop.Name] = prop.Value.DeepClone();
                     changed = true;
+                    continue;
+                }
+
+                // Add newly introduced nested fields without touching existing user values.
+                if (existingValue is JObject existingObject &&
+                    prop.Value is JObject defaultObject)
+                {
+                    foreach (var nestedProperty in defaultObject.Properties())
+                    {
+                        if (existingObject[nestedProperty.Name] == null)
+                        {
+                            existingObject[nestedProperty.Name] = nestedProperty.Value.DeepClone();
+                            changed = true;
+                        }
+                    }
                 }
             }
             return changed;

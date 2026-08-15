@@ -262,19 +262,38 @@ namespace ste_tool_studio.ViewModels
             if (string.IsNullOrWhiteSpace(cycleId) || string.Equals(cycleId, DefaultCycleOption, StringComparison.OrdinalIgnoreCase))
             {
                 DocNumber = string.Empty;
-                TestPlan = string.Empty;
                 ReportNumber = string.Empty;
+                TestPlan = string.Empty;
                 StxNumber = RequiredStxPrefix;
+                PreparedBy = string.Empty;
                 _loggingService.LogInfo("Cycle defaults reset to manual entry values.");
                 return;
             }
 
-            if (_config.TryGetCycleTemplateDefaults(cycleId, out var docNumber, out var testPlan))
+            if (_config.TryGetCycleTemplateDefaults(
+                cycleId,
+                out var docNumber,
+                out var reportNumber,
+                out var testPlan,
+                out var stxNumber,
+                out var preparedBy))
             {
                 DocNumber = docNumber;
+                ReportNumber = reportNumber;
                 TestPlan = testPlan;
-                // ReportNumber and StxNumber are user-entered, not driven by cycle defaults.
-                _loggingService.LogInfo($"Cycle defaults applied for cycle {cycleId}: DocNumber=\"{docNumber}\", TestPlan=\"{testPlan}\"");
+                PreparedBy = preparedBy;
+
+                StxNumber = string.IsNullOrWhiteSpace(stxNumber)
+                    ? RequiredStxPrefix
+                    : stxNumber;
+
+                _loggingService.LogInfo(
+                    $"Cycle defaults applied for cycle {cycleId}: " +
+                    $"DocNumber=\"{docNumber}\", " +
+                    $"ReportNumber=\"{reportNumber}\", " +
+                    $"TestPlan=\"{testPlan}\", " +
+                    $"StxNumber=\"{StxNumber}\", " +
+                    $"PreparedBy=\"{preparedBy}\"");
             }
             else
             {

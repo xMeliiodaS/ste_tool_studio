@@ -35,12 +35,14 @@ namespace ste_tool_studio.Constants
 
         // Template Normalizer: field name = config key → Word placeholder
         public const string ConfigKeyDoctype = "doc_type";
-        public const string ConfigKeyProtocolNumber = "protocol_number";  // → ADD_PROTOCOL_NUMBER#
+        // Protocol number is used by ADD_PROTOCOL_NUMBER#
+        // and by ADD_DOC_STD# in Protocol mode.
+        public const string ConfigKeyProtocolNumber = "protocol_number";
         public const string ConfigKeyProjectNumber = "project_number";
         public const string ConfigKeyTestPlan = "test_plan";               // → ADD_PLAN_NUMBER
         public const string ConfigKeyPreparedBy = "prepared_by";          // → ADD_PREPARED_BY
         public const string ConfigKeyFooter = "footer";
-        public const string ConfigKeyReportNumber = "report_number";      // → ADD_REPORT_NUMBER
+        public const string ConfigKeyReportNumber = "report_number";      // → ADD_DOC_STD# in Report mode
         public const string ConfigKeyStxNumber = "stx_number";            // → ADD_STX_NUMBER
         public const string ConfigKeyTemplateProtocol = "Template_protocol";
 

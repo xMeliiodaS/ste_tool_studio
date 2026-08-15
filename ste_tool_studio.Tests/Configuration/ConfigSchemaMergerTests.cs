@@ -70,17 +70,21 @@ namespace ste_tool_studio.Tests.Configuration
         }
 
         [Fact]
-        public void MergeMissingKeys_PreservesExistingPresetObject()
+        public void MergeMissingKeys_PreservesExistingPresetValues_AndAddsMissingFields()
         {
             var user = JObject.Parse(
                 @"{ ""cycle_1"": { ""protocol_number"": ""USER_VAL"", ""test_plan"": ""9999"" } }");
             var defaults = JObject.Parse(
-                @"{ ""cycle_1"": { ""protocol_number"": ""2473596580"", ""test_plan"": ""0685"" } }");
+                @"{ ""cycle_1"": { ""protocol_number"": ""2473596580"", ""report_number"": """", ""test_plan"": ""0685"", ""stx_number"": """", ""prepared_by"": """" } }");
 
             bool changed = ConfigSchemaMerger.MergeMissingKeys(user, defaults);
 
-            Assert.False(changed);                                        // whole key already exists
-            Assert.Equal("USER_VAL", user["cycle_1"]["protocol_number"].ToString());
+            Assert.True(changed);
+            Assert.Equal("USER_VAL", user["cycle_1"]["protocol_number"]?.ToString());
+            Assert.Equal("9999", user["cycle_1"]["test_plan"]?.ToString());
+            Assert.NotNull(user["cycle_1"]["report_number"]);
+            Assert.NotNull(user["cycle_1"]["stx_number"]);
+            Assert.NotNull(user["cycle_1"]["prepared_by"]);
         }
 
         // --- Edge cases ----------------------------------------------------
