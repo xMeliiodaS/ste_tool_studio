@@ -264,6 +264,7 @@ namespace ste_tool_studio.ViewModels
                 DocNumber = string.Empty;
                 ReportNumber = string.Empty;
                 TestPlan = string.Empty;
+                Footer = string.Empty;
                 StxNumber = RequiredStxPrefix;
                 PreparedBy = string.Empty;
                 _loggingService.LogInfo("Cycle defaults reset to manual entry values.");
@@ -276,11 +277,13 @@ namespace ste_tool_studio.ViewModels
                 out var reportNumber,
                 out var testPlan,
                 out var stxNumber,
-                out var preparedBy))
+                out var preparedBy,
+                out var footer))
             {
                 DocNumber = docNumber;
                 ReportNumber = reportNumber;
                 TestPlan = testPlan;
+                Footer = footer;
                 PreparedBy = preparedBy;
 
                 StxNumber = string.IsNullOrWhiteSpace(stxNumber)
@@ -293,7 +296,8 @@ namespace ste_tool_studio.ViewModels
                     $"ReportNumber=\"{reportNumber}\", " +
                     $"TestPlan=\"{testPlan}\", " +
                     $"StxNumber=\"{StxNumber}\", " +
-                    $"PreparedBy=\"{preparedBy}\"");
+                    $"PreparedBy=\"{preparedBy}\", " +
+                    $"Footer=\"{footer}\"");
             }
             else
             {
@@ -398,6 +402,10 @@ namespace ste_tool_studio.ViewModels
                 ReportNumber = ReportNumber?.Trim() ?? string.Empty;
                 StxNumber = StxNumber?.Trim() ?? string.Empty;
                 PreparedBy = PreparedBy?.Trim() ?? string.Empty;
+                Footer = Footer?.Trim() ?? string.Empty;
+
+                // Footer isn't a parameter of UpdateTemplateNormalizerConfig, so persist it directly.
+                _config.Footer = Footer;
 
                 _config.UpdateTemplateNormalizerConfig(
                     DocType,
@@ -416,7 +424,7 @@ namespace ste_tool_studio.ViewModels
                     string.Empty, // projectNumber no longer used in Template Normalizer UI
                     TestPlan,
                     PreparedBy,
-                    string.Empty, // footer no longer used in Template Normalizer UI
+                    Footer,
                     IsReportMode,
                     OnProgressUpdate);
 

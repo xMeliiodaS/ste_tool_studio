@@ -1,5 +1,6 @@
 using Newtonsoft.Json.Linq;
-
+using System;
+using System.Linq;
 namespace ste_tool_studio.Configuration
 {
     /// <summary>
@@ -46,6 +47,49 @@ namespace ste_tool_studio.Configuration
                     }
                 }
             }
+            return changed;
+        }
+
+        /// <summary>
+        /// Makes the user's cycle_* keys an exact mirror of the default:
+        /// adds missing cycles, overwrites changed ones, and REMOVES cycles
+        /// that no longer exist in the default. Non-cycle keys are untouched.
+        /// </summary>
+        /// <returns>True if anything changed (caller should persist); otherwise false.</returns>
+        public static bool SyncCyclesToDefault(JObject user, JObject defaults)
+        {
+            if (user == null || defaults == null) return false;
+            bool changed = false;
+            const string prefix = "cycle_";
+
+            var defaultCycleNames = defaults.Properties()
+                .Where(p => p.Name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+                .Select(p => p.Name)
+                .ToList();
+
+            // 1) Remove user cycles that no longer exist in the default.
+            var staleUserCycles = user.Properties()
+                .Where(p => p.Name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
+                .Select(p => p.Name)
+                .Where(name => !defaultCycleNames.Contains(name, StringComparer.OrdinalIgnoreCase))
+                .ToList();
+            foreach (var name in staleUserCycles)
+            {
+                user.Remove(name);
+                changed = true;
+            }
+
+            // 2) Add or overwrite every default cycle so values always match the default.
+            foreach (var name in defaultCycleNames)
+            {
+                var desired = defaults[name];
+                if (!JToken.DeepEquals(user[name], desired))
+                {
+                    user[name] = desired.DeepClone();
+                    changed = true;
+                }
+            }
+
             return changed;
         }
     }

@@ -20,5 +20,11 @@
     "test_plan": "0685",
     "stx_number": "",
     "prepared_by": ""
+  },
+  "cycle_2.7.5 - Cycle 5 (FMR)": {
+    "protocol_number": "502526298",
+    "report_number": "502575850",
+    "footer": "502133070 (Rev A)",
+    "test_plan": "0685"
   }
 }

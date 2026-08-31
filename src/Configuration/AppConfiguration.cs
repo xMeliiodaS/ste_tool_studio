@@ -53,6 +53,7 @@ namespace ste_tool_studio.Configuration
         /// <summary>
         /// Adds any keys present in the bundled default config that are missing from the
         /// user's APPDATA config, so shipped schema changes reach existing configs.
+        /// Also syncs cycle_* keys so they fully mirror the default (add/update/delete).
         /// Delegates the merge to ConfigSchemaMerger (unit tested).
         /// </summary>
         private void MergeMissingKeysFromDefault()
@@ -62,7 +63,9 @@ namespace ste_tool_studio.Configuration
                 if (!File.Exists(_defaultConfigPath)) return;
 
                 var defaults = JObject.Parse(File.ReadAllText(_defaultConfigPath));
-                if (ConfigSchemaMerger.MergeMissingKeys(_config, defaults))
+                bool changed = ConfigSchemaMerger.MergeMissingKeys(_config, defaults);
+                changed |= ConfigSchemaMerger.SyncCyclesToDefault(_config, defaults);
+                if (changed)
                     SaveConfiguration();
             }
             catch
@@ -102,7 +105,8 @@ namespace ste_tool_studio.Configuration
         }
 
         /// <summary>
-        /// Ensures the template document in APPDATA is refreshed from bundled defaults on every startup.
+        /// Ensures the template document in APPDATA is refreshed from bundled defaults when
+        /// missing or when the bundled default has changed (size/timestamp differ).
         /// </summary>
         private void EnsureTemplateExists()
         {
@@ -113,12 +117,26 @@ namespace ste_tool_studio.Configuration
                 {
                     return; // Degrade gracefully; normalizer surfaces a clear error when used.
                 }
-                File.Copy(defaultTemplatePath, _userTemplatePath, true);
+                // Only copy when APPDATA copy is missing or differs from the bundled one,
+                // so template updates reach users without rewriting it on every launch.
+                if (!File.Exists(_userTemplatePath) || TemplatesDiffer(defaultTemplatePath, _userTemplatePath))
+                {
+                    File.Copy(defaultTemplatePath, _userTemplatePath, true);
+                }
             }
             catch
             {
                 // Non-fatal: never crash app startup because the template couldn't be staged.
             }
+        }
+
+        private static bool TemplatesDiffer(string bundledPath, string userPath)
+        {
+            var bundled = new FileInfo(bundledPath);
+            var user = new FileInfo(userPath);
+            if (bundled.Length != user.Length) return true;
+            if (bundled.LastWriteTimeUtc != user.LastWriteTimeUtc) return true;
+            return false;
         }
 
         /// <summary>
@@ -384,31 +402,31 @@ namespace ste_tool_studio.Configuration
             out string reportNumber,
             out string testPlan,
             out string stxNumber,
-            out string preparedBy)
+            out string preparedBy,
+            out string footer)
         {
             docNumber = string.Empty;
             reportNumber = string.Empty;
             testPlan = string.Empty;
             stxNumber = string.Empty;
             preparedBy = string.Empty;
+            footer = string.Empty;
 
             if (string.IsNullOrWhiteSpace(cycleId))
             {
                 return false;
             }
-
             string cycleKey = $"cycle_{cycleId.Trim()}";
             if (_config[cycleKey] is not JObject cycleConfig)
             {
                 return false;
             }
-
             docNumber = cycleConfig[AppConstants.ConfigKeyProtocolNumber]?.ToString() ?? string.Empty;
             reportNumber = cycleConfig[AppConstants.ConfigKeyReportNumber]?.ToString() ?? string.Empty;
             testPlan = cycleConfig[AppConstants.ConfigKeyTestPlan]?.ToString() ?? string.Empty;
             stxNumber = cycleConfig[AppConstants.ConfigKeyStxNumber]?.ToString() ?? string.Empty;
             preparedBy = cycleConfig[AppConstants.ConfigKeyPreparedBy]?.ToString() ?? string.Empty;
-
+            footer = cycleConfig[AppConstants.ConfigKeyFooter]?.ToString() ?? string.Empty;
             return true;
         }
     }
