@@ -2,7 +2,10 @@
 bin/
 obj/
 
-Scripts\Template.docx
+# Generated template (not source-controlled; runtime copies to APPDATA)
+Scripts/Template.docx
+Scripts/config.json
+
 # User-specific files
 *.user
 *.suo
@@ -12,6 +15,6 @@ Scripts\Template.docx
 # Visual Studio cache
 .vs/
 
-# Python cache (if you'll call Python later)
+# Python cache
 __pycache__/
 *.pyc
